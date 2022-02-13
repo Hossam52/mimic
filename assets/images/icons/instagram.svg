@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <filter id="Ellipse_t" x="0" y="0" width="96" height="96" filterUnits="userSpaceOnUse">
+      <feOffset dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feFlood flood-color="#e70b89" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="0.5" y1="0.008" x2="0.5" y2="0.998" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e09b3d"/>
+      <stop offset="0.3" stop-color="#c74c4d"/>
+      <stop offset="0.6" stop-color="#c21975"/>
+      <stop offset="1" stop-color="#7024c4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="-0.451" y2="1.462" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" y1="-1.396" y2="6.586" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="twitter" transform="translate(30.308 24)">
+    <g transform="matrix(1, 0, 0, 1, -30.31, -24)" filter="url(#Ellipse_t)">
+      <circle id="Ellipse_t-2" data-name="Ellipse t" cx="18" cy="18" r="18" transform="translate(30 24)" fill="#fff"/>
+    </g>
+    <g id="XMLID_13_" transform="translate(9.692 10)">
+      <path id="XMLID_17_" d="M11.661,0H4.948A4.953,4.953,0,0,0,0,4.948v6.713a4.953,4.953,0,0,0,4.948,4.948h6.713a4.953,4.953,0,0,0,4.948-4.948V4.948A4.953,4.953,0,0,0,11.661,0Zm3.277,11.661a3.277,3.277,0,0,1-3.277,3.277H4.948a3.277,3.277,0,0,1-3.277-3.277V4.948A3.277,3.277,0,0,1,4.948,1.671h6.713a3.277,3.277,0,0,1,3.277,3.277v6.713Z" fill="url(#linear-gradient)"/>
+      <path id="XMLID_81_" d="M137.3,133a4.3,4.3,0,1,0,4.3,4.3A4.3,4.3,0,0,0,137.3,133Zm0,6.92a2.625,2.625,0,1,1,2.625-2.625A2.625,2.625,0,0,1,137.3,139.92Z" transform="translate(-128.991 -128.991)" fill="url(#linear-gradient-2)"/>
+      <circle id="XMLID_83_" cx="1.029" cy="1.029" r="1.029" transform="translate(11.579 3.012)" fill="url(#linear-gradient-3)"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <filter id="Ellipse_g" x="0" y="0" width="96" height="96" filterUnits="userSpaceOnUse">
+      <feOffset dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feFlood flood-color="#e70b89" flood-opacity="0.149"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="gmail" transform="translate(30 24)">
+    <g transform="matrix(1, 0, 0, 1, -30, -24)" filter="url(#Ellipse_g)">
+      <circle id="Ellipse_g-2" data-name="Ellipse g" cx="18" cy="18" r="18" transform="translate(30 24)" fill="#fff"/>
+    </g>
+    <g id="Group_90" data-name="Group 90" transform="translate(10.109 10.109)">
+      <path id="y" d="M3.52,143.578l-.553,2.064-2.021.043a7.957,7.957,0,0,1-.058-7.417h0l1.8.33.788,1.788a4.74,4.74,0,0,0,.045,3.191Z" transform="translate(0 -133.978)" fill="#fbbb00"/>
+      <path id="b" d="M269.257,208.176a7.94,7.94,0,0,1-2.831,7.678h0l-2.266-.116-.321-2a4.734,4.734,0,0,0,2.037-2.417h-4.247v-3.142h7.629Z" transform="translate(-253.511 -201.717)" fill="#518ef8"/>
+      <path id="g" d="M42.477,313.945h0a7.945,7.945,0,0,1-11.968-2.43l2.574-2.107a4.724,4.724,0,0,0,6.807,2.419Z" transform="translate(-29.562 -299.809)" fill="#28b446"/>
+      <path id="r" d="M40.748,1.829,38.175,3.935a4.723,4.723,0,0,0-6.963,2.473L28.624,4.29h0A7.944,7.944,0,0,1,40.748,1.829Z" transform="translate(-27.736)" fill="#f14336"/>
+    </g>
+  </g>
+</svg>
