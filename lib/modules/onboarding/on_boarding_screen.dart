@@ -69,7 +69,7 @@ class _Indicator extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () {
-            navigateTo(context, Routes.login);
+            navigateTo(context, Routes.main);
           },
           child: const Text('Skip'),
           style: _getButtonStyle(Theme.of(context).primaryColor),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/auth/login_layout.dart';
 import 'package:mimic/modules/auth/widgets/stack_card_with_button.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -9,26 +8,31 @@ import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/default_text_field.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class NewPasswordScreen extends StatelessWidget {
+  const NewPasswordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LoginLayout(contentFields: _inputFields(context));
+    return LoginLayout(
+      contentFields: _inputFields(context),
+      displayForgotPassword: false,
+      displaySocialLogin: false,
+    );
   }
 
   Widget _inputFields(BuildContext context) {
     final buttonHeight = screenHeight(context) * 0.07;
     return StackCardInButton(
       height: buttonHeight,
-      button: DefaultButton(radius: 10, onPressed: () {}, text: 'Login'),
+      button: DefaultButton(radius: 10, onPressed: () {}, text: 'CONTINUE'),
       content: Column(children: [
         DefaultTextField(
-            hintText: 'Email',
-            icon: Icons.email_outlined,
+            hintText: 'New password',
+            icon: Icons.lock_outline,
+            isPassword: true,
             controller: TextEditingController()),
         DefaultTextField(
-            hintText: 'Password',
+            hintText: 'Confirm password',
             icon: Icons.lock_outline,
             isPassword: true,
             controller: TextEditingController()),
@@ -38,11 +42,11 @@ class LoginScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Login',
+            'New password',
             style: getBoldStyle(fontSize: FontSize.s14),
           ),
           Text(
-            'Please login to your account',
+            'Plaease enter your new password',
             style: getSemiBoldStyle(
                 fontSize: FontSize.s12, color: ColorManager.grey),
           ),

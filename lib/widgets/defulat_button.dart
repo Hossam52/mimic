@@ -12,40 +12,76 @@ class DefaultButton extends StatelessWidget {
       required this.onPressed,
       this.backgroundColor = Colors.white,
       this.radius = 0,
-      this.loading = false})
+      this.loading = false,
+      this.opacity = 1,
+      this.height,
+      this.width,
+      this.foregroundColor,
+      this.trailing,
+      this.disabledColor,
+      this.hasBorder = true})
       : super(key: key);
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+  final Color? disabledColor;
   final Color backgroundColor;
+  final Color? foregroundColor;
   final double radius;
   final bool loading;
+  final bool hasBorder;
+  final double opacity;
+  final double? height;
+  final double? width;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: loading
-          ? const DefaultCircularProgress()
-          : Center(
-              child: Text(text),
-            ),
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all(const EdgeInsets.all(0.0)),
-        backgroundColor: MaterialStateProperty.all(backgroundColor),
-        shape: getMaterialStateProperty(
-          RoundedRectangleBorder(
-            side: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 1.5,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(radius),
+    final buttonHeight = height ?? screenHeight(context) * 0.07;
+    final buttonWidth = width ?? screenWidth(context) * 0.7;
+    return SizedBox(
+      height: buttonHeight,
+      width: buttonWidth,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: loading
+            ? const DefaultCircularProgress()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(flex: 2),
+                  const Spacer(),
+                  Center(
+                    child: Text(text),
+                  ),
+                  const Spacer(flex: 2),
+                  if (trailing != null) trailing!,
+                  const Spacer(),
+                ],
+              ),
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(const EdgeInsets.all(0.0)),
+          backgroundColor: MaterialStateProperty.all(onPressed == null
+              ? disabledColor ?? ColorManager.primaryOpacity60
+              : backgroundColor.withOpacity(opacity)),
+          shape: getMaterialStateProperty(
+            RoundedRectangleBorder(
+              side: !hasBorder
+                  ? BorderSide.none
+                  : BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 1.2,
+                    ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(radius),
+              ),
             ),
           ),
-        ),
-        foregroundColor: getMaterialStateProperty(Colors.black),
-        textStyle: MaterialStateProperty.all(
-          getBoldStyle(fontSize: FontSize.s14, color: Colors.black),
+          foregroundColor:
+              getMaterialStateProperty(foregroundColor ?? Colors.black),
+          textStyle: MaterialStateProperty.all(
+            getBoldStyle(
+                fontSize: FontSize.s14, color: foregroundColor ?? Colors.black),
+          ),
         ),
       ),
     );
