@@ -10,7 +10,10 @@ class DefaultTextField extends StatelessWidget {
       required this.controller,
       this.validator,
       this.passwordWidget,
-      this.icon})
+      this.icon,
+      this.iconColor,
+      this.maxLines = 1,
+      this.prefixIcon})
       : super(key: key);
   final String hintText;
   final bool isPassword;
@@ -18,11 +21,17 @@ class DefaultTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Widget? passwordWidget;
   final IconData? icon;
+  final IconData? prefixIcon;
+  final Color? iconColor;
+  final int maxLines;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TextFormField(
+          minLines: 1,
+          textAlign: TextAlign.start,
+          maxLines: maxLines,
           controller: controller,
           obscureText: isPassword,
           validator: validator,
@@ -31,8 +40,14 @@ class DefaultTextField extends StatelessWidget {
             hintText: hintText,
             suffixIcon: Icon(
               icon,
-              color: ColorManager.grey,
+              color: iconColor ?? ColorManager.grey,
             ),
+            prefixIcon: prefixIcon == null
+                ? null
+                : Icon(
+                    prefixIcon,
+                    color: iconColor ?? ColorManager.grey,
+                  ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(color: ColorManager.grey),

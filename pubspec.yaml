@@ -87,9 +87,9 @@ flutter:
         - asset: assets/fonts/OpenSans-Medium.ttf
         - asset: assets/fonts/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans-SemiBold.ttf
-    - family: FlutterIcons
+    - family: MimicIcons
       fonts:
-        - asset: assets/fonts/flutter_icons.ttf
+        - asset: assets/fonts/MimicIcons.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

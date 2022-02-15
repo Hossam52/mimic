@@ -1,4 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:mimic/modules/home/widgets/black_opacity.dart';
+import 'package:mimic/modules/home/widgets/challenge_item.dart';
+import 'package:mimic/modules/home/widgets/drawer/guest_drawer.dart';
+import 'package:mimic/modules/home/widgets/drawer/user_drawer.dart';
+import 'package:mimic/modules/home/widgets/header_name.dart';
+import 'package:mimic/modules/home/widgets/highlight_item.dart';
+import 'package:mimic/modules/home/widgets/person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -37,88 +46,20 @@ class HomeScreen extends StatelessWidget {
               ))
         ],
       ),
-      drawer: const _HomeDrawer(),
-      body: Column(
-        children: [
-          SizedBox(
-              height: screenHeight(context) * 0.2, child: const _Highlights())
-        ],
-      ),
-    );
-  }
-}
-
-class _HomeDrawer extends StatelessWidget {
-  const _HomeDrawer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Drawer(
-        child: Column(
-          children: [
-            const _DrawerHeader(),
-            const SizedBox(height: 20),
-            _drawerItem('Feed', MimicIcons.feed),
-            _drawerItem('Discove peopler', MimicIcons.discover),
-            _drawerItem('How To Challenge', MimicIcons.help),
-            _drawerItem('Support', MimicIcons.customerService),
-            const Divider(),
-            _drawerItem('Login/Register', MimicIcons.login),
-            const Spacer(),
-            MimicLogo(width: screenWidth(context) * 0.2),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _drawerItem(String title, IconData icon, {VoidCallback? onPressed}) {
-    return ListTile(
-      onTap: onPressed,
-      leading: Icon(
-        icon,
-        size: 20,
-      ),
-      title: Text(
-        title,
-        style: getSemiBoldStyle(fontSize: FontSize.s16),
-      ),
-    );
-  }
-}
-
-class _DrawerHeader extends StatelessWidget {
-  const _DrawerHeader({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.topCenter,
-      width: double.infinity,
-      height: screenHeight(context) * 0.18,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(80),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: Row(
-          children: [
-            Icon(
-              Icons.account_circle_rounded,
-              color: ColorManager.white,
-              size: 40,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              'Guest user account',
-              style: getBoldStyle(
-                  fontSize: FontSize.s16, color: ColorManager.white),
-            )
-          ],
+      drawer: UserDrawer(),
+      body: SingleChildScrollView(
+        primary: true,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: screenHeight(context) * 0.26,
+                child: const _Highlights(),
+              ),
+              const _CurrentChallenges(),
+            ],
+          ),
         ),
       ),
     );
@@ -131,60 +72,52 @@ class _Highlights extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Highlights',
-          style: getBoldStyle(fontSize: FontSize.s18),
-        ),
-        SizedBox(height: 10),
-        ListView.builder(
-          itemBuilder: (_, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: _HighlightItem(),
-            );
-          },
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
+        const HeaderName('Highlights'),
+        const SizedBox(height: 10),
+        Expanded(
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              mainAxisSpacing: 15,
+              childAspectRatio: 4 / 3,
+            ),
+            itemBuilder: (_, index) {
+              return const HighlightItem();
+            },
+            itemCount: 5,
+            scrollDirection: Axis.horizontal,
+          ),
         )
       ],
     );
   }
 }
 
-class _HighlightItem extends StatelessWidget {
-  const _HighlightItem({Key? key}) : super(key: key);
+class _CurrentChallenges extends StatelessWidget {
+  const _CurrentChallenges({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.hardEdge,
-      children: [
-        Container(
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: ColorManager.black.withOpacity(0.5)),
-          child: Image.asset('assets/images/static/highlight_image.png'),
-        ),
-        Row(
-          children: [
-            Image.asset('assets/images/static/avatar.png'),
-            Column(
-              children: [
-                Text(
-                  'Ola ahmed',
-                  style: getSemiBoldStyle(color: ColorManager.white),
-                ),
-                Text(
-                  '2 Min ago',
-                  style: getRegularStyle(color: ColorManager.lightGrey),
-                )
-              ],
-            ),
-          ],
-        )
-      ],
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          HeaderName('Current Challeneges'),
+          HeaderName('Top', opacity: 0.49),
+        ],
+      ),
+      ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: 14,
+          itemBuilder: (_, index) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: ChallenegItem(),
+            );
+          })
+    ]);
   }
 }

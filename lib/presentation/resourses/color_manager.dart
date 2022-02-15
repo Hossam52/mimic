@@ -14,6 +14,10 @@ class ColorManager {
   static Color error = HexColor.fromHex("#ff0000");
   static Color selectedColor = HexColor.fromHex('#4D99C0E1');
   static Color black = HexColor.fromHex('#000000');
+  static Color visibilityColor = HexColor.fromHex('#081ED6');
+  static Color likeColor = HexColor.fromHex('#ff0000');
+  static Color commentsColor = HexColor.fromHex('#707070');
+  static Color drawerFillColor = HexColor.fromHex('#F1F9FF');
 }
 
 extension HexColor on Color {
