@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mimic/modules/home/widgets/drawer/custom_drawer_header.dart';
+import 'package:mimic/layout/guest/widgets/guest_custom_drawer_header.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -16,7 +16,7 @@ class GuestDrawer extends StatelessWidget {
       child: Drawer(
         child: Column(
           children: [
-            const CustomDrawerHeader(),
+            const GuestCustomDrawerHeader(),
             const SizedBox(height: 20),
             _drawerItem('Feed', MimicIcons.feed),
             _drawerItem('Discove peopler', MimicIcons.discover),
@@ -27,7 +27,9 @@ class GuestDrawer extends StatelessWidget {
               navigateTo(context, Routes.customerSupport);
             }),
             const Divider(),
-            _drawerItem('Login/Register', MimicIcons.login),
+            _drawerItem('Login/Register', MimicIcons.login, onPressed: () {
+              navigateTo(context, Routes.login);
+            }),
             const Spacer(),
             MimicLogo(width: screenWidth(context) * 0.2),
           ],

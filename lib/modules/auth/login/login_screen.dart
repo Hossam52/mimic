@@ -4,6 +4,7 @@ import 'package:mimic/layout/auth/login_layout.dart';
 import 'package:mimic/modules/auth/widgets/stack_card_with_button.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/default_text_field.dart';
@@ -21,7 +22,12 @@ class LoginScreen extends StatelessWidget {
     final buttonHeight = screenHeight(context) * 0.07;
     return StackCardInButton(
       height: buttonHeight,
-      button: DefaultButton(radius: 10, onPressed: () {}, text: 'Login'),
+      button: DefaultButton(
+          radius: 10,
+          onPressed: () {
+            navigateReplacement(context, Routes.userMainLayout);
+          },
+          text: 'Login'),
       content: Column(children: [
         DefaultTextField(
             hintText: 'Email',

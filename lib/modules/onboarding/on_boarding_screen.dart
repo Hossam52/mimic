@@ -53,7 +53,7 @@ class OnBoarding extends StatelessWidget {
         ],
         scrollDirection: Axis.horizontal,
         onPageChanged: (value) {
-          if (value == 3) navigateTo(context, Routes.login);
+          if (value == 3) navigateTo(context, Routes.guestMainLayout);
         },
       );
     });
@@ -69,7 +69,7 @@ class _Indicator extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () {
-            navigateTo(context, Routes.main);
+            navigateTo(context, Routes.guestMainLayout);
           },
           child: const Text('Skip'),
           style: _getButtonStyle(Theme.of(context).primaryColor),

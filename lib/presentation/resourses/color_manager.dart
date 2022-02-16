@@ -18,6 +18,7 @@ class ColorManager {
   static Color likeColor = HexColor.fromHex('#ff0000');
   static Color commentsColor = HexColor.fromHex('#707070');
   static Color drawerFillColor = HexColor.fromHex('#F1F9FF');
+  static Color selectedBottomColor = HexColor.fromHex('#99C0E1');
 }
 
 extension HexColor on Color {

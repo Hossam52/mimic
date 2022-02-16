@@ -11,8 +11,11 @@ import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 
 class ChallenegItem extends StatelessWidget {
-  const ChallenegItem({Key? key}) : super(key: key);
-
+  const ChallenegItem(
+      {Key? key, this.onChallengeTapped, required this.onJoinTapped})
+      : super(key: key);
+  final VoidCallback? onChallengeTapped;
+  final VoidCallback onJoinTapped;
   @override
   Widget build(BuildContext context) {
     final double joinIconHeight = 50;
@@ -27,25 +30,28 @@ class ChallenegItem extends StatelessWidget {
           children: [
             Expanded(
               flex: 4,
-              child: Stack(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Expanded(
-                        child: _ChallenegePreview(),
-                      ),
-                      SizedBox(height: halfButtonSize)
-                    ],
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: SizedBox(
-                        height: joinIconHeight,
-                        child: _joinButton(joinIconHeight)),
-                  )
-                ],
+              child: GestureDetector(
+                onTap: onChallengeTapped,
+                child: Stack(
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Expanded(
+                          child: _ChallenegePreview(),
+                        ),
+                        SizedBox(height: halfButtonSize)
+                      ],
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: SizedBox(
+                          height: joinIconHeight,
+                          child: _joinButton(joinIconHeight, onJoinTapped)),
+                    )
+                  ],
+                ),
               ),
             ),
             Text(
@@ -67,16 +73,13 @@ class ChallenegItem extends StatelessWidget {
     );
   }
 
-  Widget _joinButton(double height) {
+  Widget _joinButton(double height, VoidCallback? onJoinTapped) {
     return Builder(builder: (context) {
       return CircleAvatar(
         radius: height,
         backgroundColor: ColorManager.visibilityColor,
         child: InkWell(
-          onTap: () {
-            log('Join tapped');
-            navigateTo(context, Routes.errorGuestPermissions);
-          },
+          onTap: onJoinTapped,
           child: Text(
             'Join',
             style:

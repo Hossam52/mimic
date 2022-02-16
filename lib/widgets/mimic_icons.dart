@@ -61,33 +61,33 @@ class MimicIcons {
       IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData video =
       IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData socceer =
+  static const IconData soccer =
       IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData basketball =
       IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData homebottomtab =
+  static const IconData homeBottomTab =
       IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData discoverbottomtab =
+  static const IconData discoverBottomTab =
       IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData playvideo =
+  static const IconData playVideo =
       IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData folder =
       IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData commentoutline =
+  static const IconData commentOutline =
       IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData favoritefill =
+  static const IconData favoriteFill =
       IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData favoriteoutline =
+  static const IconData favoriteOutline =
       IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData contribution =
       IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData draftcategory =
+  static const IconData draftCategory =
       IconData(0xe81f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData drafttitle =
+  static const IconData draftTitle =
       IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData like =
       IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData localrank =
+  static const IconData localRank =
       IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData star =
       IconData(0xe823, fontFamily: _kFontFam, fontPackage: _kFontPkg);

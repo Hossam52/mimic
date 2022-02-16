@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import 'package:mimic/modules/home/widgets/drawer/custom_drawer_header.dart';
+import 'package:mimic/layout/guest/widgets/guest_custom_drawer_header.dart';
+import 'package:mimic/layout/user/widgets/user_custom_drawer_header.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
@@ -25,7 +26,7 @@ class _UserDrawerState extends State<UserDrawer> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const CustomDrawerHeader(),
+              const UserCustomDrawerHeader(),
               const SizedBox(height: 20),
               for (int i = 0; i < _DrawerItemState.items.length; i++)
                 _drawerItem(_DrawerItemState.items[i], i),
@@ -156,7 +157,7 @@ class _DrawerItemState {
         onPressed: () {},
         title: 'Discover challenges',
         subSections: [
-          _DrawerItemSubSection(icon: MimicIcons.socceer, title: 'Soccer'),
+          _DrawerItemSubSection(icon: MimicIcons.soccer, title: 'Soccer'),
           _DrawerItemSubSection(
               icon: MimicIcons.basketball, title: 'Basketballs'),
         ]),

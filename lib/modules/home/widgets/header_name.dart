@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 
@@ -7,16 +8,33 @@ class HeaderName extends StatelessWidget {
     this.title, {
     Key? key,
     this.opacity = 1,
+    this.selected = false,
+    this.onTap,
+    this.displaySelectedIndicator = true,
   }) : super(key: key);
   final String title;
   final double opacity;
+  final bool selected;
+  final VoidCallback? onTap;
+  final bool displaySelectedIndicator;
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: getBoldStyle(fontSize: FontSize.s18).copyWith(
-          color:
-              getBoldStyle(fontSize: FontSize.s18).color!.withOpacity(opacity)),
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: getBoldStyle(fontSize: FontSize.s18).copyWith(
+              color: selected
+                  ? ColorManager.black
+                  : ColorManager.black.withOpacity(0.49),
+            ),
+          ),
+          if (selected && displaySelectedIndicator)
+            CircleAvatar(backgroundColor: ColorManager.black, radius: 3),
+        ],
+      ),
     );
   }
 }
