@@ -39,6 +39,7 @@ class _UserDrawerState extends State<UserDrawer> {
   Widget _drawerItem(_DrawerItemState item, int index) {
     if (item.subSections == null) {
       return ListTile(
+        minLeadingWidth: 0,
         onTap: item.onPressed,
         leading: Icon(
           item.icon,
@@ -58,11 +59,10 @@ class _UserDrawerState extends State<UserDrawer> {
         ExpansionPanel(
           backgroundColor: Colors.transparent,
           headerBuilder: (_, val) => ListTile(
+            minLeadingWidth: 0,
             onTap: () {
               setState(() {
-                log('Before ${item.isOpen}');
                 _DrawerItemState.changeIsOpen(index);
-                log('After ${_DrawerItemState.items[index].isOpen}');
               });
               item.onPressed!();
             },
@@ -98,7 +98,7 @@ class _DrawerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: InkWell(
         onTap: onPressed,
         child: Container(
@@ -109,7 +109,7 @@ class _DrawerSection extends StatelessWidget {
             child: Row(children: [
               Icon(
                 icon,
-                size: 10,
+                size: 13,
                 color: Theme.of(context).primaryColor,
               ),
               const SizedBox(width: 10),
@@ -154,7 +154,7 @@ class _DrawerItemState {
     _DrawerItemState(
         icon: MimicIcons.discover,
         onPressed: () {},
-        title: 'Discover',
+        title: 'Discover challenges',
         subSections: [
           _DrawerItemSubSection(icon: MimicIcons.socceer, title: 'Soccer'),
           _DrawerItemSubSection(
@@ -171,16 +171,16 @@ class _DrawerItemState {
       title: 'Support',
     ),
     _DrawerItemState(
-      icon: MimicIcons.discover,
+      icon: MimicIcons.contribution,
       onPressed: () {},
       title: 'Our parteners',
     ),
     _DrawerItemState(
-        icon: MimicIcons.challenges,
+        icon: Icons.language,
         onPressed: () {},
         title: 'Language',
         subSections: [
-          _DrawerItemSubSection(icon: MimicIcons.rank, title: 'Arabic'),
+          _DrawerItemSubSection(icon: Icons.done, title: 'Arabic'),
           _DrawerItemSubSection(
               icon: MimicIcons.myChallenges, title: 'English'),
         ])

@@ -1,0 +1,14 @@
+<svg id="Icon" xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
+  <path id="Vector" d="M2.518,5.477l-2-1.1L1,3.5H1l-.482.876A1,1,0,0,1,0,3.5V1H2V2.908l1.482.816a1,1,0,0,1-.964,1.752ZM0,1A1,1,0,0,1,2,1Z" transform="translate(0 11)" fill="#0c092a"/>
+  <path id="Vector-2" data-name="Vector" d="M0,4.6V2.1H1L.518,1.224,1,2.1H0a1,1,0,0,1,.518-.877l2-1.1.964,1.752L2,2.692V4.6a1,1,0,0,1-2,0ZM2.518.124a1,1,0,1,1,.964,1.752Z" transform="translate(0 3.4)" fill="#0c092a"/>
+  <path id="Vector-3" data-name="Vector" d="M4.518,2.976,3,2.142l-1.518.835A1,1,0,1,1,.518,1.224l2-1.1L3,1H3L2.518.124a1,1,0,0,1,.964,0l2,1.1a1,1,0,1,1-.964,1.752Z" transform="translate(6)" fill="#0c092a"/>
+  <path id="Vector-4" data-name="Vector" d="M2,4.6V2.691L.518,1.877,1.482.124l2,1.1A1,1,0,0,1,4,2.1H3l.481-.877L3,2.1H4V4.6a1,1,0,0,1-2,0ZM.124.518A1,1,0,0,1,1.482.124L.518,1.877A1,1,0,0,1,.124.518Z" transform="translate(14 3.4)" fill="#0c092a"/>
+  <path id="Vector-5" data-name="Vector" d="M.128,5.108A1,1,0,0,1,.511,3.748L2,2.914V1H4V3.5a1,1,0,0,1-.512.872L3,3.5H3l.488.872-2,1.121A1,1,0,0,1,.128,5.108ZM2,1A1,1,0,0,1,4,1Z" transform="translate(14 11)" fill="#0c092a"/>
+  <path id="Vector-6" data-name="Vector" d="M2.518,2.976l-2-1.1L1.482.124,3,.959,4.518.124l.964,1.752-2,1.1a1,1,0,0,1-.964,0Zm0,0L3,2.1H3Zm2-2.852a1,1,0,0,1,.964,1.752ZM.124.518A1,1,0,0,1,1.482.124L.518,1.877A1,1,0,0,1,.124.518Z" transform="translate(6 16.9)" fill="#0c092a"/>
+  <path id="Vector-7" data-name="Vector" d="M.124,2.582A1,1,0,0,1,.518,1.224l2-1.1.964,1.752-2,1.1A1,1,0,0,1,.124,2.582ZM2.518.124a1,1,0,1,1,.964,1.752Z" transform="translate(8 7.9)" fill="#0c092a"/>
+  <path id="Vector-8" data-name="Vector" d="M.124,2.582A1,1,0,0,1,.518,1.224l2-1.1.964,1.752-2,1.1A1,1,0,0,1,.124,2.582ZM2.518.124a1,1,0,1,1,.964,1.752Z" transform="translate(14 4.5)" fill="#0c092a"/>
+  <path id="Vector-9" data-name="Vector" d="M0,3.5V1H2V3.5a1,1,0,0,1-2,0ZM0,1A1,1,0,0,1,2,1Z" transform="translate(8 9)" fill="#0c092a"/>
+  <path id="Vector-10" data-name="Vector" d="M0,3.5V1H2V3.5a1,1,0,0,1-2,0ZM0,1A1,1,0,0,1,2,1Z" transform="translate(8 15.5)" fill="#0c092a"/>
+  <path id="Vector-11" data-name="Vector" d="M2.512,2.993l-2-1.12L1.489.128l2,1.12a1,1,0,1,1-.977,1.745ZM.128.511A1,1,0,0,1,1.489.128L.511,1.873A1,1,0,0,1,.128.511Z" transform="translate(6 7.88)" fill="#0c092a"/>
+  <path id="Vector-12" data-name="Vector" d="M2.518,2.976l-2-1.1L1.482.124l2,1.1a1,1,0,1,1-.964,1.752ZM.124.518A1,1,0,0,1,1.482.124L.518,1.877A1,1,0,0,1,.124.518Z" transform="translate(0 4.5)" fill="#0c092a"/>
+</svg>
