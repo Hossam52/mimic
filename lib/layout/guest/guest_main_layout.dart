@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
+import 'package:mimic/layout/search/search_layout.dart';
 import 'package:mimic/modules/home/guest/guest_home_screen.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -21,7 +22,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
   int selectedIndex = 0;
   final screens = [
     GuestHomeScreen(),
-    Container(),
+    const SearchLayout(),
     GuestHomeScreen(),
     Container(),
     GuestHomeScreen(),

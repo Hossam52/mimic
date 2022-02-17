@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
+import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
-import 'package:mimic/modules/challenges/widgets/video_statistic_item.dart';
+import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/home/widgets/person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -29,7 +31,7 @@ class ChallengerVideo extends StatelessWidget {
                       child: ChallengePersonDetails(
                     textColor: ColorManager.black,
                   )),
-                  const Icon(Icons.more_vert),
+                  const ReportPopupMenuButton(),
                 ],
               ),
               _video(context),
@@ -100,7 +102,13 @@ class ChallengerVideo extends StatelessWidget {
         '15',
         filledColor: Theme.of(context).primaryColor,
       ),
-      const VideStatisticsItem(MimicIcons.comments, '12'),
+      VideStatisticsItem(
+        MimicIcons.comments,
+        '12',
+        onPressed: () {
+          Dialogs.showCommentsDialog(context);
+        },
+      ),
       const VideStatisticsItem(Icons.visibility, '9'),
     ]);
   }

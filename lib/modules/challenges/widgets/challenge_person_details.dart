@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/widgets/rounded_image.dart';
 
 class ChallengePersonDetails extends StatelessWidget {
   const ChallengePersonDetails({Key? key, this.textColor}) : super(key: key);
@@ -13,7 +14,10 @@ class ChallengePersonDetails extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: _roundedImage()),
+          const Expanded(
+              child: RoundedImage(
+            imagePath: 'assets/images/static/avatar.png',
+          )),
           Expanded(
             flex: 4,
             child: Column(
@@ -37,19 +41,6 @@ class ChallengePersonDetails extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _roundedImage() {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: const BoxDecoration(shape: BoxShape.circle),
-      child: Image.asset(
-        'assets/images/static/avatar.png',
-        width: 40,
-        height: 40,
-        fit: BoxFit.contain,
       ),
     );
   }

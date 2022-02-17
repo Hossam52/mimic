@@ -7,8 +7,10 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
+import 'package:mimic/widgets/video_statistic_item.dart';
 
 class ChallenegItem extends StatelessWidget {
   const ChallenegItem(
@@ -110,38 +112,38 @@ class _ChallenegePreview extends StatelessWidget {
           color: ColorManager.white,
           size: 55,
         ),
-        Align(alignment: Alignment.bottomLeft, child: _challengeActions()),
+        Align(
+            alignment: Alignment.bottomLeft, child: _challengeActions(context)),
       ],
     );
   }
 
-  Widget _challengeActions() {
+  Widget _challengeActions(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
+      child: Wrap(
+        spacing: 10,
         children: [
-          _actionItem(Icons.favorite, ColorManager.likeColor, '10'),
-          const SizedBox(width: 10),
-          _actionItem(MimicIcons.comments, ColorManager.commentsColor, '11'),
-          const SizedBox(width: 10),
-          _actionItem(Icons.visibility, ColorManager.visibilityColor, '12'),
+          _actionItem(
+              MimicIcons.favoriteFill, ColorManager.favoriteColor, '12'),
+          _actionItem(MimicIcons.comments, ColorManager.commentsColor, '15',
+              onPressed: () {
+            Dialogs.showCommentsDialog(context);
+          }),
+          _actionItem(Icons.visibility, ColorManager.visibilityColor, '114'),
         ],
       ),
     );
   }
 
-  Widget _actionItem(IconData icon, Color color, String count) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color),
-        Text(
-          count,
-          style: getRegularStyle(
-            color: ColorManager.white,
-          ),
-        )
-      ],
+  Widget _actionItem(IconData icon, Color color, String count,
+      {VoidCallback? onPressed}) {
+    return VideStatisticsItem(
+      icon,
+      count,
+      filledColor: color,
+      textColor: ColorManager.white,
+      onPressed: onPressed,
     );
   }
 }

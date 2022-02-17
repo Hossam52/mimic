@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
 import 'package:mimic/modules/challenges/widgets/challenges_grid_view.dart';
+import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
-import 'package:mimic/modules/challenges/widgets/video_statistic_item.dart';
+import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/widgets/video_statistic_item.dart';
+import 'package:mimic/modules/comments/comments_screen.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -181,9 +186,14 @@ class ChallengeDetailsScreen extends StatelessWidget {
   }
 }
 
-class _VideoPlayer extends StatelessWidget {
+class _VideoPlayer extends StatefulWidget {
   const _VideoPlayer({Key? key}) : super(key: key);
 
+  @override
+  State<_VideoPlayer> createState() => _VideoPlayerState();
+}
+
+class _VideoPlayerState extends State<_VideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -203,30 +213,14 @@ class _VideoPlayer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(child: ChallengePersonDetails()),
-                GestureDetector(
-                    onTapDown: (details) {
-                      showMenu(
-                        context: context,
-                        position: RelativeRect.fromLTRB(
-                          details.globalPosition.dx,
-                          details.globalPosition.dy + 20,
-                          details.globalPosition.dx,
-                          details.globalPosition.dy,
-                        ),
-                        items: [
-                          PopupMenuItem(
-                              value: 'report',
-                              onTap: () {},
-                              child: Container(
-                                color: Colors.blue,
-                                width: 20,
-                                height: 10,
-                              ))
-                        ],
-                      );
-                    },
-                    onTap: () {},
-                    child: Icon(Icons.more_vert)),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ReportPopupMenuButton(
+                    iconColor: ColorManager.white,
+                  ),
+                ),
+
                 // PopupMenuButton(
                 //   padding: const EdgeInsets.all(30),
                 //   shape: RoundedRectangleBorder(
@@ -281,7 +275,13 @@ class _VideoStatistics extends StatelessWidget {
     return Wrap(spacing: 10, children: [
       VideStatisticsItem(MimicIcons.favoriteFill, '12',
           filledColor: Theme.of(context).primaryColor),
-      const VideStatisticsItem(MimicIcons.comments, '12'),
+      VideStatisticsItem(
+        MimicIcons.comments,
+        '12',
+        onPressed: () {
+          Dialogs.showCommentsDialog(context);
+        },
+      ),
       const VideStatisticsItem(Icons.visibility, '12'),
       const VideStatisticsItem(Icons.share, '12'),
     ]);

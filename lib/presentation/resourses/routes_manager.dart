@@ -15,6 +15,7 @@ import 'package:mimic/modules/challenges/challenger_video/challenger_video.dart'
 import 'package:mimic/modules/home/customer_support.dart';
 import 'package:mimic/modules/home/home_screen.dart';
 import 'package:mimic/modules/home/how_to_challenge.dart';
+import 'package:mimic/modules/search/scan_qr.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 
 class Routes {
@@ -36,6 +37,7 @@ class Routes {
   static const String challengeDetails = '/challenge_details';
   static const String allChallengers = '/all_challengers';
   static const String challengerVideo = '/challenger_video';
+  static const String scanQr = '/scan_qr';
 }
 
 class RouteGenerator {
@@ -75,6 +77,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AllChallengers());
       case Routes.challengerVideo:
         return MaterialPageRoute(builder: (_) => const ChallengerVideo());
+      case Routes.scanQr:
+        return MaterialPageRoute(builder: (_) => const ScanQrScreen());
 
       default:
         return unDefinedRoute();

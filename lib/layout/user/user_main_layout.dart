@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
+import 'package:mimic/layout/search/search_layout.dart';
 import 'package:mimic/layout/user/widgets/user_drawer.dart';
 import 'package:mimic/modules/challenges/challenge_details/challenge_details.dart';
 import 'package:mimic/modules/home/home_screen.dart';
@@ -24,7 +25,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _screens = [
     UserHomeScreen(),
-    Container(),
+    const SearchLayout(),
     Container(),
     UserHomeScreen(),
     Container(),

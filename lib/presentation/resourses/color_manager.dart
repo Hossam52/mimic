@@ -19,6 +19,10 @@ class ColorManager {
   static Color commentsColor = HexColor.fromHex('#707070');
   static Color drawerFillColor = HexColor.fromHex('#F1F9FF');
   static Color selectedBottomColor = HexColor.fromHex('#99C0E1');
+  static Color favoriteColor = HexColor.fromHex('#FF4546');
+  static Color emotionColor = HexColor.fromHex('#E5F50A');
+  static Color commentsBackgroundColor = HexColor.fromHex('#EFEFEF');
+  static Color tabBarIndicator = HexColor.fromHex('#081ED6');
 }
 
 extension HexColor on Color {
