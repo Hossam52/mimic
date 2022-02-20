@@ -12,6 +12,7 @@ import 'package:mimic/modules/auth/register/terms_conditions/privacy_policy_scre
 import 'package:mimic/modules/challenges/all_challengers/all_challengers.dart';
 import 'package:mimic/modules/challenges/challenge_details/challenge_details.dart';
 import 'package:mimic/modules/challenges/challenger_video/challenger_video.dart';
+import 'package:mimic/modules/draft/draft_screen.dart';
 import 'package:mimic/modules/home/customer_support.dart';
 import 'package:mimic/modules/home/home_screen.dart';
 import 'package:mimic/modules/home/how_to_challenge.dart';
@@ -38,6 +39,7 @@ class Routes {
   static const String allChallengers = '/all_challengers';
   static const String challengerVideo = '/challenger_video';
   static const String scanQr = '/scan_qr';
+  static const String draft = '/draft';
 }
 
 class RouteGenerator {
@@ -79,6 +81,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ChallengerVideo());
       case Routes.scanQr:
         return MaterialPageRoute(builder: (_) => const ScanQrScreen());
+      case Routes.draft:
+        return MaterialPageRoute(builder: (_) => const DraftScreen());
 
       default:
         return unDefinedRoute();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mimic/modules/home/widgets/challenge_item.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
 import 'package:mimic/modules/home/widgets/highlight_item.dart';
+import 'package:mimic/modules/home/widgets/highlights.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/shared/methods.dart';
 
@@ -14,47 +15,15 @@ class UserHomeScreen extends StatelessWidget {
     return SingleChildScrollView(
       primary: true,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 8.0),
         child: Column(
           children: [
-            SizedBox(
-              height: screenHeight(context) * 0.26,
-              child: const _Highlights(),
-            ),
+            const Highlights(),
             const SizedBox(height: 8),
             const _CurrentChallenges(),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _Highlights extends StatelessWidget {
-  const _Highlights({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const HeaderName('Highlights'),
-        const SizedBox(height: 10),
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 15,
-              childAspectRatio: 4 / 3,
-            ),
-            itemBuilder: (_, index) {
-              return const HighlightItem();
-            },
-            itemCount: 5,
-            scrollDirection: Axis.horizontal,
-          ),
-        )
-      ],
     );
   }
 }

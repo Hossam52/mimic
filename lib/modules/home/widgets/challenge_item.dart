@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/home/widgets/images_builder.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -10,6 +11,7 @@ import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
+import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 class ChallenegItem extends StatelessWidget {
@@ -31,7 +33,7 @@ class ChallenegItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 4,
+              flex: 5,
               child: GestureDetector(
                 onTap: onChallengeTapped,
                 child: Stack(
@@ -60,6 +62,7 @@ class ChallenegItem extends StatelessWidget {
               'Sports challenge details',
               style: getBoldStyle(fontSize: FontSize.s14),
             ),
+            SizedBox(height: 10.h),
             Text(
               '12 People joined',
               style: getRegularStyle(),
@@ -107,11 +110,7 @@ class _ChallenegePreview extends StatelessWidget {
           fit: BoxFit.fill,
         ),
         const BlackOpacity(),
-        Icon(
-          Icons.play_circle_outline,
-          color: ColorManager.white,
-          size: 55,
-        ),
+        PlayVideoIcon(size: 66.r),
         Align(
             alignment: Alignment.bottomLeft, child: _challengeActions(context)),
       ],
@@ -124,26 +123,18 @@ class _ChallenegePreview extends StatelessWidget {
       child: Wrap(
         spacing: 10,
         children: [
-          _actionItem(
-              MimicIcons.favoriteFill, ColorManager.favoriteColor, '12'),
-          _actionItem(MimicIcons.comments, ColorManager.commentsColor, '15',
-              onPressed: () {
-            Dialogs.showCommentsDialog(context);
-          }),
-          _actionItem(Icons.visibility, ColorManager.visibilityColor, '114'),
+          const FavoriteIcon(
+            count: '12',
+          ),
+          CommentIcon(
+            count: '15',
+            onPressed: () {
+              Dialogs.showCommentsDialog(context);
+            },
+          ),
+          const ViewIcon(count: '112'),
         ],
       ),
-    );
-  }
-
-  Widget _actionItem(IconData icon, Color color, String count,
-      {VoidCallback? onPressed}) {
-    return VideStatisticsItem(
-      icon,
-      count,
-      filledColor: color,
-      textColor: ColorManager.white,
-      onPressed: onPressed,
     );
   }
 }

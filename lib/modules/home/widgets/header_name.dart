@@ -11,12 +11,14 @@ class HeaderName extends StatelessWidget {
     this.selected = false,
     this.onTap,
     this.displaySelectedIndicator = true,
+    this.fontSize,
   }) : super(key: key);
   final String title;
   final double opacity;
   final bool selected;
   final VoidCallback? onTap;
   final bool displaySelectedIndicator;
+  final double? fontSize;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,7 +27,7 @@ class HeaderName extends StatelessWidget {
         children: [
           Text(
             title,
-            style: getBoldStyle(fontSize: FontSize.s18).copyWith(
+            style: getBoldStyle(fontSize: fontSize ?? FontSize.s20).copyWith(
               color: selected
                   ? ColorManager.black
                   : ColorManager.black.withOpacity(0.49),

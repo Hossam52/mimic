@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
-import 'package:mimic/modules/search/widgets/shadow_box.dart';
+import 'package:mimic/widgets/custom_drop_down.dart';
+import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -47,34 +48,13 @@ class SearchChallenges extends StatelessWidget {
   }
 }
 
-class _CustomDropDown extends StatelessWidget {
-  const _CustomDropDown({Key? key, required this.child}) : super(key: key);
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return ShadowBox(
-      child: InputDecorator(
-        decoration: const InputDecoration.collapsed(hintText: '').copyWith(
-          fillColor: ColorManager.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: DropdownButtonHideUnderline(child: child),
-      ),
-    );
-  }
-}
-
 class _CategoryDropDown extends StatelessWidget {
   const _CategoryDropDown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ShadowBox(
-      child: _CustomDropDown(
+      child: CustomDropDown(
         child: DropdownButton<String>(
           hint: Text(
             'Category',
@@ -109,7 +89,7 @@ class _CategoryDatePublished extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadowBox(
-      child: _CustomDropDown(
+      child: CustomDropDown(
         child: DropdownButton<String>(
           hint: Text(
             'Date published',

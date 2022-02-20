@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
+import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
 import 'package:mimic/layout/search/search_layout.dart';
+import 'package:mimic/layout/widgets/notification_icon.dart';
 import 'package:mimic/modules/home/guest/guest_home_screen.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -9,6 +11,7 @@ import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/bottom_navigation.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/mimic_logo.dart';
+import 'package:mimic/widgets/sized_icon.dart';
 
 class GuestMainLayout extends StatefulWidget {
   const GuestMainLayout({Key? key}) : super(key: key);
@@ -24,7 +27,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
     GuestHomeScreen(),
     const SearchLayout(),
     GuestHomeScreen(),
-    Container(),
+    const MyChallengesLayout(),
     GuestHomeScreen(),
   ];
   @override
@@ -40,19 +43,13 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
           onPressed: () {
             scaffoldKey.currentState?.openDrawer();
           },
-          icon: Icon(
+          icon: SizedIcon(
             MimicIcons.menu,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                MimicIcons.notifications,
-                color: Theme.of(context).primaryColor,
-              ))
-        ],
+        actions: const [NotificationIcon()],
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: selectedIndex,
@@ -67,6 +64,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
         items: [
           _bottomNavBarItem(MimicIcons.homeBottomTab, 'Home'),
           _bottomNavBarItem(MimicIcons.discoverBottomTab, 'Discover'),
+          _bottomNavBarItem(Icons.add, 'Add'),
           _bottomNavBarItem(MimicIcons.challenges, 'Challenges'),
           _bottomNavBarItem(MimicIcons.accountFilled, 'Account'),
         ],

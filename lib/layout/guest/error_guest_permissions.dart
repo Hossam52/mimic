@@ -18,6 +18,8 @@ class ErrorGuestPermission extends StatelessWidget {
         children: [
           Image.asset(
             'assets/images/static/error_guest_permissions.png',
+            width: double.infinity,
+            height: double.infinity,
             fit: BoxFit.fill,
           ),
           const BlackOpacity(opacity: 0.46),

@@ -19,4 +19,7 @@ class AppStrings {
 
   static const String commentBody =
       '@Ahmed_Saber123 The Battles That Count Aren’t The Ones For Gold Medals. The Struggles Within Yourself -The Invisible Battles Inside All Of Us- That’s Where It’s At. ';
+
+  static const String rejectedReason =
+      'Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Eopksio Laborum. Sed Ut Perspiciatis Unde Omnis Istpoe Natus Error Sit Voluptatem Accusantium Doloremque Eopsloi Laudantium, Totam Rem Aperiam, Eaque Ipsa Quae Ab Illo Inventore Veritatis Et Quasi Architecto Beatae Vitae Dicta Sunot Explicabo. Nemo Ernim Ipsam Voluptatem Quia Voluptas Sit Aspernatur Aut Odit Aut Fugit, Sedopk Quia Consequuntur Magni Dolores Eos Qui Rationesopl Voluptatem Sequi Nesciunt. Neque Porro Quisquameo Est, Qui Dolorem Ipsum Quia Dolor Sit Amet, Eopsmiep Consectetur, Adipisci Velit, Seisud Quia Non Numquam Eius Modi Tempora Incidunt Ut Labore Et Dolore Wopeir Magnam Aliquam Quaerat Voluptatem Eoplmuriquisqu';
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
+import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
 import 'package:mimic/layout/search/search_layout.dart';
 import 'package:mimic/layout/user/widgets/user_drawer.dart';
+import 'package:mimic/layout/widgets/notification_icon.dart';
 import 'package:mimic/modules/challenges/challenge_details/challenge_details.dart';
 import 'package:mimic/modules/home/home_screen.dart';
 import 'package:mimic/modules/home/user/user_home_screen.dart';
@@ -27,7 +30,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
     UserHomeScreen(),
     const SearchLayout(),
     Container(),
-    UserHomeScreen(),
+    const MyChallengesLayout(),
     Container(),
   ];
 
@@ -49,14 +52,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                MimicIcons.notifications,
-                color: Theme.of(context).primaryColor,
-              ))
-        ],
+        actions: const [NotificationIcon()],
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: selectedIndex,

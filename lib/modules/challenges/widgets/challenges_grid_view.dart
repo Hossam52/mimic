@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
+import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
@@ -80,16 +81,22 @@ class _ChallengeItemPreview extends StatelessWidget {
       child: Wrap(
         spacing: 10,
         children: [
-          VideStatisticsItem(MimicIcons.favoriteFill, '12',
-              filledColor: Theme.of(context).primaryColor),
-          VideStatisticsItem(
-            MimicIcons.comments,
-            '12',
+          FavoriteIcon(
+            count: '12',
+            textColor: ColorManager.black,
+          ),
+          CommentIcon(
+            count: '12',
+            textColor: ColorManager.black,
             onPressed: () {
               Dialogs.showCommentsDialog(context);
             },
           ),
-          const VideStatisticsItem(Icons.visibility, '12'),
+          ViewIcon(
+            count: '12',
+            iconColor: ColorManager.commentsColor,
+            textColor: ColorManager.black,
+          ),
         ],
       ),
     );

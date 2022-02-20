@@ -26,8 +26,7 @@ class PersonDetails extends StatelessWidget {
                 ),
                 Text(
                   '2 Min ago',
-                  style: getRegularStyle(
-                      color: ColorManager.white.withOpacity(0.56)),
+                  style: getRegularStyle(color: ColorManager.timeAgo),
                 )
               ],
             ),

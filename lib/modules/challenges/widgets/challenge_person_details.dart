@@ -14,10 +14,10 @@ class ChallengePersonDetails extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Expanded(
-              child: RoundedImage(
+          const RoundedImage(
             imagePath: 'assets/images/static/avatar.png',
-          )),
+          ),
+          const SizedBox(width: 4),
           Expanded(
             flex: 4,
             child: Column(
@@ -26,9 +26,8 @@ class ChallengePersonDetails extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Ola ahmed',
-                  style:
-                      getSemiBoldStyle(color: textColor ?? ColorManager.white),
+                  'Rahma Ahmed',
+                  style: getBoldStyle(color: textColor ?? ColorManager.white),
                 ),
                 Text(
                   '2 Min ago',

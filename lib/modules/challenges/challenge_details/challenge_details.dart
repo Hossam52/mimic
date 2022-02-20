@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
 import 'package:mimic/modules/challenges/widgets/challenges_grid_view.dart';
 import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/widgets/rounded_image.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/comments/comments_screen.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
@@ -44,6 +46,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 _hashtags(),
                 const SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _remainingTime(context),
                 const SizedBox(height: 10),
                 _peopleJoined(context),
@@ -67,12 +70,13 @@ class ChallengeDetailsScreen extends StatelessWidget {
           const Expanded(child: _VideoStatistics()),
           DefaultButton(
             width: screenWidth(context) * 0.31,
+            height: screenHeight(context) * 0.055,
             text: 'Join',
             onPressed: () {},
             trailing: const Icon(Icons.add),
             foregroundColor: ColorManager.white,
             backgroundColor: Theme.of(context).primaryColor,
-            radius: 25,
+            radius: 20.r,
           )
         ],
       ),
@@ -101,7 +105,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
         ),
         Text(
           'Remaining',
-          style: getRegularStyle(),
+          style: getRegularStyle(fontSize: FontSize.s10),
         ),
       ],
     );
@@ -115,7 +119,6 @@ class ChallengeDetailsScreen extends StatelessWidget {
           '15 people joined',
           style: getBoldStyle(),
         ),
-        const SizedBox(height: 5),
         Row(
           children: [
             Expanded(
@@ -123,10 +126,10 @@ class ChallengeDetailsScreen extends StatelessWidget {
                 spacing: 10,
                 children: [
                   for (int i = 0; i < 4; i++)
-                    const CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/static/avatar.png'),
-                        radius: 15),
+                    RoundedImage(
+                      imagePath: 'assets/images/static/avatar.png',
+                      size: 28.r,
+                    )
                 ],
               ),
             ),
@@ -136,7 +139,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
                 },
                 child: Text(
                   'VIEW ALL',
-                  style: getSemiBoldStyle()
+                  style: getRegularStyle()
                       .copyWith(decoration: TextDecoration.underline),
                 ))
           ],
@@ -151,6 +154,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
       children: [
         const HeaderName(
           'TOP CHALLENGERS',
+          fontSize: FontSize.s14,
           displaySelectedIndicator: false,
           selected: true,
         ),
@@ -173,9 +177,9 @@ class ChallengeDetailsScreen extends StatelessWidget {
               navigateTo(context, Routes.allChallengers);
             },
             child: Text(
-              'VIEW ALL',
+              'VIEW ALL >>',
               style: getBoldStyle(
-                      fontSize: FontSize.s14,
+                      fontSize: FontSize.s10,
                       color: ColorManager.visibilityColor)
                   .copyWith(decoration: TextDecoration.underline),
             ),
@@ -186,23 +190,20 @@ class ChallengeDetailsScreen extends StatelessWidget {
   }
 }
 
-class _VideoPlayer extends StatefulWidget {
+class _VideoPlayer extends StatelessWidget {
   const _VideoPlayer({Key? key}) : super(key: key);
-
-  @override
-  State<_VideoPlayer> createState() => _VideoPlayerState();
-}
-
-class _VideoPlayerState extends State<_VideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         showDialog(context: context, builder: (_) => const _VideoPopup());
       },
-      child: SizedBox(
-        height: screenHeight(context) * 0.33,
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        height: screenHeight(context) * 0.43,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.r)),
         child: Stack(
+          clipBehavior: Clip.hardEdge,
           children: [
             Image.asset('assets/images/static/video_preview.png',
                 width: double.infinity,
@@ -213,30 +214,12 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(child: ChallengePersonDetails()),
-
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ReportPopupMenuButton(
                     iconColor: ColorManager.white,
                   ),
                 ),
-
-                // PopupMenuButton(
-                //   padding: const EdgeInsets.all(30),
-                //   shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(10)),
-                //   icon: Icon(Icons.more_vert, color: ColorManager.white),
-                //   itemBuilder: (context) => [
-                //     PopupMenuItem(
-                //         value: 'report',
-                //         onTap: () {},
-                //         child: Container(
-                //           color: Colors.blue,
-                //           width: 20,
-                //           height: 10,
-                //         ))
-                //   ],
-                // ),
               ],
             ),
             Align(
@@ -273,17 +256,16 @@ class _VideoStatistics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(spacing: 10, children: [
-      VideStatisticsItem(MimicIcons.favoriteFill, '12',
-          filledColor: Theme.of(context).primaryColor),
-      VideStatisticsItem(
-        MimicIcons.comments,
-        '12',
+      FavoriteIcon(count: '12', textColor: ColorManager.black),
+      CommentIcon(
+        count: '19',
+        textColor: ColorManager.black,
         onPressed: () {
           Dialogs.showCommentsDialog(context);
         },
       ),
-      const VideStatisticsItem(Icons.visibility, '12'),
-      const VideStatisticsItem(Icons.share, '12'),
+      ViewIcon(count: '112', textColor: ColorManager.black),
+      ShareIcon(count: '88', textColor: ColorManager.black),
     ]);
   }
 }
@@ -295,8 +277,7 @@ class _HashtagBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '#$title',
-      style: getBoldStyle(
-          fontSize: FontSize.s14, color: ColorManager.visibilityColor),
+      style: getBoldStyle(color: ColorManager.hashtagColor),
     );
   }
 }
@@ -358,13 +339,15 @@ class _VideoPopup extends StatelessWidget {
     return Wrap(
       spacing: 10,
       children: [
-        VideStatisticsItem(
-          MimicIcons.favoriteFill,
-          '12',
-          filledColor: Theme.of(context).primaryColor,
+        FavoriteIcon(count: '12', textColor: ColorManager.black),
+        CommentIcon(
+          count: '19',
+          textColor: ColorManager.black,
+          onPressed: () {
+            Dialogs.showCommentsDialog(context);
+          },
         ),
-        const VideStatisticsItem(MimicIcons.comments, '12'),
-        const VideStatisticsItem(Icons.visibility, '12'),
+        ViewIcon(count: '112', textColor: ColorManager.black),
       ],
     );
   }

@@ -40,7 +40,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           DefaultButton(
             text: 'Finish',
             onPressed: () {
-              navigateTo(context, Routes.main);
+              navigateTo(context, Routes.userMainLayout);
             },
             hasBorder: false,
             radius: 15,

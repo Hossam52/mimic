@@ -149,7 +149,7 @@ class _CommentPersonDetails extends StatelessWidget {
               ),
               Text(
                 '2 Min ago',
-                style: getRegularStyle(color: Colors.grey),
+                style: getRegularStyle(color: ColorManager.timeAgo),
               )
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:mimic/layout/guest/widgets/guest_custom_drawer_header.dart';
 import 'package:mimic/layout/user/widgets/user_custom_drawer_header.dart';
@@ -22,14 +23,37 @@ class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Drawer(
-        child: SingleChildScrollView(
+      child: SizedBox(
+        width: screenWidth(context) * 0.62,
+        child: Drawer(
           child: Column(
             children: [
               const UserCustomDrawerHeader(),
               const SizedBox(height: 20),
-              for (int i = 0; i < _DrawerItemState.items.length; i++)
-                _drawerItem(_DrawerItemState.items[i], i),
+              Expanded(
+                flex: 6,
+                child: SingleChildScrollView(
+                    child: Column(
+                  children: [
+                    for (int i = 0; i < _DrawerItemState.items.length; i++)
+                      _drawerItem(_DrawerItemState.items[i], i),
+                  ],
+                )),
+              ),
+              Divider(
+                color: ColorManager.darkGrey,
+                thickness: 1,
+                endIndent: 80.w,
+              ),
+              Expanded(
+                child: _drawerItem(
+                    _DrawerItemState(
+                        icon: MimicIcons.logout,
+                        title: 'Logout',
+                        onPressed: () {}),
+                    0,
+                    color: ColorManager.darkGrey),
+              )
             ],
           ),
         ),
@@ -37,18 +61,19 @@ class _UserDrawerState extends State<UserDrawer> {
     );
   }
 
-  Widget _drawerItem(_DrawerItemState item, int index) {
+  Widget _drawerItem(_DrawerItemState item, int index, {Color? color}) {
     if (item.subSections == null) {
       return ListTile(
         minLeadingWidth: 0,
         onTap: item.onPressed,
         leading: Icon(
           item.icon,
-          size: 20,
+          size: 18,
+          color: color ?? ColorManager.iconDrawerColor,
         ),
         title: Text(
           item.title,
-          style: getSemiBoldStyle(fontSize: FontSize.s16),
+          style: getSemiBoldStyle(fontSize: FontSize.s12),
         ),
       );
     }
@@ -69,11 +94,12 @@ class _UserDrawerState extends State<UserDrawer> {
             },
             leading: Icon(
               item.icon,
-              size: 20,
+              size: 18,
+              color: ColorManager.iconDrawerColor,
             ),
             title: Text(
               item.title,
-              style: getSemiBoldStyle(fontSize: FontSize.s16),
+              style: getSemiBoldStyle(fontSize: FontSize.s12),
             ),
           ),
           canTapOnHeader: item.subSections != null,

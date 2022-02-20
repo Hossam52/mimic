@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mimic/modules/auth/widgets/background_color_widget.dart';
+import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_logo.dart';
 
 class AuthLayoutWidget extends StatelessWidget {
@@ -35,7 +36,9 @@ class AuthLayoutWidget extends StatelessWidget {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        const MimicLogo(),
+        MimicLogo(
+          height: screenHeight(context) * 0.24,
+        ),
         if (canPop) const BackButton(),
       ],
     );

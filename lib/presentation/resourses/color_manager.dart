@@ -23,6 +23,10 @@ class ColorManager {
   static Color emotionColor = HexColor.fromHex('#E5F50A');
   static Color commentsBackgroundColor = HexColor.fromHex('#EFEFEF');
   static Color tabBarIndicator = HexColor.fromHex('#081ED6');
+  static Color iconDrawerColor = HexColor.fromHex('#000000').withOpacity(0.25);
+  static Color hashtagColor = HexColor.fromHex('#081ED6');
+  static Color timeAgo = HexColor.fromHex('#ffffff').withOpacity(0.76);
+  static Color complain = HexColor.fromHex('#464444');
 }
 
 extension HexColor on Color {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/shared/methods.dart';
 
 class RoundedDrawerHeader extends StatelessWidget {
@@ -13,10 +14,13 @@ class RoundedDrawerHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(80),
+          bottomRight: Radius.circular(100),
+          bottomLeft: Radius.circular(10),
         ),
       ),
-      child: Padding(padding: const EdgeInsets.all(40.0), child: child),
+      child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 30.0.h, horizontal: 10.w),
+          child: child),
     );
   }
 }

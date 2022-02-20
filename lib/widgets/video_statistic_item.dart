@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/widgets/mimic_icons.dart';
 
 class VideStatisticsItem extends StatelessWidget {
   const VideStatisticsItem(this.icon, this.count,
@@ -25,7 +26,7 @@ class VideStatisticsItem extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: iconSize,
+            size: 18,
             color: filledColor ?? ColorManager.commentsColor,
           ),
           Text(
@@ -34,6 +35,112 @@ class VideStatisticsItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class FavoriteIcon extends StatelessWidget {
+  const FavoriteIcon(
+      {Key? key,
+      required this.count,
+      this.filled = true,
+      this.iconSize,
+      this.onPressed,
+      this.textColor})
+      : super(key: key);
+  final String count;
+  final bool filled;
+  final double? iconSize;
+  final VoidCallback? onPressed;
+  final Color? textColor;
+  @override
+  Widget build(BuildContext context) {
+    return VideStatisticsItem(
+      filled ? MimicIcons.favoriteFill : MimicIcons.favoriteOutline,
+      count,
+      iconSize: iconSize,
+      onPressed: onPressed,
+      filledColor: Theme.of(context).primaryColor,
+      textColor: textColor ?? ColorManager.white,
+    );
+  }
+}
+
+class CommentIcon extends StatelessWidget {
+  const CommentIcon(
+      {Key? key,
+      required this.count,
+      this.iconSize,
+      this.onPressed,
+      this.textColor})
+      : super(key: key);
+  final String count;
+  final double? iconSize;
+  final VoidCallback? onPressed;
+  final Color? textColor;
+  @override
+  Widget build(BuildContext context) {
+    return VideStatisticsItem(
+      MimicIcons.comments,
+      count,
+      iconSize: iconSize,
+      onPressed: onPressed,
+      filledColor: ColorManager.commentsColor,
+      textColor: textColor ?? ColorManager.white,
+    );
+  }
+}
+
+class ViewIcon extends StatelessWidget {
+  const ViewIcon(
+      {Key? key,
+      required this.count,
+      this.iconSize,
+      this.onPressed,
+      this.textColor,
+      this.iconColor})
+      : super(key: key);
+  final String count;
+  final double? iconSize;
+  final VoidCallback? onPressed;
+  final Color? textColor;
+  final Color? iconColor;
+  @override
+  Widget build(BuildContext context) {
+    return VideStatisticsItem(
+      Icons.visibility,
+      count,
+      iconSize: iconSize,
+      onPressed: onPressed,
+      filledColor: iconColor ?? ColorManager.visibilityColor,
+      textColor: textColor ?? ColorManager.white,
+    );
+  }
+}
+
+class ShareIcon extends StatelessWidget {
+  const ShareIcon(
+      {Key? key,
+      required this.count,
+      this.iconSize,
+      this.onPressed,
+      this.textColor,
+      this.iconColor})
+      : super(key: key);
+  final String count;
+  final double? iconSize;
+  final VoidCallback? onPressed;
+  final Color? textColor;
+  final Color? iconColor;
+  @override
+  Widget build(BuildContext context) {
+    return VideStatisticsItem(
+      Icons.share,
+      count,
+      iconSize: iconSize,
+      onPressed: onPressed,
+      filledColor: iconColor,
+      textColor: textColor ?? ColorManager.white,
     );
   }
 }

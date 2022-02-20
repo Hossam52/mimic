@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mimic/modules/search/widgets/shadow_box.dart';
+import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
