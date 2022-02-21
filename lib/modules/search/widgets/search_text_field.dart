@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -10,8 +11,8 @@ class CustomSearchField extends StatelessWidget {
   final String searchTextHint;
   @override
   Widget build(BuildContext context) {
-    const border = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(50)),
+    final border = OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(20.r)),
       borderSide: BorderSide.none,
     );
     return ShadowBox(
@@ -42,10 +43,14 @@ class CustomSearchField extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.search),
+                    Icon(
+                      Icons.search,
+                      size: 28.r,
+                    ),
+                    SizedBox(width: 10.w),
                     Text(
                       searchTextHint,
-                      style: getRegularStyle(fontSize: FontSize.s16),
+                      style: getRegularStyle(fontSize: FontSize.s12),
                     ),
                     VerticalDivider(
                       color: ColorManager.grey,

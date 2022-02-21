@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
 import 'package:mimic/widgets/shadow_box.dart';
@@ -25,16 +26,20 @@ class SearchPeople extends StatelessWidget {
                   searchTextHint: 'User_name',
                 ),
               ),
-              const SizedBox(width: 20),
+              SizedBox(width: 20.h),
               GestureDetector(
                   onTap: () {
                     navigateTo(context, Routes.scanQr);
                   },
-                  child: SvgPicture.asset('assets/images/qr.svg')),
+                  child: SvgPicture.asset(
+                    'assets/images/qr.svg',
+                    width: 30.w,
+                    height: 30.h,
+                  )),
             ],
           ),
-          const SizedBox(height: 30),
-          Expanded(child: _searchedPeople())
+          SizedBox(height: 25.h),
+          Expanded(child: _searchedPeople()),
         ],
       ),
     );
@@ -43,11 +48,11 @@ class SearchPeople extends StatelessWidget {
   Widget _searchedPeople() {
     return GridView.builder(
         itemCount: 14,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 5 / 6,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20),
+            mainAxisExtent: 270.h,
+            mainAxisSpacing: 20.h,
+            crossAxisSpacing: 20.w),
         itemBuilder: (_, index) {
           return const _SearchedPersonItem();
         });
@@ -61,13 +66,13 @@ class _SearchedPersonItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       clipBehavior: Clip.hardEdge,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-              flex: 5,
+          SizedBox(
+              height: 190.h,
               child: Image.asset(
                 'assets/images/static/avatar.png',
                 fit: BoxFit.fill,
@@ -83,7 +88,8 @@ class _SearchedPersonItem extends StatelessWidget {
                 children: [
                   Text(
                     'Maria Snow',
-                    style: getSemiBoldStyle(fontSize: FontSize.s16),
+                    style: getRegularStyle()
+                        .copyWith(fontFamily: FontConstants.gibsonFamily),
                   ),
                   Expanded(
                     child: Center(
@@ -93,7 +99,7 @@ class _SearchedPersonItem extends StatelessWidget {
                         },
                         rating: 5,
                         itemCount: 5,
-                        itemSize: 30,
+                        itemSize: 16,
                       ),
                     ),
                   )

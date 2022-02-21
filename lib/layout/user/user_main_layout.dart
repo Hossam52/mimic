@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
 import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
+import 'package:mimic/layout/my_profile/my_profile_layout.dart';
 import 'package:mimic/layout/search/search_layout.dart';
 import 'package:mimic/layout/user/widgets/user_drawer.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
@@ -31,7 +32,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
     const SearchLayout(),
     Container(),
     const MyChallengesLayout(),
-    Container(),
+    const MyProfileLayout(),
   ];
 
   @override
@@ -79,7 +80,10 @@ class _UserMainLayoutState extends State<UserMainLayout> {
 
   CustomBottomNavBarItem _bottomNavBarItem(IconData icon, String title) {
     return CustomBottomNavBarItem(
-      icon: Icon(icon),
+      icon: Icon(
+        icon,
+        size: 20.r,
+      ),
       title: Text(
         title,
         style: getSemiBoldStyle(fontSize: FontSize.s14),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -23,7 +24,8 @@ class ChallengeDescription extends StatelessWidget {
     return Text(
       AppStrings.challengeDiscription,
       maxLines: 4,
-      style: getRegularStyle(fontSize: FontSize.s12),
+      style: getRegularStyle(
+          fontSize: FontSize.s10, color: ColorManager.challengeDescription),
     );
   }
 }

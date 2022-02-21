@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
@@ -25,11 +27,12 @@ class ChallengesGridView extends StatelessWidget {
         primary: false,
         shrinkWrap: true,
         itemCount: itemCount,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio: 5 / 7),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 20.w,
+          crossAxisSpacing: 20.h,
+          mainAxisExtent: 290.h,
+        ),
         itemBuilder: (_, index) {
           return _ChallengeItemPreview(
             showPlayIcon: showPlayIcon,
@@ -50,7 +53,8 @@ class _ChallengeItemPreview extends StatelessWidget {
       },
       child: Card(
         clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         child: Column(
           children: [
             Expanded(
@@ -62,7 +66,7 @@ class _ChallengeItemPreview extends StatelessWidget {
                     width: double.infinity,
                     height: double.infinity,
                   ),
-                  const ChallengePersonDetails(),
+                  const PersonDetails(),
                   if (showPlayIcon) const BlackOpacity(opacity: 0.4),
                   if (showPlayIcon) const Center(child: PlayVideoIcon()),
                 ],

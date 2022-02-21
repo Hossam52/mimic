@@ -16,6 +16,8 @@ import 'package:mimic/modules/draft/draft_screen.dart';
 import 'package:mimic/modules/home/customer_support.dart';
 import 'package:mimic/modules/home/home_screen.dart';
 import 'package:mimic/modules/home/how_to_challenge.dart';
+import 'package:mimic/modules/my_profile/profile_change_password.dart';
+import 'package:mimic/modules/my_profile/profile_settings.dart';
 import 'package:mimic/modules/search/scan_qr.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 
@@ -40,6 +42,8 @@ class Routes {
   static const String challengerVideo = '/challenger_video';
   static const String scanQr = '/scan_qr';
   static const String draft = '/draft';
+  static const String profileSettings = '/profile_settings';
+  static const String profileChangePassword = '/profile_change_password';
 }
 
 class RouteGenerator {
@@ -83,6 +87,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ScanQrScreen());
       case Routes.draft:
         return MaterialPageRoute(builder: (_) => const DraftScreen());
+      case Routes.profileSettings:
+        return MaterialPageRoute(builder: (_) => const ProfileSettings());
+      case Routes.profileChangePassword:
+        return MaterialPageRoute(builder: (_) => const ProfileChangePassword());
 
       default:
         return unDefinedRoute();

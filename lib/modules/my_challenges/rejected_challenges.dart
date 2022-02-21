@@ -30,14 +30,15 @@ class RejectedChallenges extends StatelessWidget {
 
   Widget _rejectedChallenges() {
     return ListView.builder(
-        itemCount: 10,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-              onTap: () {
-                Dialogs.showRejectedVideoReason(context);
-              },
-              child: const MyChallengeItem());
-        });
+      itemCount: 10,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+            onTap: () {
+              Dialogs.showRejectedVideoReason(context);
+            },
+            child: const MyChallengeItem());
+      },
+    );
   }
 }

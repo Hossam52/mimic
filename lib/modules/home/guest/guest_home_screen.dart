@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/home/widgets/challenge_item.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
@@ -8,7 +9,7 @@ import 'package:mimic/layout/user/widgets/user_drawer.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
 import 'package:mimic/modules/home/widgets/highlight_item.dart';
 import 'package:mimic/modules/home/widgets/highlights.dart';
-import 'package:mimic/modules/home/widgets/person_details.dart';
+import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
@@ -25,15 +26,12 @@ class GuestHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       primary: true,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            const Highlights(),
-            const SizedBox(height: 8),
-            const _CurrentChallenges(),
-          ],
-        ),
+      child: Column(
+        children: [
+          const Highlights(),
+          SizedBox(height: 16.h),
+          const _CurrentChallenges(),
+        ],
       ),
     );
   }
@@ -51,45 +49,50 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          HeaderName(
-            'Current Challenges',
-            selected: selectedHeader == _HeaderEnum.currentChallenges,
-            onTap: () {
-              setState(() {
-                selectedHeader = _HeaderEnum.currentChallenges;
-              });
-            },
-          ),
-          HeaderName(
-            'Top',
-            selected: selectedHeader == _HeaderEnum.top,
-            onTap: () {
-              setState(() {
-                selectedHeader = _HeaderEnum.top;
-              });
-            },
-          ),
-        ],
-      ),
-      ListView.builder(
-          primary: false,
-          shrinkWrap: true,
-          itemCount: 14,
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ChallenegItem(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            HeaderName(
+              'Current Challenges',
+              fontSize: 18.sp,
+              selected: selectedHeader == _HeaderEnum.currentChallenges,
+              onTap: () {
+                setState(() {
+                  selectedHeader = _HeaderEnum.currentChallenges;
+                });
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: HeaderName(
+                'Top',
+                fontSize: 18.sp,
+                selected: selectedHeader == _HeaderEnum.top,
+                onTap: () {
+                  setState(() {
+                    selectedHeader = _HeaderEnum.top;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: 14,
+            itemBuilder: (_, index) {
+              return ChallenegItem(
                 onJoinTapped: () {
                   navigateTo(context, Routes.errorGuestPermissions);
                 },
-              ),
-            );
-          })
-    ]);
+              );
+            })
+      ]),
+    );
   }
 }
 

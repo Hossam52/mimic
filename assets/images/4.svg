@@ -1,0 +1,12 @@
+<svg id="_4" data-name="4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="77" viewBox="0 0 80 77">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_12" data-name="Rectangle 12" width="80" height="77" rx="38.5" transform="translate(0 0)" fill="#99c0e1" opacity="0.486"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_8" data-name="Rectangle 8" width="80" height="77" rx="38.5" transform="translate(0 0)" fill="#99c0e1" opacity="0"/>
+  <g id="Mask_Group_4" data-name="Mask Group 4" transform="translate(0 0)" clip-path="url(#clip-path)">
+    <text id="Profile" transform="translate(78 44)" fill="#444d5e" font-size="17" font-family="Poppins-SemiBold, Poppins" font-weight="600" opacity="0"><tspan x="0" y="0">Profile</tspan></text>
+    <path id="Union_1" data-name="Union 1" d="M24.536,25.434c0-3.8-3.86-6.882-8.617-6.882H11.012c-4.758,0-8.618,3.082-8.618,6.882a1.2,1.2,0,1,1-2.394,0c0-5.117,4.937-9.276,11.012-9.276h4.907c6.074,0,11.011,4.159,11.011,9.276a1.2,1.2,0,1,1-2.394,0ZM6.284,7.181a7.181,7.181,0,1,1,7.181,7.181A7.164,7.164,0,0,1,6.284,7.181Zm2.394,0a4.788,4.788,0,1,0,4.787-4.788A4.8,4.8,0,0,0,8.678,7.181Z" transform="translate(28.535 23.59)" fill="#444d5e"/>
+  </g>
+</svg>

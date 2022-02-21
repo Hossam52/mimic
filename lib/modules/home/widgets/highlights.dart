@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
 import 'package:mimic/modules/home/widgets/highlight_item.dart';
 import 'package:mimic/shared/methods.dart';
@@ -8,23 +9,26 @@ class Highlights extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: screenHeight(context) * 0.3,
+    return Padding(
+      padding: EdgeInsets.only(left: 16.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const HeaderName(
+          HeaderName(
             'Highlights',
+            fontSize: 18.sp,
             selected: true,
             displaySelectedIndicator: false,
           ),
-          const SizedBox(height: 10),
-          Expanded(
+          SizedBox(height: 10.h),
+          SizedBox(
+            height: 160.h,
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
                 mainAxisSpacing: 15,
-                childAspectRatio: 7 / 6,
+                // childAspectRatio: 150 / 106,
+                mainAxisExtent: 106.w,
               ),
               itemBuilder: (_, index) {
                 return const HighlightItem();

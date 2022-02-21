@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/challenge_item.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
 import 'package:mimic/modules/home/widgets/highlight_item.dart';
@@ -19,7 +20,7 @@ class UserHomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const Highlights(),
-            const SizedBox(height: 8),
+            SizedBox(height: 16.h),
             const _CurrentChallenges(),
           ],
         ),
@@ -45,6 +46,7 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
         children: [
           HeaderName(
             'Current Challenges',
+            fontSize: 18.sp,
             selected: selectedHeader == _HeaderEnum.currentChallenges,
             onTap: () {
               setState(() {
@@ -54,6 +56,7 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
           ),
           HeaderName(
             'Marked',
+            fontSize: 18.sp,
             selected: selectedHeader == _HeaderEnum.marked,
             onTap: () {
               setState(() {
@@ -68,14 +71,11 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
           shrinkWrap: true,
           itemCount: 14,
           itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ChallenegItem(
-                onJoinTapped: () {},
-                onChallengeTapped: () {
-                  navigateTo(context, Routes.challengeDetails);
-                },
-              ),
+            return ChallenegItem(
+              onJoinTapped: () {},
+              onChallengeTapped: () {
+                navigateTo(context, Routes.challengeDetails);
+              },
             );
           })
     ]);

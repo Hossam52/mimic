@@ -14,7 +14,7 @@ class RoundedImage extends StatelessWidget {
         imagePath,
         width: size,
         height: size,
-        fit: BoxFit.contain,
+        fit: BoxFit.fill,
       ),
     );
   }

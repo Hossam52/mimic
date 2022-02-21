@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
 import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
@@ -6,7 +7,7 @@ import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
-import 'package:mimic/modules/home/widgets/person_details.dart';
+import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
@@ -20,7 +21,7 @@ class ChallengerVideo extends StatelessWidget {
     return Scaffold(
       appBar: const TransparentAppBar(title: 'Challenge'),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0.w),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,18 +29,20 @@ class ChallengerVideo extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                      child: ChallengePersonDetails(
+                      child: PersonDetails(
+                    imageRadius: 30,
                     textColor: ColorManager.black,
                   )),
                   const ReportPopupMenuButton(),
                 ],
               ),
+              SizedBox(height: 10.h),
               _video(context),
-              const SizedBox(height: 10),
+              SizedBox(height: 15.h),
               _statistics(context),
-              const SizedBox(height: 20),
+              SizedBox(height: 13.h),
               const ChallengeTitle(),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               const ChallengeDescription(),
             ],
           ),
@@ -50,16 +53,16 @@ class ChallengerVideo extends StatelessWidget {
 
   Widget _video(BuildContext context) {
     return Container(
-      height: screenHeight(context) * 0.5,
+      height: 410.h,
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(48.r)),
       child: Stack(
         children: [
           Image.asset('assets/images/static/video_preview.png',
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.fill),
-          const BlackOpacity(opacity: 0.4),
+          const BlackOpacity(opacity: 0.35),
           Align(
             alignment: Alignment.center,
             child: Row(
@@ -96,20 +99,19 @@ class ChallengerVideo extends StatelessWidget {
   }
 
   Widget _statistics(BuildContext context) {
-    return Wrap(spacing: 10, children: [
-      VideStatisticsItem(
-        MimicIcons.favoriteFill,
-        '15',
-        filledColor: Theme.of(context).primaryColor,
-      ),
-      VideStatisticsItem(
-        MimicIcons.comments,
-        '12',
+    return Wrap(spacing: 10.w, children: [
+      FavoriteIcon(count: '12', textColor: ColorManager.black),
+      CommentIcon(
+        count: '12',
+        textColor: ColorManager.black,
         onPressed: () {
           Dialogs.showCommentsDialog(context);
         },
       ),
-      const VideStatisticsItem(Icons.visibility, '9'),
+      ViewIcon(
+          count: '12',
+          iconColor: ColorManager.commentsColor,
+          textColor: ColorManager.black),
     ]);
   }
 }

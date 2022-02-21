@@ -19,6 +19,7 @@ class ApprovedChallenges extends StatelessWidget {
       child: Column(
         children: [
           const AllCategoriesDropDown(),
+          SizedBox(height: 20.h),
           Expanded(child: _requestsListView()),
         ],
       ),
@@ -32,9 +33,6 @@ class ApprovedChallenges extends StatelessWidget {
         itemBuilder: (_, index) {
           return MyChallengeItem(
             displayBlackOpacity: index != 0,
-          );
-          return _ApprovedItem(
-            remaining: index != 0,
           );
         });
   }

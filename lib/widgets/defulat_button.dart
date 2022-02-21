@@ -19,7 +19,8 @@ class DefaultButton extends StatelessWidget {
       this.foregroundColor,
       this.trailing,
       this.disabledColor,
-      this.hasBorder = true})
+      this.hasBorder = true,
+      this.padding})
       : super(key: key);
   final String text;
   final VoidCallback? onPressed;
@@ -33,6 +34,7 @@ class DefaultButton extends StatelessWidget {
   final double? height;
   final double? width;
   final Widget? trailing;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +42,29 @@ class DefaultButton extends StatelessWidget {
     final buttonWidth = width ?? screenWidth(context) * 0.7;
     return SizedBox(
       height: buttonHeight,
-      width: buttonWidth,
+      // width: buttonWidth,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: loading
-            ? const DefaultCircularProgress()
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Spacer(flex: 2),
-                  const Spacer(),
-                  Center(
-                    child: Text(text),
-                  ),
-                  const Spacer(flex: 2),
-                  if (trailing != null) trailing!,
-                  const Spacer(),
-                ],
-              ),
+        child: Container(
+          padding: padding,
+          child: loading
+              ? const DefaultCircularProgress()
+              : trailing == null
+                  ? Text(text)
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(flex: 2),
+                        const Spacer(),
+                        Center(
+                          child: Text(text),
+                        ),
+                        const Spacer(flex: 2),
+                        if (trailing != null) trailing!,
+                        const Spacer(),
+                      ],
+                    ),
+        ),
         style: ButtonStyle(
           padding: MaterialStateProperty.all(const EdgeInsets.all(0.0)),
           backgroundColor: MaterialStateProperty.all(onPressed == null

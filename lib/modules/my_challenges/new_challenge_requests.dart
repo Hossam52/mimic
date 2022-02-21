@@ -21,6 +21,7 @@ class NewChallengeRequests extends StatelessWidget {
       child: Column(
         children: [
           const AllCategoriesDropDown(),
+          SizedBox(height: 20.h),
           Expanded(child: _requestsListView()),
         ],
       ),
@@ -45,7 +46,6 @@ class NewChallengeRequests extends StatelessWidget {
               ),
             )
           ]);
-          return const _RequestItem();
         });
   }
 }

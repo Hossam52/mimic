@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
 import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
+import 'package:mimic/layout/my_profile/my_profile_layout.dart';
 import 'package:mimic/layout/search/search_layout.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
 import 'package:mimic/modules/home/guest/guest_home_screen.dart';
@@ -28,7 +31,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
     const SearchLayout(),
     GuestHomeScreen(),
     const MyChallengesLayout(),
-    GuestHomeScreen(),
+    const MyProfileLayout(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -76,7 +79,11 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
 
   CustomBottomNavBarItem _bottomNavBarItem(IconData icon, String title) {
     return CustomBottomNavBarItem(
-      icon: Icon(icon),
+      icon: SvgPicture.asset('assets/images/home_add.svg'),
+      //   Icon(
+      //   icon,
+      //   size: 20.r,
+      // ),
       title: Text(
         title,
         style: getSemiBoldStyle(fontSize: FontSize.s14),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
 import 'package:mimic/widgets/custom_drop_down.dart';
+import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -13,21 +15,21 @@ class SearchChallenges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(16.0.h).copyWith(bottom: 0),
       child: Column(
         children: [
           const CustomSearchField(
             searchTextHint: 'Challenge title',
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 15.h),
           Row(
-            children: const [
-              Expanded(child: _CategoryDropDown()),
-              SizedBox(width: 20),
-              Expanded(child: _CategoryDatePublished()),
+            children: [
+              const Expanded(child: _CategoryDropDown()),
+              SizedBox(width: 20.w),
+              const Expanded(child: _CategoryDatePublished()),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 30.h),
           Expanded(child: _searchedChallenges())
         ],
       ),
@@ -37,11 +39,11 @@ class SearchChallenges extends StatelessWidget {
   Widget _searchedChallenges() {
     return GridView.builder(
         itemCount: 14,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 5 / 6,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20),
+            mainAxisExtent: 260.h,
+            mainAxisSpacing: 20.h,
+            crossAxisSpacing: 20.w),
         itemBuilder: (_, index) {
           return const _SearchedChallengeItem();
         });
@@ -58,21 +60,21 @@ class _CategoryDropDown extends StatelessWidget {
         child: DropdownButton<String>(
           hint: Text(
             'Category',
-            style: getRegularStyle(fontSize: FontSize.s16),
+            style: getRegularStyle(),
           ),
           items: [
             DropdownMenuItem(
               value: '1',
               child: Text(
                 'Category1',
-                style: getRegularStyle(fontSize: FontSize.s16),
+                style: getRegularStyle(),
               ),
             ),
             DropdownMenuItem(
               value: '2',
               child: Text(
                 'Category2',
-                style: getRegularStyle(fontSize: FontSize.s16),
+                style: getRegularStyle(),
               ),
             ),
           ],
@@ -93,21 +95,21 @@ class _CategoryDatePublished extends StatelessWidget {
         child: DropdownButton<String>(
           hint: Text(
             'Date published',
-            style: getRegularStyle(fontSize: FontSize.s16),
+            style: getRegularStyle(),
           ),
           items: [
             DropdownMenuItem(
               value: '1',
               child: Text(
                 '2022',
-                style: getRegularStyle(fontSize: FontSize.s16),
+                style: getRegularStyle(),
               ),
             ),
             DropdownMenuItem(
               value: '2',
               child: Text(
                 '2021',
-                style: getRegularStyle(fontSize: FontSize.s16),
+                style: getRegularStyle(),
               ),
             ),
           ],
@@ -126,7 +128,8 @@ class _SearchedChallengeItem extends StatelessWidget {
     return ShadowBox(
       shadow: 8,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         clipBehavior: Clip.hardEdge,
         child: Stack(
           children: [
@@ -136,19 +139,8 @@ class _SearchedChallengeItem extends StatelessWidget {
               height: double.infinity,
               fit: BoxFit.fill,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const RoundedImage(
-                      imagePath: 'assets/images/static/avatar.png'),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Ola Ahmed',
-                    style: getRegularStyle(fontSize: FontSize.s16),
-                  )
-                ],
-              ),
+            PersonNameAndImage(
+              textColor: ColorManager.black,
             )
           ],
         ),

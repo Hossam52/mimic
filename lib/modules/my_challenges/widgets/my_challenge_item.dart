@@ -4,6 +4,7 @@ import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/widgets/hashtag_item.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
@@ -28,15 +29,10 @@ class MyChallengeItem extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  children: [
-                    const Center(child: _ChallengePerson()),
-                    const Spacer(),
-                    Text(
-                      '#Music',
-                      style: getBoldStyle(
-                        color: ColorManager.visibilityColor,
-                      ),
-                    )
+                  children: const [
+                    Center(child: _ChallengePerson()),
+                    Spacer(),
+                    HashtagItem(title: 'Music'),
                   ],
                 ),
                 Expanded(
@@ -63,7 +59,7 @@ class _ChallengePerson extends StatelessWidget {
         SizedBox(width: 10.w),
         Text(
           'Rahma Ahmed',
-          style: getBoldStyle(fontSize: FontSize.s14),
+          style: getBoldStyle(fontSize: FontSize.s12),
         )
       ],
     );
@@ -107,7 +103,7 @@ class _Video extends StatelessWidget {
 
   Widget _challengeNameAndTime() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4),
+      padding: EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 4.w),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -118,7 +114,8 @@ class _Video extends StatelessWidget {
             ),
             Text(
               '2Min Ago',
-              style: getRegularStyle(color: ColorManager.timeAgo),
+              style: getRegularStyle(
+                  color: ColorManager.timeAgo, fontSize: FontSize.s10),
             )
           ]),
     );

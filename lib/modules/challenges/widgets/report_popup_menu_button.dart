@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -13,6 +14,8 @@ class ReportPopupMenuButton extends StatelessWidget {
     return GestureDetector(
       onTapDown: (details) {
         showMenu(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
           context: context,
           position: RelativeRect.fromLTRB(
             details.globalPosition.dx,

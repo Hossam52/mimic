@@ -89,6 +89,11 @@ flutter:
         - asset: assets/fonts/OpenSans-Medium.ttf
         - asset: assets/fonts/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans-SemiBold.ttf
+    - family: Gibson
+      fonts:
+        - asset: assets/fonts/gibson/gibson-bold.ttf
+          weight: 700
+        - asset: assets/fonts/gibson/Gibson-Regular.ttf
     - family: MimicIcons
       fonts:
         - asset: assets/fonts/MimicIcons.ttf

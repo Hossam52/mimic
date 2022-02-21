@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mimic/layout/widgets/tab_bar_header.dart';
 import 'package:mimic/modules/search/search_challenges.dart';
 import 'package:mimic/modules/search/search_people.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+
+final List<CustomTabBarItem> _searchTabs = [
+  CustomTabBarItem(name: 'Challenges', widget: const SearchChallenges()),
+  CustomTabBarItem(name: 'People', widget: const SearchPeople()),
+];
 
 class SearchLayout extends StatelessWidget {
   const SearchLayout({Key? key}) : super(key: key);
@@ -14,29 +20,16 @@ class SearchLayout extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: TabBar(
-                labelStyle: getBoldStyle(),
-                labelPadding: const EdgeInsets.all(0),
-                padding: const EdgeInsets.all(0),
-                unselectedLabelStyle: getBoldStyle(),
-                labelColor: ColorManager.black,
-                tabs: const [
-                  Text('Challenges'),
-                  Text('People'),
-                ],
-                indicatorColor: ColorManager.tabBarIndicator),
-          ),
-          const Expanded(
+              child: TabBarHeader(
+            tabBars: _searchTabs,
+          )),
+          Expanded(
             flex: 10,
-            child: TabBarView(children: [
-              Center(
-                child: SearchChallenges(),
-              ),
-              Center(
-                child: SearchPeople(),
-              ),
-            ]),
-          )
+            child: TabBarView(
+              children:
+                  _searchTabs.map((e) => Center(child: e.widget)).toList(),
+            ),
+          ),
         ],
       ),
     );

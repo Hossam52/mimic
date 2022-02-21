@@ -8,6 +8,8 @@ import 'package:mimic/modules/challenges/widgets/challenges_grid_view.dart';
 import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/widgets/hashtag_item.dart';
+import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/comments/comments_screen.dart';
@@ -33,24 +35,23 @@ class ChallengeDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const _VideoPlayer(),
                 _statisticsAndJoinButton(context),
-                const SizedBox(height: 5),
+                SizedBox(height: 12.h),
                 const ChallengeTitle(),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 const ChallengeDescription(),
-                const SizedBox(height: 10),
+                const SizedBox(height: 4),
                 _hashtags(),
-                const SizedBox(height: 10),
-                const SizedBox(height: 10),
+                SizedBox(height: 13.h),
                 _remainingTime(context),
-                const SizedBox(height: 10),
+                SizedBox(height: 15.h),
                 _peopleJoined(context),
-                const SizedBox(height: 10),
+                SizedBox(height: 16.h),
                 _headerChallenges(),
                 _challenges(context),
               ],
@@ -63,7 +64,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
 
   Widget _statisticsAndJoinButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.only(top: 18.0.h, left: 8.w, right: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -85,27 +86,27 @@ class ChallengeDetailsScreen extends StatelessWidget {
 
   Widget _hashtags() {
     return Wrap(
-      spacing: 10,
+      spacing: 9.w,
       children: const [
-        _HashtagBuilder(title: 'Volleyball'),
-        _HashtagBuilder(title: 'Developer'),
-        _HashtagBuilder(title: 'Entertainment'),
+        HashtagItem(title: 'Volleyball'),
+        HashtagItem(title: 'Developer'),
+        HashtagItem(title: 'Entertainment'),
       ],
     );
   }
 
   Widget _remainingTime(context) {
     return Wrap(
-      spacing: 10,
+      spacing: 10.w,
       children: [
         Text(
           '2 days, 10 hours, 12 min',
           style: getBoldStyle(
-              color: Theme.of(context).primaryColor, fontSize: FontSize.s14),
+              color: Theme.of(context).primaryColor, fontSize: FontSize.s12),
         ),
         Text(
           'Remaining',
-          style: getRegularStyle(fontSize: FontSize.s10),
+          style: getRegularStyle(fontSize: FontSize.s8),
         ),
       ],
     );
@@ -139,7 +140,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
                 },
                 child: Text(
                   'VIEW ALL',
-                  style: getRegularStyle()
+                  style: getRegularStyle(fontSize: FontSize.s8)
                       .copyWith(decoration: TextDecoration.underline),
                 ))
           ],
@@ -158,9 +159,12 @@ class ChallengeDetailsScreen extends StatelessWidget {
           displaySelectedIndicator: false,
           selected: true,
         ),
-        Text(
-          'By date',
-          style: getRegularStyle(),
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0),
+          child: Text(
+            'By date',
+            style: getRegularStyle(),
+          ),
         )
       ],
     );
@@ -178,8 +182,8 @@ class ChallengeDetailsScreen extends StatelessWidget {
             },
             child: Text(
               'VIEW ALL >>',
-              style: getBoldStyle(
-                      fontSize: FontSize.s10,
+              style: getRegularStyle(
+                      fontSize: FontSize.s8,
                       color: ColorManager.visibilityColor)
                   .copyWith(decoration: TextDecoration.underline),
             ),
@@ -213,7 +217,7 @@ class _VideoPlayer extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Expanded(child: ChallengePersonDetails()),
+                const Expanded(child: PersonDetails()),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ReportPopupMenuButton(
@@ -227,7 +231,9 @@ class _VideoPlayer extends StatelessWidget {
               child: Row(
                 children: [
                   const Spacer(),
-                  const PlayVideoIcon(),
+                  PlayVideoIcon(
+                    size: 44.r,
+                  ),
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -235,6 +241,7 @@ class _VideoPlayer extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Icon(
                           Icons.skip_next,
+                          size: 30,
                           color: ColorManager.white,
                         ),
                       ),
@@ -264,21 +271,13 @@ class _VideoStatistics extends StatelessWidget {
           Dialogs.showCommentsDialog(context);
         },
       ),
-      ViewIcon(count: '112', textColor: ColorManager.black),
+      ViewIcon(
+        count: '112',
+        textColor: ColorManager.black,
+        iconColor: ColorManager.commentsColor,
+      ),
       ShareIcon(count: '88', textColor: ColorManager.black),
     ]);
-  }
-}
-
-class _HashtagBuilder extends StatelessWidget {
-  const _HashtagBuilder({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '#$title',
-      style: getBoldStyle(color: ColorManager.hashtagColor),
-    );
   }
 }
 
@@ -288,10 +287,11 @@ class _VideoPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      insetPadding: EdgeInsets.all(16.w),
       clipBehavior: Clip.hardEdge,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20),
+          bottom: Radius.circular(21.r),
         ),
       ),
       child: Column(
@@ -300,7 +300,7 @@ class _VideoPopup extends StatelessWidget {
         children: [
           _video(context),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 14.0.h, horizontal: 10.w),
             child: _statistics(context),
           ),
         ],
@@ -310,16 +310,17 @@ class _VideoPopup extends StatelessWidget {
 
   Widget _video(context) {
     return SizedBox(
-      height: screenHeight(context) * 0.4,
+      height: 250.h,
       child: Stack(
+        clipBehavior: Clip.hardEdge,
         children: [
           Image.asset('assets/images/static/video_preview.png',
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.fill),
-          const Center(
+          Center(
               child: PlayVideoIcon(
-            size: 50,
+            size: 50.r,
           )),
           Align(
               alignment: Alignment.bottomRight,
@@ -328,6 +329,7 @@ class _VideoPopup extends StatelessWidget {
                 child: Icon(
                   Icons.volume_off_outlined,
                   color: ColorManager.white,
+                  size: 25.r,
                 ),
               )),
         ],
@@ -337,7 +339,7 @@ class _VideoPopup extends StatelessWidget {
 
   Widget _statistics(BuildContext context) {
     return Wrap(
-      spacing: 10,
+      spacing: 10.w,
       children: [
         FavoriteIcon(count: '12', textColor: ColorManager.black),
         CommentIcon(

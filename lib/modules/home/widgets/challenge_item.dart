@@ -12,6 +12,7 @@ import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
+import 'package:mimic/widgets/video_item.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 class ChallenegItem extends StatelessWidget {
@@ -24,56 +25,54 @@ class ChallenegItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final double joinIconHeight = 50;
     final halfButtonSize = joinIconHeight / 2;
-    return SizedBox(
-      height: screenHeight(context) * 0.42,
-      child: Card(
-        clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 5,
-              child: GestureDetector(
-                onTap: onChallengeTapped,
-                child: Stack(
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Expanded(
-                          child: _ChallenegePreview(),
-                        ),
-                        SizedBox(height: halfButtonSize)
-                      ],
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: SizedBox(
-                          height: joinIconHeight,
-                          child: _joinButton(joinIconHeight, onJoinTapped)),
-                    )
-                  ],
-                ),
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 220.h,
+            child: GestureDetector(
+              onTap: onChallengeTapped,
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Expanded(
+                        child: VideoOverview(),
+                      ),
+                      SizedBox(height: halfButtonSize)
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: SizedBox(
+                        height: joinIconHeight,
+                        child: _joinButton(joinIconHeight, onJoinTapped)),
+                  )
+                ],
               ),
             ),
-            Text(
-              'Sports challenge details',
-              style: getBoldStyle(fontSize: FontSize.s14),
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              '12 People joined',
-              style: getRegularStyle(),
-            ),
-            const Expanded(
-                child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: ImagesBuilder(imagesCount: 10),
-            ))
-          ],
-        ),
+          ),
+          Text(
+            'Sports challenge details',
+            style: getBoldStyle(fontSize: FontSize.s14),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            '12 People joined',
+            style: getRegularStyle(),
+          ),
+          SizedBox(
+              height: 60.h,
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ImagesBuilder(imagesCount: 10),
+              ))
+        ],
       ),
     );
   }

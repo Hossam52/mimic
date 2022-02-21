@@ -27,6 +27,12 @@ class ColorManager {
   static Color hashtagColor = HexColor.fromHex('#081ED6');
   static Color timeAgo = HexColor.fromHex('#ffffff').withOpacity(0.76);
   static Color complain = HexColor.fromHex('#464444');
+  static Color profileName = HexColor.fromHex('#454F63');
+  static Color profileLocation = HexColor.fromHex('#78849E');
+  static Color profileStatisticIcon = HexColor.fromHex('#081ED6');
+  static Color challengeDescription = HexColor.fromHex('#7F7F7F');
+  static Color achievedRank = HexColor.fromHex('#BECBFF');
+  static Color unAchievedRank = HexColor.fromHex('#707070').withOpacity(0.56);
 }
 
 extension HexColor on Color {
