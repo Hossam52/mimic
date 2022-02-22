@@ -27,12 +27,12 @@ class ChallenegItem extends StatelessWidget {
     final halfButtonSize = joinIconHeight / 2;
     return Card(
       clipBehavior: Clip.hardEdge,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 220.h,
+            // height: 220.h,
             child: GestureDetector(
               onTap: onChallengeTapped,
               child: Stack(
@@ -40,9 +40,7 @@ class ChallenegItem extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Expanded(
-                        child: VideoOverview(),
-                      ),
+                      VideoOverview(),
                       SizedBox(height: halfButtonSize)
                     ],
                   ),
@@ -57,21 +55,30 @@ class ChallenegItem extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            'Sports challenge details',
-            style: getBoldStyle(fontSize: FontSize.s14),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            '12 People joined',
-            style: getRegularStyle(),
-          ),
-          SizedBox(
-              height: 60.h,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ImagesBuilder(imagesCount: 10),
-              ))
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Sports challenge details',
+                  style: getBoldStyle(fontSize: FontSize.s14),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  '12 People joined',
+                  style: getRegularStyle(),
+                ),
+                SizedBox(height: 8.h),
+                SizedBox(
+                    height: 60.h,
+                    child: const Padding(
+                      padding: EdgeInsets.only(bottom: 8.0),
+                      child: ImagesBuilder(imagesCount: 7),
+                    )),
+              ],
+            ),
+          )
         ],
       ),
     );

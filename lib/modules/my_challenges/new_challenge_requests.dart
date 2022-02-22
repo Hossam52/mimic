@@ -41,7 +41,7 @@ class NewChallengeRequests extends StatelessWidget {
                 child: Text(
                   '2 days, 10 hours, 12 min',
                   style: getBoldStyle(
-                      fontSize: FontSize.s14, color: ColorManager.white),
+                      fontSize: FontSize.s12, color: ColorManager.white),
                 ),
               ),
             )

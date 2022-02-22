@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/guest/widgets/guest_custom_drawer_header.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -47,15 +48,16 @@ class GuestDrawer extends StatelessWidget {
   Widget _drawerItem(String title, IconData icon,
       {VoidCallback? onPressed, Color? color}) {
     return ListTile(
+      minLeadingWidth: 20.w,
       onTap: onPressed,
       leading: SizedIcon(
         icon,
-        size: 18,
+        size: 18.r,
         color: color ?? ColorManager.iconDrawerColor,
       ),
       title: Text(
         title,
-        style: getSemiBoldStyle(fontSize: FontSize.s14),
+        style: getSemiBoldStyle(),
       ),
     );
   }

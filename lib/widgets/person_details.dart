@@ -20,40 +20,38 @@ class PersonDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0.w),
+      padding: EdgeInsets.all(6.0.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 28,
+            width: 28.r,
+            height: 28.r,
             child: RoundedImage(
               imagePath: 'assets/images/static/avatar.png',
               size: imageRadius.r,
             ),
           ),
           SizedBox(width: 3.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Ola ahmed',
-                  style: getRegularStyle(
-                      color: textColor ?? ColorManager.white,
-                      fontSize: nameSize),
-                ),
-                Text(
-                  '2 Min ago',
-                  style: getRegularStyle(
-                      color: textColor != null
-                          ? textColor!.withOpacity(0.76)
-                          : ColorManager.timeAgo,
-                      fontSize: timeAgoSize),
-                )
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Ola ahmed',
+                style: getRegularStyle(
+                    color: textColor ?? ColorManager.white, fontSize: nameSize),
+              ),
+              Text(
+                '2 Min ago',
+                style: getRegularStyle(
+                    color: textColor != null
+                        ? textColor!.withOpacity(0.76)
+                        : ColorManager.timeAgo,
+                    fontSize: timeAgoSize),
+              )
+            ],
           ),
         ],
       ),

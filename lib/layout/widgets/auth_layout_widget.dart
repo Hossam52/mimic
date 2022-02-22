@@ -36,7 +36,7 @@ class AuthLayoutWidget extends StatelessWidget {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        MimicLogo(
+        MimicLogoVertical(
           height: screenHeight(context) * 0.24,
         ),
         if (canPop) const BackButton(),

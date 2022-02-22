@@ -33,6 +33,10 @@ class ColorManager {
   static Color challengeDescription = HexColor.fromHex('#7F7F7F');
   static Color achievedRank = HexColor.fromHex('#BECBFF');
   static Color unAchievedRank = HexColor.fromHex('#707070').withOpacity(0.56);
+  static Color notificationPersonDetails =
+      HexColor.fromHex('#E2E4E5').withOpacity(0.56);
+  static Color seenNotificationBackground = HexColor.fromHex('#E2E4E5');
+  static Color allRanksStatisticItem = HexColor.fromHex('#0C092A');
 }
 
 extension HexColor on Color {

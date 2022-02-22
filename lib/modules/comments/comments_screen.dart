@@ -36,9 +36,15 @@ class CommentsScreen extends StatelessWidget {
   Widget _commentStatistics() {
     return Row(
       children: [
-        Text(
-          '40 comment',
-          style: getBoldStyle(fontSize: FontSize.s16),
+        DecoratedBox(
+          decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 7.0),
+            child: Text(
+              '40 comment',
+              style: getBoldStyle(fontSize: FontSize.s16),
+            ),
+          ),
         ),
         const SizedBox(width: 20),
         Row(
@@ -145,11 +151,12 @@ class _CommentPersonDetails extends StatelessWidget {
             children: [
               Text(
                 'Ola ahmed',
-                style: getBoldStyle(fontSize: FontSize.s14),
+                style: getBoldStyle(),
               ),
               Text(
                 '2 Min ago',
-                style: getRegularStyle(color: ColorManager.timeAgo),
+                style: getRegularStyle(
+                    color: ColorManager.lightGrey, fontSize: FontSize.s8),
               )
             ],
           ),

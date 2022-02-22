@@ -16,7 +16,7 @@ class Highlights extends StatelessWidget {
         children: [
           HeaderName(
             'Highlights',
-            fontSize: 18.sp,
+            fontSize: 17.sp,
             selected: true,
             displaySelectedIndicator: false,
           ),
@@ -25,11 +25,11 @@ class Highlights extends StatelessWidget {
             height: 160.h,
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                mainAxisSpacing: 15,
-                // childAspectRatio: 150 / 106,
-                mainAxisExtent: 106.w,
-              ),
+                  crossAxisCount: 1,
+                  mainAxisSpacing: 15,
+                  // childAspectRatio: 150 / 106,
+                  // mainAxisExtent: 106.w,
+                  childAspectRatio: 150 / 116),
               itemBuilder: (_, index) {
                 return const HighlightItem();
               },

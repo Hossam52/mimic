@@ -48,32 +48,35 @@ class MyProfileLayout extends StatelessWidget {
                 SizedBox(height: 22.h),
                 IntrinsicHeight(
                   child: Row(children: [
-                    const Expanded(
-                        flex: 2,
+                    const FittedBox(
+                        // flex: 2,
                         child: _ProfileStatistics(
-                          count: '140',
-                          icon: MimicIcons.video,
-                          label: 'Video uploaded',
-                        )),
+                      count: '140',
+                      icon: MimicIcons.video,
+                      label: 'Video uploaded',
+                    )),
                     divider,
-                    const Expanded(
+                    const FittedBox(
                         child: _ProfileStatistics(
                       count: '140',
                       icon: MimicIcons.like,
                       label: 'Likes',
                     )),
                     divider,
-                    const Expanded(
-                        flex: 2,
+                    const FittedBox(
+                        // flex: 2,
                         child: _ProfileStatistics(
-                          count: '24K',
-                          icon: MimicIcons.contribution,
-                          label: 'Contribution',
-                        )),
+                      count: '24K',
+                      icon: MimicIcons.contribution,
+                      label: 'Contribution',
+                    )),
                   ]),
                 ),
                 SizedBox(height: 36.h),
-                TabBarHeader(tabBars: _profileTabs),
+                TabBarHeader(
+                  fontSize: FontSize.s14,
+                  tabBars: _profileTabs,
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(top: 15.h),
@@ -98,21 +101,22 @@ class _MyProfileDetails extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 100.w,
+          width: 100.r,
           child: Stack(
             children: [
               RoundedImage(
                 imagePath: 'assets/images/static/avatar.png',
                 size: 95.r,
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Transform.rotate(
-                    alignment: Alignment.topRight,
-                    angle: (34 * 180 / 360).r,
-                    child: SvgPicture.asset('assets/images/crown.svg',
-                        width: 44.w, height: 44.w)),
-              )
+              // Align(
+              //   alignment: Alignment.topRight,
+              //   child: SvgPicture.asset(
+              //     'assets/images/crown_rotated.svg',
+              //     width: 44.w,
+              //     height: 44.w,
+              //     fit: BoxFit.fill,
+              //   ),
+              // )
             ],
           ),
         ),
@@ -199,7 +203,7 @@ class _ProfileStatistics extends StatelessWidget {
         Row(
           children: [
             Icon(icon, color: ColorManager.profileStatisticIcon, size: 15.r),
-            SizedBox(width: 10.w),
+            SizedBox(width: 15.w),
             Text(
               label,
               style: getRegularStyle(),

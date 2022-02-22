@@ -39,6 +39,8 @@ dependencies:
   pin_code_fields: ^7.3.0
   flutter_screenutil: ^5.2.0
   flutter_rating_bar: ^4.0.0
+  device_preview: ^1.0.0
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +91,12 @@ flutter:
         - asset: assets/fonts/OpenSans-Medium.ttf
         - asset: assets/fonts/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans-SemiBold.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
     - family: Gibson
       fonts:
         - asset: assets/fonts/gibson/gibson-bold.ttf

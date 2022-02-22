@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
+import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
@@ -16,7 +17,7 @@ class SearchPeople extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(left: 16.w, right: 35.w, top: 18.h),
       child: Column(
         children: [
           Row(
@@ -26,7 +27,7 @@ class SearchPeople extends StatelessWidget {
                   searchTextHint: 'User_name',
                 ),
               ),
-              SizedBox(width: 20.h),
+              SizedBox(width: 15.h),
               GestureDetector(
                   onTap: () {
                     navigateTo(context, Routes.scanQr);
@@ -47,12 +48,14 @@ class SearchPeople extends StatelessWidget {
 
   Widget _searchedPeople() {
     return GridView.builder(
+        padding: const EdgeInsets.all(0),
         itemCount: 14,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 270.h,
-            mainAxisSpacing: 20.h,
-            crossAxisSpacing: 20.w),
+          crossAxisCount: 2,
+          mainAxisSpacing: 18.h,
+          childAspectRatio: 108.w / 200.h,
+          crossAxisSpacing: 30.w,
+        ),
         itemBuilder: (_, index) {
           return const _SearchedPersonItem();
         });
@@ -65,7 +68,8 @@ class _SearchedPersonItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 8,
+      elevation: 4,
+      shadowColor: ColorManager.visibilityColor.withOpacity(0.6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       clipBehavior: Clip.hardEdge,
       child: Column(

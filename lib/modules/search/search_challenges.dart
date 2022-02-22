@@ -37,16 +37,24 @@ class SearchChallenges extends StatelessWidget {
   }
 
   Widget _searchedChallenges() {
-    return GridView.builder(
-        itemCount: 14,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 260.h,
-            mainAxisSpacing: 20.h,
-            crossAxisSpacing: 20.w),
-        itemBuilder: (_, index) {
-          return const _SearchedChallengeItem();
-        });
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: ShadowBox(
+        radius: 12.r,
+        shadow: 0,
+        child: GridView.builder(
+            itemCount: 14,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                // mainAxisExtent: 260.h,
+                childAspectRatio: 140.w / 230.h,
+                mainAxisSpacing: 20.h,
+                crossAxisSpacing: 20.w),
+            itemBuilder: (_, index) {
+              return const _SearchedChallengeItem();
+            }),
+      ),
+    );
   }
 }
 
@@ -58,6 +66,8 @@ class _CategoryDropDown extends StatelessWidget {
     return ShadowBox(
       child: CustomDropDown(
         child: DropdownButton<String>(
+          icon: Icon(Icons.keyboard_arrow_down,
+              size: 25.r, color: ColorManager.commentsColor),
           hint: Text(
             'Category',
             style: getRegularStyle(),
@@ -93,6 +103,8 @@ class _CategoryDatePublished extends StatelessWidget {
     return ShadowBox(
       child: CustomDropDown(
         child: DropdownButton<String>(
+          icon: Icon(Icons.keyboard_arrow_down,
+              size: 25.r, color: ColorManager.commentsColor),
           hint: Text(
             'Date published',
             style: getRegularStyle(),
@@ -125,25 +137,22 @@ class _SearchedChallengeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShadowBox(
-      shadow: 8,
-      child: Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-        clipBehavior: Clip.hardEdge,
-        child: Stack(
-          children: [
-            Image.asset(
-              'assets/images/static/video_preview.png',
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.fill,
-            ),
-            PersonNameAndImage(
-              textColor: ColorManager.black,
-            )
-          ],
-        ),
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      clipBehavior: Clip.hardEdge,
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/images/static/video_preview.png',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.fill,
+          ),
+          PersonNameAndImage(
+            textColor: ColorManager.black,
+            nameSize: FontSize.s10,
+          )
+        ],
       ),
     );
   }

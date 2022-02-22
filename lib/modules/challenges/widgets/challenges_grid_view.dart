@@ -49,7 +49,7 @@ class _ChallengeItemPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigateTo(context, Routes.challengerVideo);
+        showDialog(context: context, builder: (_) => const _VideoPopup());
       },
       child: Card(
         clipBehavior: Clip.hardEdge,
@@ -103,6 +103,80 @@ class _ChallengeItemPreview extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _VideoPopup extends StatelessWidget {
+  const _VideoPopup({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.all(16.w),
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(21.r),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _video(context),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 14.0.h, horizontal: 10.w),
+            child: _statistics(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _video(context) {
+    return SizedBox(
+      height: 250.h,
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
+        children: [
+          Image.asset('assets/images/static/video_preview.png',
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.fill),
+          Center(
+              child: PlayVideoIcon(
+            size: 50.r,
+          )),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.volume_off_outlined,
+                  color: ColorManager.white,
+                  size: 25.r,
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget _statistics(BuildContext context) {
+    return Wrap(
+      spacing: 10.w,
+      children: [
+        FavoriteIcon(count: '12', textColor: ColorManager.black),
+        CommentIcon(
+          count: '19',
+          textColor: ColorManager.black,
+          onPressed: () {
+            Dialogs.showCommentsDialog(context);
+          },
+        ),
+        ViewIcon(count: '112', textColor: ColorManager.black),
+      ],
     );
   }
 }

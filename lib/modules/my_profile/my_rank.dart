@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 
 class MyRank extends StatelessWidget {
@@ -43,13 +45,18 @@ class MyRank extends StatelessWidget {
             style: getRegularStyle(),
           ),
           SizedBox(height: 60.h),
-          DefaultButton(
-              text: 'View All Ranks',
-              onPressed: () {},
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              backgroundColor: Theme.of(context).primaryColor,
-              foregroundColor: ColorManager.white,
-              radius: 16.r)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 70.0.w),
+            child: DefaultButton(
+                text: 'View All Ranks',
+                onPressed: () {
+                  navigateTo(context, Routes.allRanks);
+                },
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                backgroundColor: Theme.of(context).primaryColor,
+                foregroundColor: ColorManager.white,
+                radius: 16.r),
+          )
         ],
       ),
     );

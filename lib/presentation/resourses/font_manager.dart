@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class FontConstants {
   static const String fontFamily = 'OpenSans';
   static const String gibsonFamily = 'Gibson';
+  static const String poppins = 'Poppins';
 }
 
 class FontWeightManager {

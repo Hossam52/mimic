@@ -35,6 +35,7 @@ class HighlightItem extends StatelessWidget {
     return Image.asset(
       'assets/images/static/interest3.png',
       width: double.infinity,
+      height: double.infinity,
       fit: BoxFit.fill,
     );
   }

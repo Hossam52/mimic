@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/presentation/resourses/routes_manager.dart';
+import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 
 class NotificationIcon extends StatelessWidget {
@@ -8,10 +10,12 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () {},
+        onPressed: () {
+          navigateTo(context, Routes.notifications);
+        },
         icon: Icon(
           MimicIcons.notifications,
-          size: 20.r,
+          size: 17.r,
           color: Theme.of(context).primaryColor,
         ));
   }

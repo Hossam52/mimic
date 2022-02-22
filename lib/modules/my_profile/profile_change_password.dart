@@ -12,7 +12,7 @@ class ProfileChangePassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double spaceAfterEnd = 10;
+    final double spaceAfterEnd = 10.h;
     return Scaffold(
       appBar: const TransparentAppBar(title: 'Change password'),
       body: SingleChildScrollView(
@@ -21,6 +21,7 @@ class ProfileChangePassword extends StatelessWidget {
         child: Column(
           children: [
             DefaultTextField(
+              isPassword: true,
               hintText: 'Current Password',
               controller: TextEditingController(),
               marginAfterEnd: spaceAfterEnd,
@@ -28,6 +29,7 @@ class ProfileChangePassword extends StatelessWidget {
               iconColor: ColorManager.black,
             ),
             DefaultTextField(
+              isPassword: true,
               hintText: 'New Password',
               controller: TextEditingController(),
               icon: Icons.visibility_outlined,
@@ -35,13 +37,19 @@ class ProfileChangePassword extends StatelessWidget {
               iconColor: ColorManager.black,
             ),
             DefaultTextField(
+              isPassword: true,
               hintText: 'Confirm New Password',
               controller: TextEditingController(),
               marginAfterEnd: spaceAfterEnd,
               icon: Icons.visibility_outlined,
               iconColor: ColorManager.black,
             ),
-            SizedBox(width: double.infinity, height: 220.h),
+            SvgPicture.asset(
+              'assets/images/logo_vertical.svg',
+              width: double.infinity,
+              height: 220.h,
+              fit: BoxFit.fill,
+            ),
             SizedBox(height: 20.h),
             SizedBox(
               width: double.infinity,

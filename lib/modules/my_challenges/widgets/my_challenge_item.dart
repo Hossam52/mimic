@@ -19,7 +19,7 @@ class MyChallengeItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 20.h),
       child: SizedBox(
-        height: 270.h,
+        height: 280.h,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -110,12 +110,13 @@ class _Video extends StatelessWidget {
           children: [
             Text(
               'Challenge Name',
-              style: getSemiBoldStyle(color: ColorManager.white),
+              style: getSemiBoldStyle(
+                  color: ColorManager.white, fontSize: FontSize.s10),
             ),
             Text(
               '2Min Ago',
               style: getRegularStyle(
-                  color: ColorManager.timeAgo, fontSize: FontSize.s10),
+                  color: ColorManager.timeAgo, fontSize: FontSize.s8),
             )
           ]),
     );

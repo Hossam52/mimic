@@ -36,7 +36,7 @@ class ProfileSettings extends StatelessWidget {
             ),
             SizedBox(height: 40.h),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.h),
+              padding: EdgeInsets.symmetric(horizontal: 40.h),
               child: Column(
                 children: [
                   const _AccountSettings(),

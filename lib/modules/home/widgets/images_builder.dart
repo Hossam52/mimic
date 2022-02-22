@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
@@ -11,22 +13,25 @@ class ImagesBuilder extends StatelessWidget {
   final int imagesCount;
   @override
   Widget build(BuildContext context) {
-    const double imageRadius = 50;
-    final imagesToRender = screenWidth(context) / ((imageRadius) * 2);
-    int i = 0;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        // for (i = 0; i < imagesToRender.toInt() - 1 && i < imagesCount; i++)
-        for (i = 0; i < 4; i++)
-          RoundedImage(
-            imagePath: 'assets/images/static/interest4.png',
-            size: imageRadius.r,
-          ),
-        // if (i < imagesCount)
-        _lastImage(imageRadius, i),
-      ],
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      final double imageRadius = 60.r;
+      final imagesToRender = constraints.maxWidth / ((imageRadius));
+      int i = 0;
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          for (i = 0; i < imagesToRender.toInt() - 1 && i < imagesCount; i++)
+            Padding(
+              padding: EdgeInsets.only(right: 5.0.w),
+              child: RoundedImage(
+                imagePath: 'assets/images/static/interest4.png',
+                size: imageRadius.r,
+              ),
+            ),
+          if (i < imagesCount) _lastImage(imageRadius, i),
+        ],
+      );
+    });
   }
 
   Widget _lastImage(double imageRadius, int i) {
@@ -36,6 +41,7 @@ class ImagesBuilder extends StatelessWidget {
       children: [
         RoundedImage(
           imagePath: 'assets/images/static/interest3.png',
+          size: imageRadius,
         ),
         // BlackOpacity(),
         CircleAvatar(

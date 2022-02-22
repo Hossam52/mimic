@@ -57,7 +57,7 @@ class _DraftItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: ColorManager.visibilityColor, size: 25.r),
+              Icon(icon, color: ColorManager.visibilityColor, size: 20.r),
               SizedBox(width: 10.w),
               Text(
                 title,

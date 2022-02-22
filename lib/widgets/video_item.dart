@@ -12,15 +12,18 @@ class VideoOverview extends StatelessWidget {
   final Color? defaultIconColor;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 190.h,
+    return Container(
+      height: 200.h,
       width: double.infinity,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(6.r)),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Image.asset(
             'assets/images/static/video_preview.png',
             width: double.infinity,
+            height: double.infinity,
             fit: BoxFit.fill,
           ),
           const BlackOpacity(

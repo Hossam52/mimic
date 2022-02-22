@@ -17,7 +17,7 @@ class _AllCategoriesDropDownState extends State<AllCategoriesDropDown> {
   @override
   Widget build(BuildContext context) {
     return ShadowBox(
-      shadow: 8,
+      shadow: 12,
       child: SizedBox(
         width: double.infinity,
         child: CustomDropDown(

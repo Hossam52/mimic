@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
@@ -20,7 +21,7 @@ class HowToChallengeScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(30.w),
           child: _howToChallengeText(),
         ),
       ),
@@ -31,7 +32,7 @@ class HowToChallengeScreen extends StatelessWidget {
     return Text(
       AppStrings.howToChallenge * 2,
       style: getRegularStyle(color: ColorManager.lightGrey).copyWith(
-        height: 2.5,
+        height: 2,
         wordSpacing: 1,
         letterSpacing: 1,
       ),

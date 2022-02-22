@@ -50,12 +50,14 @@ class _UserMainLayoutState extends State<UserMainLayout> {
           },
           icon: Icon(
             MimicIcons.menu,
+            size: 18.r,
             color: Theme.of(context).primaryColor,
           ),
         ),
         actions: const [NotificationIcon()],
       ),
       bottomNavigationBar: CustomBottomNavBar(
+        curve: Curves.easeIn,
         currentIndex: selectedIndex,
         onTap: (index) {
           setState(() {
@@ -65,12 +67,14 @@ class _UserMainLayoutState extends State<UserMainLayout> {
         selectedItemColor: ColorManager.selectedBottomColor,
         unselectedItemColor: ColorManager.darkGrey,
         selectedColorOpacity: 0.3,
+        itemPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.all(0),
         items: [
-          _bottomNavBarItem(MimicIcons.homeBottomTab, 'Home'),
-          _bottomNavBarItem(MimicIcons.discoverBottomTab, 'Discover'),
-          _bottomNavBarItem(Icons.add, 'Add'),
-          _bottomNavBarItem(MimicIcons.challenges, 'Challenges'),
-          _bottomNavBarItem(MimicIcons.accountFilled, 'Account'),
+          _bottomNavBarItem(_icon(MimicIcons.homeBottomTab), 'Home'),
+          _bottomNavBarItem(_icon(MimicIcons.discoverBottomTab), 'Discover'),
+          _bottomNavBarItem(_add(), ''),
+          _bottomNavBarItem(_icon(MimicIcons.challenges), 'Challenges'),
+          _bottomNavBarItem(_icon(Icons.account_circle_outlined), 'Account'),
         ],
       ),
       drawer: const UserDrawer(),
@@ -78,16 +82,35 @@ class _UserMainLayoutState extends State<UserMainLayout> {
     );
   }
 
-  CustomBottomNavBarItem _bottomNavBarItem(IconData icon, String title) {
+  CustomBottomNavBarItem _bottomNavBarItem(Widget child, String title) {
     return CustomBottomNavBarItem(
-      icon: Icon(
-        icon,
-        size: 20.r,
-      ),
+      icon: child,
       title: Text(
         title,
-        style: getSemiBoldStyle(fontSize: FontSize.s14),
+        style: getSemiBoldStyle(fontSize: FontSize.s8)
+            .copyWith(fontFamily: FontConstants.poppins),
       ),
+    );
+  }
+
+  Widget _add() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(10.r)),
+      child: Icon(
+        Icons.add,
+        color: ColorManager.white,
+        size: 40.r,
+      ),
+    );
+  }
+
+  Widget _icon(IconData icon) {
+    return Icon(
+      icon,
+      color: ColorManager.commentsColor,
+      size: 20.r,
     );
   }
 }

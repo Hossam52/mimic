@@ -68,7 +68,7 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: HeaderName(
-                'Top',
+                'Marked',
                 fontSize: 18.sp,
                 selected: selectedHeader == _HeaderEnum.top,
                 onTap: () {
@@ -80,6 +80,7 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
             ),
           ],
         ),
+        SizedBox(height: 16.h),
         ListView.builder(
             primary: false,
             shrinkWrap: true,

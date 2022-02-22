@@ -42,6 +42,7 @@ class _MyChallengeItem extends StatelessWidget {
           Image.asset(
             'assets/images/static/video_preview.png',
             width: double.infinity,
+            height: double.infinity,
             fit: BoxFit.fill,
           ),
           const BlackOpacity(

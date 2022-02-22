@@ -15,15 +15,12 @@ class UserHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       primary: true,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: Column(
-          children: [
-            const Highlights(),
-            SizedBox(height: 16.h),
-            const _CurrentChallenges(),
-          ],
-        ),
+      child: Column(
+        children: [
+          const Highlights(),
+          SizedBox(height: 16.h),
+          const _CurrentChallenges(),
+        ],
       ),
     );
   }
@@ -40,45 +37,49 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
   _HeaderEnum selectedHeader = _HeaderEnum.currentChallenges;
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          HeaderName(
-            'Current Challenges',
-            fontSize: 18.sp,
-            selected: selectedHeader == _HeaderEnum.currentChallenges,
-            onTap: () {
-              setState(() {
-                selectedHeader = _HeaderEnum.currentChallenges;
-              });
-            },
-          ),
-          HeaderName(
-            'Marked',
-            fontSize: 18.sp,
-            selected: selectedHeader == _HeaderEnum.marked,
-            onTap: () {
-              setState(() {
-                selectedHeader = _HeaderEnum.marked;
-              });
-            },
-          ),
-        ],
-      ),
-      ListView.builder(
-          primary: false,
-          shrinkWrap: true,
-          itemCount: 14,
-          itemBuilder: (_, index) {
-            return ChallenegItem(
-              onJoinTapped: () {},
-              onChallengeTapped: () {
-                navigateTo(context, Routes.challengeDetails);
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            HeaderName(
+              'Current Challenges',
+              fontSize: 18.sp,
+              selected: selectedHeader == _HeaderEnum.currentChallenges,
+              onTap: () {
+                setState(() {
+                  selectedHeader = _HeaderEnum.currentChallenges;
+                });
               },
-            );
-          })
-    ]);
+            ),
+            HeaderName(
+              'Marked',
+              fontSize: 18.sp,
+              selected: selectedHeader == _HeaderEnum.marked,
+              onTap: () {
+                setState(() {
+                  selectedHeader = _HeaderEnum.marked;
+                });
+              },
+            ),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: 14,
+            itemBuilder: (_, index) {
+              return ChallenegItem(
+                onJoinTapped: () {},
+                onChallengeTapped: () {
+                  navigateTo(context, Routes.challengeDetails);
+                },
+              );
+            })
+      ]),
+    );
   }
 }
 

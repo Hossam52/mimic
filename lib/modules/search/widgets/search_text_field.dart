@@ -12,7 +12,7 @@ class CustomSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(20.r)),
+      borderRadius: BorderRadius.all(Radius.circular(14.r)),
       borderSide: BorderSide.none,
     );
     return ShadowBox(
@@ -45,15 +45,18 @@ class CustomSearchField extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.search,
-                      size: 28.r,
+                      size: 24.r,
                     ),
                     SizedBox(width: 10.w),
                     Text(
                       searchTextHint,
-                      style: getRegularStyle(fontSize: FontSize.s12),
+                      style: getRegularStyle(fontSize: FontSize.s10),
                     ),
+                    SizedBox(width: 14.w),
                     VerticalDivider(
                       color: ColorManager.grey,
+                      indent: 8.h,
+                      endIndent: 8.h,
                       thickness: 1,
                     )
                   ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 
@@ -26,12 +28,13 @@ class VideStatisticsItem extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 18,
+            size: 15.r,
             color: filledColor ?? ColorManager.commentsColor,
           ),
           Text(
             count,
-            style: getSemiBoldStyle(color: textColor ?? ColorManager.black),
+            style: getSemiBoldStyle(
+                color: textColor ?? ColorManager.black, fontSize: FontSize.s10),
           ),
         ],
       ),

@@ -20,7 +20,8 @@ class DefaultButton extends StatelessWidget {
       this.trailing,
       this.disabledColor,
       this.hasBorder = true,
-      this.padding})
+      this.padding,
+      this.borderColor})
       : super(key: key);
   final String text;
   final VoidCallback? onPressed;
@@ -35,14 +36,15 @@ class DefaultButton extends StatelessWidget {
   final double? width;
   final Widget? trailing;
   final EdgeInsetsGeometry? padding;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
-    final buttonHeight = height ?? screenHeight(context) * 0.07;
-    final buttonWidth = width ?? screenWidth(context) * 0.7;
+    final buttonHeight = height ?? screenHeight(context) * 0.06;
+    final buttonWidth = width ?? double.infinity; //screenWidth(context) * 0.7;
     return SizedBox(
       height: buttonHeight,
-      // width: buttonWidth,
+      width: buttonWidth,
       child: ElevatedButton(
         onPressed: onPressed,
         child: Container(
@@ -75,7 +77,7 @@ class DefaultButton extends StatelessWidget {
               side: !hasBorder
                   ? BorderSide.none
                   : BorderSide(
-                      color: Theme.of(context).primaryColor,
+                      color: borderColor ?? Theme.of(context).primaryColor,
                       width: 1.2,
                     ),
               borderRadius: BorderRadius.all(

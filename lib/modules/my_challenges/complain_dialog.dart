@@ -32,7 +32,7 @@ class ComplainDialog extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
             SizedBox(
-              height: screenHeight(context) * 0.34,
+              height: 210.h,
               child: SingleChildScrollView(
                 child: Text(
                   AppStrings.rejectedReason,
@@ -53,7 +53,8 @@ class ComplainDialog extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(height: 16.h),
           ],
         ),
       ),

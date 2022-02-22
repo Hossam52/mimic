@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -89,7 +90,7 @@ class _InputFields extends StatelessWidget {
               hintText: 'Name',
               iconColor: Theme.of(context).primaryColor,
               controller: TextEditingController(),
-              icon: MimicIcons.account),
+              icon: MimicIcons.accountfilled),
           DefaultTextField(
               hintText: 'Mobile',
               iconColor: Theme.of(context).primaryColor,
@@ -117,12 +118,18 @@ class _SendButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultButton(
-      text: 'Send',
-      onPressed: () {},
-      backgroundColor: Theme.of(context).primaryColor,
-      foregroundColor: ColorManager.white,
-      radius: 15,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 90.0.w),
+      child: SizedBox(
+        width: double.infinity,
+        child: DefaultButton(
+          text: 'Send',
+          onPressed: () {},
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: ColorManager.white,
+          radius: 15.r,
+        ),
+      ),
     );
   }
 }
