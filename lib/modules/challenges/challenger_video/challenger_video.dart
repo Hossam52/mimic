@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/main.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
 import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
@@ -58,7 +59,7 @@ class ChallengerVideo extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(48.r)),
       child: Stack(
         children: [
-          Image.asset('assets/images/static/video_preview.png',
+          Image.asset(getVideoImageRandom(),
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.fill),

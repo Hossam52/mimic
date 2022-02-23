@@ -1,9 +1,22 @@
+import 'dart:math';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/onboarding/on_boarding_screen.dart';
 import 'package:mimic/presentation/resourses/theme_manager.dart';
+
+final videoPaths = [
+  'assets/images/static/video_images/video1.png',
+  'assets/images/static/video_images/video2.png',
+  'assets/images/static/video_images/video3.png',
+  'assets/images/static/video_images/video4.png',
+  'assets/images/static/video_images/video5.png',
+];
+String getVideoImageRandom() {
+  return videoPaths[Random.secure().nextInt(videoPaths.length)];
+}
 
 void main() {
   runApp(

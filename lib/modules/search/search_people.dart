@@ -17,30 +17,37 @@ class SearchPeople extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16.w, right: 35.w, top: 18.h),
+      padding: EdgeInsets.only(top: 20.h),
       child: Column(
         children: [
-          Row(
-            children: [
-              const Expanded(
-                child: CustomSearchField(
-                  searchTextHint: 'User_name',
+          Padding(
+            padding: EdgeInsets.only(left: 16.w, right: 32.w),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: CustomSearchField(
+                    searchTextHint: 'User_name',
+                  ),
                 ),
-              ),
-              SizedBox(width: 15.h),
-              GestureDetector(
-                  onTap: () {
-                    navigateTo(context, Routes.scanQr);
-                  },
-                  child: SvgPicture.asset(
-                    'assets/images/qr.svg',
-                    width: 30.w,
-                    height: 30.h,
-                  )),
-            ],
+                SizedBox(width: 15.h),
+                GestureDetector(
+                    onTap: () {
+                      navigateTo(context, Routes.scanQr);
+                    },
+                    child: SvgPicture.asset(
+                      'assets/images/qr.svg',
+                      width: 30.w,
+                      height: 30.h,
+                    )),
+              ],
+            ),
           ),
           SizedBox(height: 25.h),
-          Expanded(child: _searchedPeople()),
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 28.w),
+            child: _searchedPeople(),
+          )),
         ],
       ),
     );
@@ -53,8 +60,8 @@ class SearchPeople extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 18.h,
-          childAspectRatio: 108.w / 200.h,
-          crossAxisSpacing: 30.w,
+          childAspectRatio: 140.w / 200.h,
+          crossAxisSpacing: 25.w,
         ),
         itemBuilder: (_, index) {
           return const _SearchedPersonItem();
@@ -67,51 +74,64 @@ class _SearchedPersonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shadowColor: ColorManager.visibilityColor.withOpacity(0.6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      clipBehavior: Clip.hardEdge,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-              height: 190.h,
-              child: Image.asset(
-                'assets/images/static/avatar.png',
-                fit: BoxFit.fill,
-                width: double.infinity,
-                height: double.infinity,
-              )),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Maria Snow',
-                    style: getRegularStyle()
-                        .copyWith(fontFamily: FontConstants.gibsonFamily),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: RatingBarIndicator(
-                        itemBuilder: (_, index) {
-                          return const Icon(Icons.star, color: Colors.amber);
-                        },
-                        rating: 5,
-                        itemCount: 5,
-                        itemSize: 16,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+    return GestureDetector(
+      onTap: () {
+        navigateTo(context, Routes.challengerProfile);
+      },
+      child: Card(
+        elevation: 4,
+        shadowColor: ColorManager.visibilityColor.withOpacity(0.6),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 6,
+              child: SizedBox(
+                  height: 140.h,
+                  child: Image.asset(
+                    'assets/images/static/avatar.png',
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    height: double.infinity,
+                  )),
             ),
-          )
-        ],
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Maria Snow',
+                      style: getRegularStyle()
+                          .copyWith(fontFamily: FontConstants.gibsonFamily),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: RatingBarIndicator(
+                          itemBuilder: (_, index) {
+                            return Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 22.r,
+                            );
+                          },
+                          rating: 5,
+                          itemCount: 5,
+                          itemSize: 22.r,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/main.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/widgets/person_details.dart';
@@ -8,20 +9,23 @@ import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 class VideoOverview extends StatelessWidget {
-  const VideoOverview({Key? key, this.defaultIconColor}) : super(key: key);
+  const VideoOverview({Key? key, this.defaultIconColor, this.borderRadius})
+      : super(key: key);
   final Color? defaultIconColor;
+  final double? borderRadius;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 200.h,
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(6.r)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius ?? 6.r)),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Image.asset(
-            'assets/images/static/video_preview.png',
+            getVideoImageRandom(),
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.fill,

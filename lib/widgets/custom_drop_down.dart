@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 
 class CustomDropDown extends StatelessWidget {
@@ -6,16 +7,21 @@ class CustomDropDown extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    return InputDecorator(
-      decoration: const InputDecoration.collapsed(hintText: '').copyWith(
-        fillColor: ColorManager.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+    // final border =
+    return SizedBox(
+      height: 45.h,
+      child: InputDecorator(
+        decoration: const InputDecoration.collapsed(hintText: '').copyWith(
+          fillColor: ColorManager.white,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+          filled: true,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
+        child: DropdownButtonHideUnderline(child: child),
       ),
-      child: DropdownButtonHideUnderline(child: child),
     );
   }
 }

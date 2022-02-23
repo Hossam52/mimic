@@ -27,7 +27,7 @@ class HeaderName extends StatelessWidget {
         children: [
           Text(
             title,
-            style: getBoldStyle(fontSize: fontSize ?? FontSize.s20).copyWith(
+            style: getBoldStyle(fontSize: fontSize ?? FontSize.s18).copyWith(
               color: selected
                   ? ColorManager.black
                   : ColorManager.black.withOpacity(0.49),

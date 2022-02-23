@@ -9,9 +9,11 @@ import 'package:mimic/modules/auth/register/interests/interests_screen.dart';
 import 'package:mimic/modules/auth/register/register_screen.dart';
 import 'package:mimic/modules/auth/register/register_virefy_email.dart';
 import 'package:mimic/modules/auth/register/terms_conditions/privacy_policy_screen.dart';
+import 'package:mimic/modules/challenger_profile/challenger_profile.dart';
 import 'package:mimic/modules/challenges/all_challengers/all_challengers.dart';
 import 'package:mimic/modules/challenges/challenge_details/challenge_details.dart';
 import 'package:mimic/modules/challenges/challenger_video/challenger_video.dart';
+import 'package:mimic/modules/create_challenge/create_challenge_screen.dart';
 import 'package:mimic/modules/draft/draft_screen.dart';
 import 'package:mimic/modules/home/customer_support.dart';
 import 'package:mimic/modules/home/home_screen.dart';
@@ -48,6 +50,8 @@ class Routes {
   static const String profileChangePassword = '/profile_change_password';
   static const String notifications = '/notifications';
   static const String allRanks = '/allRanks';
+  static const String createChallenge = '/create_challenge';
+  static const String challengerProfile = '/challenger_profile';
 }
 
 class RouteGenerator {
@@ -99,6 +103,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case Routes.allRanks:
         return MaterialPageRoute(builder: (_) => const AllRanksScreen());
+      case Routes.createChallenge:
+        return MaterialPageRoute(builder: (_) => const CreateChallenge());
+      case Routes.challengerProfile:
+        return MaterialPageRoute(builder: (_) => const ChallengerProfile());
 
       default:
         return unDefinedRoute();

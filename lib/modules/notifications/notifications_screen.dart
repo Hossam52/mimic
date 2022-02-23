@@ -6,6 +6,7 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
@@ -254,7 +255,9 @@ class _NotificationActions extends StatelessWidget {
       children: [
         Expanded(
             child: DefaultButton(
-          onPressed: () {},
+          onPressed: () {
+            Dialogs.acceptChallengeDialog(context);
+          },
           text: 'Approve',
           hasBorder: false,
           radius: 8.r,
@@ -262,7 +265,9 @@ class _NotificationActions extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
             child: DefaultButton(
-          onPressed: () {},
+          onPressed: () {
+            Dialogs.rejectChallengeDialog(context);
+          },
           text: 'Reject',
           radius: 8.r,
           borderColor: ColorManager.white,

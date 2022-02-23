@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/main.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
@@ -61,7 +62,7 @@ class _ChallengeItemPreview extends StatelessWidget {
               child: Stack(
                 children: [
                   Image.asset(
-                    'assets/images/static/video_preview.png',
+                    getVideoImageRandom(),
                     fit: BoxFit.fill,
                     width: double.infinity,
                     height: double.infinity,
@@ -140,7 +141,7 @@ class _VideoPopup extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
-          Image.asset('assets/images/static/video_preview.png',
+          Image.asset(getVideoImageRandom(),
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.fill),

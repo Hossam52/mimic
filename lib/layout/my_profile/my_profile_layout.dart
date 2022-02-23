@@ -13,6 +13,7 @@ import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
+import 'package:mimic/widgets/profile_statistics.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/widgets/video_item.dart';
@@ -46,32 +47,7 @@ class MyProfileLayout extends StatelessWidget {
               children: [
                 const _MyProfileDetails(),
                 SizedBox(height: 22.h),
-                IntrinsicHeight(
-                  child: Row(children: [
-                    const FittedBox(
-                        // flex: 2,
-                        child: _ProfileStatistics(
-                      count: '140',
-                      icon: MimicIcons.video,
-                      label: 'Video uploaded',
-                    )),
-                    divider,
-                    const FittedBox(
-                        child: _ProfileStatistics(
-                      count: '140',
-                      icon: MimicIcons.like,
-                      label: 'Likes',
-                    )),
-                    divider,
-                    const FittedBox(
-                        // flex: 2,
-                        child: _ProfileStatistics(
-                      count: '24K',
-                      icon: MimicIcons.contribution,
-                      label: 'Contribution',
-                    )),
-                  ]),
-                ),
+                const ProfileStatistics(),
                 SizedBox(height: 36.h),
                 TabBarHeader(
                   fontSize: FontSize.s14,
@@ -147,7 +123,7 @@ class _MyProfileDetails extends StatelessWidget {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                _scanQR(),
+                _scanQR(context),
                 SizedBox(width: 19.w),
                 _settings(context),
                 SizedBox(width: 19.w),
@@ -159,13 +135,18 @@ class _MyProfileDetails extends StatelessWidget {
     );
   }
 
-  Widget _scanQR() {
-    return SvgPicture.asset(
-      'assets/images/scan_qr.svg',
-      fit: BoxFit.fill,
-      width: 19.w,
-      height: 19.w,
-      color: ColorManager.commentsColor,
+  Widget _scanQR(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Dialogs.shareSaveToGalleryDialog(context);
+      },
+      child: SvgPicture.asset(
+        'assets/images/scan_qr.svg',
+        fit: BoxFit.fill,
+        width: 19.w,
+        height: 19.w,
+        color: ColorManager.commentsColor,
+      ),
     );
   }
 

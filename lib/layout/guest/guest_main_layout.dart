@@ -5,6 +5,8 @@ import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
 import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
 import 'package:mimic/layout/my_profile/my_profile_layout.dart';
 import 'package:mimic/layout/search/search_layout.dart';
+import 'package:mimic/layout/widgets/bottom_bar_widgets.dart';
+import 'package:mimic/layout/widgets/mimic_bottom_bar.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
 import 'package:mimic/modules/home/guest/guest_home_screen.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -54,29 +56,58 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
         ),
         actions: const [NotificationIcon()],
       ),
-      bottomNavigationBar: CustomBottomNavBar(
-        curve: Curves.easeIn,
-        currentIndex: selectedIndex,
-        onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        selectedItemColor: ColorManager.selectedBottomColor,
-        unselectedItemColor: ColorManager.darkGrey,
-        selectedColorOpacity: 0.3,
-        margin: const EdgeInsets.all(0),
-        itemPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        items: [
-          _bottomNavBarItem(_icon(MimicIcons.homeBottomTab), 'Home'),
-          _bottomNavBarItem(_icon(MimicIcons.discoverBottomTab), 'Discover'),
-          _bottomNavBarItem(_add(), ''),
-          _bottomNavBarItem(_icon(MimicIcons.challenges), 'Challenges'),
-          _bottomNavBarItem(_icon(Icons.account_circle_outlined), 'Account'),
-        ],
-      ),
+
+      // bottomNavigationBar: CustomBottomNavBar(
+      //   curve: Curves.easeIn,
+      //   currentIndex: selectedIndex,
+      //   onTap: (index) {
+      //     setState(() {
+      //       selectedIndex = index;
+      //     });
+      //   },
+      //   selectedItemColor: ColorManager.selectedBottomColor,
+      //   unselectedItemColor: ColorManager.darkGrey,
+      //   selectedColorOpacity: 0.3,
+      //   margin: const EdgeInsets.all(0),
+      //   itemPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      //   items: [
+      //     _bottomNavBarItem(_icon(MimicIcons.homeBottomTab), 'Home'),
+      //     _bottomNavBarItem(_icon(MimicIcons.discoverBottomTab), 'Discover'),
+      //     _bottomNavBarItem(_add(), ''),
+      //     _bottomNavBarItem(_icon(MimicIcons.challenges), 'Challenges'),
+      //     _bottomNavBarItem(_icon(Icons.account_circle_outlined), 'Account'),
+      //   ],
+      // ),
       drawer: const GuestDrawer(),
-      body: screens[selectedIndex],
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          // alignment: Alignment.bottomCenter,
+          children: [
+            Expanded(child: screens[selectedIndex]),
+            MimicBottomBar(
+              selectedIndex: selectedIndex,
+              onTap: (index) => setState(() {
+                selectedIndex = index;
+              }),
+              bottomBars: [
+                MimicBottomBarItem(
+                    title: 'Home', widget: const HomeBottomBarWidget()),
+                MimicBottomBarItem(
+                    title: 'Discover', widget: const SearchBottomBarWidget()),
+                MimicBottomBarItem(
+                    title: '', widget: const AddChallengeBottomBarWidget()),
+                MimicBottomBarItem(
+                    title: 'Challenges',
+                    widget: const ChallengesBottomBarWidget()),
+                MimicBottomBarItem(
+                    title: 'Account', widget: const AccountBottomBarWidget()),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 

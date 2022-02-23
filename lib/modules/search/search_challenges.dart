@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
@@ -29,7 +31,7 @@ class SearchChallenges extends StatelessWidget {
               const Expanded(child: _CategoryDatePublished()),
             ],
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: 60.h),
           Expanded(child: _searchedChallenges())
         ],
       ),
@@ -47,7 +49,7 @@ class SearchChallenges extends StatelessWidget {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 // mainAxisExtent: 260.h,
-                childAspectRatio: 140.w / 230.h,
+                childAspectRatio: 140.w / 210.h,
                 mainAxisSpacing: 20.h,
                 crossAxisSpacing: 20.w),
             itemBuilder: (_, index) {
@@ -140,20 +142,30 @@ class _SearchedChallengeItem extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       clipBehavior: Clip.hardEdge,
-      child: Stack(
+      child: Column(
         children: [
-          Image.asset(
-            'assets/images/static/video_preview.png',
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.fill,
-          ),
           PersonNameAndImage(
             textColor: ColorManager.black,
             nameSize: FontSize.s10,
-          )
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(8.h),
+              child: Image.asset(
+                _paths[Random.secure().nextInt(_paths.length)],
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
+final _paths = [
+  'assets/images/static/discover/discover_challenge_person1.png',
+  'assets/images/static/discover/discover_challenge_person2.png',
+];

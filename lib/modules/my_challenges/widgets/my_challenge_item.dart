@@ -19,7 +19,7 @@ class MyChallengeItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 20.h),
       child: SizedBox(
-        height: 280.h,
+        height: 220.h,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

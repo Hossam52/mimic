@@ -27,7 +27,7 @@ class TabBarHeader extends StatelessWidget {
         unselectedLabelColor: ColorManager.black,
         unselectedLabelStyle: getSemiBoldStyle(fontSize: fontSize),
         labelColor: ColorManager.black,
-        tabs: tabBars.map((e) => Text(e.name)).toList(),
+        tabs: tabBars.map((e) => Center(child: Text(e.name))).toList(),
         indicatorWeight: 2,
         indicatorColor: ColorManager.tabBarIndicator,
       ),

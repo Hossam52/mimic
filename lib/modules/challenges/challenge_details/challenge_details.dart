@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/main.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
 import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
 import 'package:mimic/modules/challenges/widgets/challenges_grid_view.dart';
@@ -72,7 +73,8 @@ class ChallengeDetailsScreen extends StatelessWidget {
           SizedBox(
             width: screenWidth(context) * 0.31,
             child: DefaultButton(
-              height: screenHeight(context) * 0.055,
+              // height: screenHeight(context) * 0.055,
+              height: 40.h,
               text: 'Join',
               onPressed: () {},
               trailing: const Icon(Icons.add),
@@ -211,7 +213,7 @@ class _VideoPlayer extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.hardEdge,
           children: [
-            Image.asset('assets/images/static/video_preview.png',
+            Image.asset(getVideoImageRandom(),
                 width: double.infinity,
                 height: double.infinity,
                 fit: BoxFit.fill),

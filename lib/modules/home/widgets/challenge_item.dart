@@ -23,7 +23,7 @@ class ChallenegItem extends StatelessWidget {
   final VoidCallback onJoinTapped;
   @override
   Widget build(BuildContext context) {
-    final double joinIconHeight = 50;
+    final double joinIconHeight = 50.r;
     final halfButtonSize = joinIconHeight / 2;
     return Card(
       clipBehavior: Clip.hardEdge,
@@ -94,7 +94,7 @@ class ChallenegItem extends StatelessWidget {
           child: Text(
             'Join',
             style:
-                getBoldStyle(fontSize: FontSize.s18, color: ColorManager.white),
+                getBoldStyle(fontSize: FontSize.s14, color: ColorManager.white),
           ),
         ),
       );

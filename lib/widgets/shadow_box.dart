@@ -10,16 +10,16 @@ class ShadowBox extends StatelessWidget {
   final double radius;
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   decoration: BoxDecoration(boxShadow: [
-    //     BoxShadow(
-    //         color: ColorManager.visibilityColor,
-    //         blurRadius: 8,
-    //         blurStyle: BlurStyle.outer,
-    //         spreadRadius: 2)
-    //   ]),
-    //   child: child,
-    // );
+    return Container(
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: ColorManager.visibilityColor.withOpacity(0.09),
+            blurRadius: 8,
+            blurStyle: BlurStyle.normal,
+            spreadRadius: radius)
+      ]),
+      child: child,
+    );
     return Material(
       borderRadius: BorderRadius.circular(radius),
       shadowColor: ColorManager.visibilityColor.withOpacity(0.15),

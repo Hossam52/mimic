@@ -15,12 +15,18 @@ class UserHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       primary: true,
-      child: Column(
-        children: [
-          const Highlights(),
-          SizedBox(height: 16.h),
-          const _CurrentChallenges(),
-        ],
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.w),
+        child: Column(
+          children: [
+            const Highlights(),
+            SizedBox(height: 16.h),
+            Padding(
+              padding: EdgeInsets.only(right: 11.w),
+              child: const _CurrentChallenges(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -37,10 +43,10 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
   _HeaderEnum selectedHeader = _HeaderEnum.currentChallenges;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: EdgeInsets.only(right: 4.0.w),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             HeaderName(
@@ -65,21 +71,21 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
             ),
           ],
         ),
-        SizedBox(height: 16.h),
-        ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: 14,
-            itemBuilder: (_, index) {
-              return ChallenegItem(
-                onJoinTapped: () {},
-                onChallengeTapped: () {
-                  navigateTo(context, Routes.challengeDetails);
-                },
-              );
-            })
-      ]),
-    );
+      ),
+      SizedBox(height: 16.h),
+      ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: 14,
+          itemBuilder: (_, index) {
+            return ChallenegItem(
+              onJoinTapped: () {},
+              onChallengeTapped: () {
+                navigateTo(context, Routes.challengeDetails);
+              },
+            );
+          })
+    ]);
   }
 }
 

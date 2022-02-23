@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
@@ -33,10 +35,16 @@ class HighlightItem extends StatelessWidget {
 
   Widget _image() {
     return Image.asset(
-      'assets/images/static/interest3.png',
+      _paths[Random.secure().nextInt(_paths.length)],
       width: double.infinity,
       height: double.infinity,
       fit: BoxFit.fill,
     );
   }
 }
+
+final _paths = [
+  'assets/images/static/highlights/highlight1.png',
+  'assets/images/static/highlights/highlight2.png',
+  'assets/images/static/highlights/highlight3.png',
+];

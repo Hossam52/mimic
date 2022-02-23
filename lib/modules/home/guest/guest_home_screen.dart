@@ -26,12 +26,18 @@ class GuestHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       primary: true,
-      child: Column(
-        children: [
-          const Highlights(),
-          SizedBox(height: 16.h),
-          const _CurrentChallenges(),
-        ],
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.w),
+        child: Column(
+          children: [
+            const Highlights(),
+            SizedBox(height: 16.h),
+            Padding(
+              padding: EdgeInsets.only(right: 11.w),
+              child: const _CurrentChallenges(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -49,10 +55,10 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: EdgeInsets.only(right: 4.0.w),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             HeaderName(
@@ -65,35 +71,32 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
                 });
               },
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: HeaderName(
-                'Marked',
-                fontSize: 18.sp,
-                selected: selectedHeader == _HeaderEnum.top,
-                onTap: () {
-                  setState(() {
-                    selectedHeader = _HeaderEnum.top;
-                  });
-                },
-              ),
+            HeaderName(
+              'Marked',
+              fontSize: 18.sp,
+              selected: selectedHeader == _HeaderEnum.top,
+              onTap: () {
+                setState(() {
+                  selectedHeader = _HeaderEnum.top;
+                });
+              },
             ),
           ],
         ),
-        SizedBox(height: 16.h),
-        ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: 14,
-            itemBuilder: (_, index) {
-              return ChallenegItem(
-                onJoinTapped: () {
-                  navigateTo(context, Routes.errorGuestPermissions);
-                },
-              );
-            })
-      ]),
-    );
+      ),
+      SizedBox(height: 16.h),
+      ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: 14,
+          itemBuilder: (_, index) {
+            return ChallenegItem(
+              onJoinTapped: () {
+                navigateTo(context, Routes.errorGuestPermissions);
+              },
+            );
+          })
+    ]);
   }
 }
 

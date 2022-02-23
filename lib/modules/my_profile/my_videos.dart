@@ -16,6 +16,7 @@ class MyVideos extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (_, index) {
           return VideoOverview(
+            borderRadius: 13.r,
             defaultIconColor: ColorManager.commentsColor,
           );
         });

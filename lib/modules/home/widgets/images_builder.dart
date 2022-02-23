@@ -14,7 +14,7 @@ class ImagesBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      final double imageRadius = 60.r;
+      final double imageRadius = 50.r;
       final imagesToRender = constraints.maxWidth / ((imageRadius));
       int i = 0;
       return Row(
@@ -25,7 +25,7 @@ class ImagesBuilder extends StatelessWidget {
               padding: EdgeInsets.only(right: 5.0.w),
               child: RoundedImage(
                 imagePath: 'assets/images/static/interest4.png',
-                size: imageRadius.r,
+                size: imageRadius,
               ),
             ),
           if (i < imagesCount) _lastImage(imageRadius, i),

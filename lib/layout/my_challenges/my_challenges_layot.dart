@@ -7,6 +7,7 @@ import 'package:mimic/modules/my_challenges/new_challenge_requests.dart';
 import 'package:mimic/modules/my_challenges/rejected_challenges.dart';
 import 'package:mimic/modules/search/search_people.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 
 final List<CustomTabBarItem> _myChallengesTabBars = [
@@ -30,6 +31,7 @@ class MyChallengesLayout extends StatelessWidget {
             Expanded(
                 child: TabBarHeader(
               tabBars: _myChallengesTabBars,
+              fontSize: FontSize.s10,
             )),
             Expanded(
               flex: 10,
