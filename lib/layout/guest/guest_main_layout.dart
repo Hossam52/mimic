@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mimic/layout/guest/error_guest_permissions.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
 import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
 import 'package:mimic/layout/my_profile/my_profile_layout.dart';
@@ -30,10 +31,10 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
   int selectedIndex = 0;
   final screens = [
     GuestHomeScreen(),
-    const SearchLayout(),
-    GuestHomeScreen(),
-    const MyChallengesLayout(),
-    const MyProfileLayout(),
+    const ErrorGuestPermission(),
+    const ErrorGuestPermission(),
+    const ErrorGuestPermission(),
+    const ErrorGuestPermission(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
       key: scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
-        title: MimicLogo(width: screenWidth(context) * 0.25),
+        title: MimicLogoHorizontal(width: screenWidth(context) * 0.25),
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
@@ -88,6 +89,9 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
             Expanded(child: screens[selectedIndex]),
             MimicBottomBar(
               selectedIndex: selectedIndex,
+              transparentColorIndex: selectedIndex != 0
+                  ? selectedIndex
+                  : 2, //to make the selected color to transparent in error guest permissions
               onTap: (index) => setState(() {
                 selectedIndex = index;
               }),
@@ -95,14 +99,13 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
                 MimicBottomBarItem(
                     title: 'Home', widget: const HomeBottomBarWidget()),
                 MimicBottomBarItem(
-                    title: 'Discover', widget: const SearchBottomBarWidget()),
+                    title: '', widget: const SearchBottomBarWidget()),
                 MimicBottomBarItem(
                     title: '', widget: const AddChallengeBottomBarWidget()),
                 MimicBottomBarItem(
-                    title: 'Challenges',
-                    widget: const ChallengesBottomBarWidget()),
+                    title: '', widget: const ChallengesBottomBarWidget()),
                 MimicBottomBarItem(
-                    title: 'Account', widget: const AccountBottomBarWidget()),
+                    title: '', widget: const AccountBottomBarWidget()),
               ],
             ),
           ],

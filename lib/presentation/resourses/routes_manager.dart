@@ -81,7 +81,7 @@ class RouteGenerator {
       case Routes.errorGuestPermissions:
         return MaterialPageRoute(builder: (_) => const ErrorGuestPermission());
       case Routes.userMainLayout:
-        return MaterialPageRoute(builder: (_) => const UserMainLayout());
+        return MaterialPageRoute(builder: (_) => UserMainLayout());
       case Routes.guestMainLayout:
         return MaterialPageRoute(builder: (_) => const GuestMainLayout());
       case Routes.challengeDetails:
@@ -102,7 +102,7 @@ class RouteGenerator {
       case Routes.notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case Routes.allRanks:
-        return MaterialPageRoute(builder: (_) => const AllRanksScreen());
+        return MaterialPageRoute(builder: (_) => AllRanksScreen());
       case Routes.createChallenge:
         return MaterialPageRoute(builder: (_) => const CreateChallenge());
       case Routes.challengerProfile:

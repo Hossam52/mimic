@@ -154,6 +154,7 @@ class _ProblemDescription extends StatelessWidget {
       child: TextField(
         controller: TextEditingController(),
         maxLines: 5,
+        minLines: 1,
         style:
             getRegularStyle(color: ColorManager.grey, fontSize: FontSize.s16),
         decoration: InputDecoration(

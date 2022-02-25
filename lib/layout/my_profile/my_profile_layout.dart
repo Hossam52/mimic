@@ -11,6 +11,7 @@ import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/widgets/custom_nested_scroll_view.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/profile_statistics.dart';
@@ -42,25 +43,22 @@ class MyProfileLayout extends StatelessWidget {
           padding: EdgeInsets.all(15.w),
           child: DefaultTabController(
             length: _profileTabs.length,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+            child: CustomNestedScrollView(
+              headerWidgets: [
                 const _MyProfileDetails(),
                 SizedBox(height: 22.h),
                 const ProfileStatistics(),
                 SizedBox(height: 36.h),
                 TabBarHeader(
-                  fontSize: FontSize.s14,
+                  fontSize: FontSize.s12,
                   tabBars: _profileTabs,
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 15.h),
-                    child: TabBarView(
-                        children: _profileTabs.map((e) => e.widget).toList()),
-                  ),
-                ),
               ],
+              body: Padding(
+                padding: EdgeInsets.only(top: 15.h),
+                child: TabBarView(
+                    children: _profileTabs.map((e) => e.widget).toList()),
+              ),
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
 import 'package:mimic/widgets/custom_drop_down.dart';
+import 'package:mimic/widgets/custom_nested_scroll_view.dart';
 import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
@@ -18,8 +19,8 @@ class SearchChallenges extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.h).copyWith(bottom: 0),
-      child: Column(
-        children: [
+      child: CustomNestedScrollView(
+        headerWidgets: [
           const CustomSearchField(
             searchTextHint: 'Challenge title',
           ),
@@ -32,8 +33,8 @@ class SearchChallenges extends StatelessWidget {
             ],
           ),
           SizedBox(height: 60.h),
-          Expanded(child: _searchedChallenges())
         ],
+        body: _searchedChallenges(),
       ),
     );
   }

@@ -6,10 +6,16 @@ import 'package:mimic/presentation/resourses/styles_manager.dart';
 
 class TabBarHeader extends StatelessWidget {
   const TabBarHeader(
-      {Key? key, required this.tabBars, this.fontSize = FontSize.s12})
+      {Key? key,
+      required this.tabBars,
+      this.fontSize = FontSize.s12,
+      this.onTap,
+      this.controller})
       : super(key: key);
   final List<CustomTabBarItem> tabBars;
   final double fontSize;
+  final void Function(int)? onTap;
+  final TabController? controller;
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -21,6 +27,8 @@ class TabBarHeader extends StatelessWidget {
         ),
       ),
       child: TabBar(
+        controller: controller,
+        onTap: onTap,
         labelStyle: getBoldStyle(fontSize: fontSize),
         labelPadding: const EdgeInsets.all(4),
         padding: const EdgeInsets.all(0),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/rounded_image.dart';
@@ -21,11 +22,14 @@ class ImagesBuilder extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           for (i = 0; i < imagesToRender.toInt() - 1 && i < imagesCount; i++)
-            Padding(
-              padding: EdgeInsets.only(right: 5.0.w),
-              child: RoundedImage(
-                imagePath: 'assets/images/static/interest4.png',
-                size: imageRadius,
+            GestureDetector(
+              onTap: () => navigateTo(context, Routes.challengerProfile),
+              child: Padding(
+                padding: EdgeInsets.only(right: 5.0.w),
+                child: RoundedImage(
+                  imagePath: 'assets/images/static/interest4.png',
+                  size: imageRadius,
+                ),
               ),
             ),
           if (i < imagesCount) _lastImage(imageRadius, i),

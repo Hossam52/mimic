@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/widgets/custom_nested_scroll_view.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
@@ -18,8 +19,8 @@ class SearchPeople extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 20.h),
-      child: Column(
-        children: [
+      child: CustomNestedScrollView(
+        headerWidgets: [
           Padding(
             padding: EdgeInsets.only(left: 16.w, right: 32.w),
             child: Row(
@@ -43,12 +44,11 @@ class SearchPeople extends StatelessWidget {
             ),
           ),
           SizedBox(height: 25.h),
-          Expanded(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 28.w),
-            child: _searchedPeople(),
-          )),
         ],
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 28.w),
+          child: _searchedPeople(),
+        ),
       ),
     );
   }

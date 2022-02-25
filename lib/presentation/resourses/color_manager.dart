@@ -37,6 +37,7 @@ class ColorManager {
       HexColor.fromHex('#E2E4E5').withOpacity(0.56);
   static Color seenNotificationBackground = HexColor.fromHex('#E2E4E5');
   static Color allRanksStatisticItem = HexColor.fromHex('#0C092A');
+  static Color backButtonColor = HexColor.fromHex('#707070');
 }
 
 extension HexColor on Color {

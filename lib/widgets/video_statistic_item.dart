@@ -23,23 +23,26 @@ class VideStatisticsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 4.w),
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 15.r,
-              color: filledColor ?? ColorManager.commentsColor,
-            ),
-            Text(
-              count,
-              style: getSemiBoldStyle(
-                  color: textColor ?? ColorManager.black,
-                  fontSize: FontSize.s9),
-            ),
-          ],
+      child: Padding(
+        padding: EdgeInsets.all(4.r),
+        child: GestureDetector(
+          onTap: onPressed,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 15.r,
+                color: filledColor ?? ColorManager.commentsColor,
+              ),
+              Text(
+                count,
+                style: getSemiBoldStyle(
+                    color: textColor ?? ColorManager.black,
+                    fontSize: FontSize.s9),
+              ),
+            ],
+          ),
         ),
       ),
     );
