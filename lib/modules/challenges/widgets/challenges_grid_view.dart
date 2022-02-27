@@ -176,7 +176,11 @@ class _VideoPopup extends StatelessWidget {
             Dialogs.showCommentsDialog(context);
           },
         ),
-        ViewIcon(count: '112', textColor: ColorManager.black),
+        ViewIcon(
+          count: '112',
+          textColor: ColorManager.black,
+          iconColor: ColorManager.commentsColor,
+        ),
       ],
     );
   }

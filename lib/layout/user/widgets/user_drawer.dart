@@ -82,7 +82,6 @@ class _UserDrawerState extends State<UserDrawer> {
       },
       children: [
         ExpansionPanel(
-          backgroundColor: Colors.transparent,
           headerBuilder: (_, val) => DrawerItem(
               iconSize: item.iconSize,
               onTap: () {

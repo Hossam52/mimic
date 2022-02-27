@@ -22,35 +22,42 @@ class ProfileChangePassword extends StatelessWidget {
           children: [
             DefaultTextField(
               isPassword: true,
+              borderRadius: 5.r,
               hintText: 'Current Password',
               controller: TextEditingController(),
               marginAfterEnd: spaceAfterEnd,
               icon: Icons.visibility_outlined,
-              iconColor: ColorManager.black,
+              iconColor: ColorManager.commentsColor,
             ),
             DefaultTextField(
               isPassword: true,
+              borderRadius: 5.r,
               hintText: 'New Password',
               controller: TextEditingController(),
               icon: Icons.visibility_outlined,
               marginAfterEnd: spaceAfterEnd,
-              iconColor: ColorManager.black,
+              iconColor: ColorManager.commentsColor,
             ),
             DefaultTextField(
               isPassword: true,
+              borderRadius: 5.r,
               hintText: 'Confirm New Password',
               controller: TextEditingController(),
               marginAfterEnd: spaceAfterEnd,
               icon: Icons.visibility_outlined,
-              iconColor: ColorManager.black,
+              iconColor: ColorManager.commentsColor,
             ),
-            SvgPicture.asset(
-              'assets/images/logo_vertical.svg',
-              width: double.infinity,
-              height: 220.h,
-              fit: BoxFit.fill,
+            SizedBox(height: 30.h),
+            Opacity(
+              opacity: 0.7,
+              child: SvgPicture.asset(
+                'assets/images/logos/logo_vertical.svg',
+                width: double.infinity,
+                height: 220.h,
+                fit: BoxFit.fill,
+              ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 30.h),
             SizedBox(
               width: double.infinity,
               child: DefaultButton(

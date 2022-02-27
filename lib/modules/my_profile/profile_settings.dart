@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -18,48 +19,58 @@ class ProfileSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TransparentAppBar(title: 'Account settings'),
-      body: SingleChildScrollView(
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const _ProfileImage(),
-            SizedBox(height: 10.h),
-            Text(
-              'Maria Snow',
-              style: getBoldStyle(),
-            ),
-            SizedBox(height: 5.h),
-            Text(
-              'San Francisco, CA',
-              style: getRegularStyle(color: ColorManager.commentsColor),
-            ),
-            SizedBox(height: 40.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.h),
-              child: Column(
-                children: [
-                  const _AccountSettings(),
-                  SizedBox(height: 30.h),
-                  const _PersonalData(),
-                  SizedBox(height: 30.h),
-                  DefaultButton(
-                    text: 'Save Changes',
-                    onPressed: () {},
-                    width: double.infinity,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    foregroundColor: ColorManager.white,
-                    hasBorder: false,
-                    padding: EdgeInsets.symmetric(horizontal: 30.w),
-                    radius: 24.r,
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Opacity(
+            opacity: 0.2,
+            child: SvgPicture.asset('assets/images/logos/logo_vertical.svg',
+                width: double.infinity, height: 245.h),
+          ),
+          SingleChildScrollView(
+              child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const _ProfileImage(),
+                SizedBox(height: 10.h),
+                Text(
+                  'Maria Snow',
+                  style: getBoldStyle(),
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  'San Francisco, CA',
+                  style: getRegularStyle(color: ColorManager.commentsColor),
+                ),
+                SizedBox(height: 40.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.h),
+                  child: Column(
+                    children: [
+                      const _AccountSettings(),
+                      SizedBox(height: 30.h),
+                      const _PersonalData(),
+                      SizedBox(height: 30.h),
+                      DefaultButton(
+                        text: 'Save Changes',
+                        onPressed: () {},
+                        width: double.infinity,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        foregroundColor: ColorManager.white,
+                        hasBorder: false,
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        radius: 24.r,
+                      ),
+                      SizedBox(height: 30.h),
+                    ],
                   ),
-                  SizedBox(height: 30.h),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      )),
+          )),
+        ],
+      ),
     );
   }
 }
@@ -78,26 +89,47 @@ class _ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75.r,
-      width: 75.r,
+      height: 80.w,
+      width: 80.w,
       child: Stack(
         children: [
           RoundedImage(
-              imagePath: 'assets/images/static/avatar.png', size: 70.r),
+              imagePath: 'assets/images/static/avatar.png', size: 85.w),
           Align(
             alignment: Alignment.bottomRight,
             child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r)),
+                  borderRadius: BorderRadius.circular(7.r)),
               elevation: 1,
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(Icons.edit,
-                    color: Theme.of(context).primaryColor, size: 14.r),
+                padding: EdgeInsets.all(4.r),
+                child: SvgPicture.asset(
+                    'assets/images/edit_profile_icons/edit.svg'),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PrefixIconImage extends StatelessWidget {
+  const _PrefixIconImage({Key? key, required this.svgImagePath, this.size = 15})
+      : super(key: key);
+  final String svgImagePath;
+  final double size;
+  @override
+  Widget build(BuildContext context) {
+    return UnconstrainedBox(
+      child: SizedBox(
+        width: size.w,
+        height: size.w,
+        child: FittedBox(
+          child: SvgPicture.asset(
+            svgImagePath,
+          ),
+        ),
       ),
     );
   }
@@ -118,7 +150,8 @@ class _AccountSettings extends StatelessWidget {
             hintText: 'hossam.hassan.fcis@gmail.com',
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,
-            prefixIcon: MimicIcons.email,
+            prefix: const _PrefixIconImage(
+                svgImagePath: 'assets/images/edit_profile_icons/email.svg'),
             labelText: 'Email',
             iconColor: Theme.of(context).primaryColor),
         DefaultTextField(
@@ -126,7 +159,8 @@ class _AccountSettings extends StatelessWidget {
             labelText: 'User Name',
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,
-            prefixIcon: MimicIcons.accountFilled,
+            prefix: const _PrefixIconImage(
+                svgImagePath: 'assets/images/edit_profile_icons/user_name.svg'),
             iconColor: Theme.of(context).primaryColor),
         GestureDetector(
           onTap: () {
@@ -137,7 +171,10 @@ class _AccountSettings extends StatelessWidget {
               labelText: 'Change Password',
               controller: TextEditingController(),
               marginAfterEnd: spaceAfterEnd,
-              prefixIcon: MimicIcons.password,
+              prefix: const _PrefixIconImage(
+                svgImagePath: 'assets/images/edit_profile_icons/password.svg',
+                size: 25,
+              ),
               enabled: false,
               suffix: _icon(),
               iconColor: Theme.of(context).primaryColor),
@@ -163,7 +200,8 @@ class _PersonalData extends StatelessWidget {
             labelText: 'Birth date',
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,
-            prefixIcon: MimicIcons.birthday,
+            prefix: const _PrefixIconImage(
+                svgImagePath: 'assets/images/edit_profile_icons/birthday.svg'),
             enabled: false,
             suffix: _icon(),
             iconColor: Theme.of(context).primaryColor),
@@ -172,7 +210,8 @@ class _PersonalData extends StatelessWidget {
             labelText: 'Country',
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,
-            prefixIcon: MimicIcons.country,
+            prefix: const _PrefixIconImage(
+                svgImagePath: 'assets/images/edit_profile_icons/country.svg'),
             enabled: false,
             suffix: _icon(),
             iconColor: Theme.of(context).primaryColor),
@@ -181,7 +220,8 @@ class _PersonalData extends StatelessWidget {
             labelText: 'City',
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,
-            prefixIcon: MimicIcons.city,
+            prefix: const _PrefixIconImage(
+                svgImagePath: 'assets/images/edit_profile_icons/city.svg'),
             enabled: false,
             suffix: _icon(),
             iconColor: Theme.of(context).primaryColor),

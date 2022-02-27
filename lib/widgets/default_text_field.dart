@@ -4,23 +4,25 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 
 class DefaultTextField extends StatelessWidget {
-  const DefaultTextField({
-    Key? key,
-    required this.hintText,
-    this.isPassword = false,
-    required this.controller,
-    this.validator,
-    this.passwordWidget,
-    this.icon,
-    this.iconColor,
-    this.maxLines = 1,
-    this.prefixIcon,
-    this.marginAfterEnd,
-    this.labelText,
-    this.enabled = true,
-    this.borderRadius,
-    this.suffix,
-  }) : super(key: key);
+  const DefaultTextField(
+      {Key? key,
+      required this.hintText,
+      this.isPassword = false,
+      required this.controller,
+      this.validator,
+      this.passwordWidget,
+      this.icon,
+      this.iconColor,
+      this.maxLines = 1,
+      this.prefixIcon,
+      this.marginAfterEnd,
+      this.labelText,
+      this.enabled = true,
+      this.borderRadius,
+      this.suffix,
+      this.prefix,
+      this.fillColor})
+      : super(key: key);
   final String hintText;
   final bool isPassword;
   final TextEditingController controller;
@@ -28,6 +30,7 @@ class DefaultTextField extends StatelessWidget {
   final Widget? passwordWidget;
   final IconData? icon;
   final IconData? prefixIcon;
+  final Widget? prefix;
   final Color? iconColor;
   final int maxLines;
   final double? marginAfterEnd;
@@ -35,6 +38,7 @@ class DefaultTextField extends StatelessWidget {
   final bool enabled;
   final double? borderRadius;
   final Widget? suffix;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,8 @@ class DefaultTextField extends StatelessWidget {
           obscureText: isPassword,
           validator: validator,
           decoration: InputDecoration(
+            filled: true,
+            fillColor: fillColor ?? ColorManager.white,
             contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
             iconColor: Theme.of(context).primaryColor,
             hintText: hintText,
@@ -64,13 +70,15 @@ class DefaultTextField extends StatelessWidget {
                         icon,
                         color: iconColor ?? ColorManager.grey,
                       ),
-            prefixIcon: prefixIcon == null
-                ? null
-                : Icon(
-                    prefixIcon,
-                    size: 15,
-                    color: iconColor ?? ColorManager.grey,
-                  ),
+            prefixIcon: prefix != null
+                ? prefix
+                : prefixIcon == null
+                    ? null
+                    : Icon(
+                        prefixIcon,
+                        size: 15,
+                        color: iconColor ?? ColorManager.grey,
+                      ),
             border: border,
             enabledBorder: border,
             focusedBorder: border,

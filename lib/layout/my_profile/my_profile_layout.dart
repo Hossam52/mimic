@@ -72,25 +72,35 @@ class _MyProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageSize = 90.w;
+    final crownSize = imageSize / 2;
+
     return Column(
       children: [
         SizedBox(
-          width: 100.r,
+          width: imageSize,
+          height: imageSize,
           child: Stack(
             children: [
-              RoundedImage(
-                imagePath: 'assets/images/static/avatar.png',
-                size: 95.r,
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: crownSize / 2),
+                  child: RoundedImage(
+                    imagePath: 'assets/images/static/avatar.png',
+                    size: imageSize - crownSize / 2,
+                  ),
+                ),
               ),
-              // Align(
-              //   alignment: Alignment.topRight,
-              //   child: SvgPicture.asset(
-              //     'assets/images/crown_rotated.svg',
-              //     width: 44.w,
-              //     height: 44.w,
-              //     fit: BoxFit.fill,
-              //   ),
-              // )
+              Positioned(
+                top: 0,
+                right: 0,
+                child: SvgPicture.asset(
+                  'assets/images/crown_rotated.svg',
+                  height: crownSize,
+                  width: crownSize,
+                  fit: BoxFit.fill,
+                ),
+              )
             ],
           ),
         ),
