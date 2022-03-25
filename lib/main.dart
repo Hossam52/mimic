@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/bloc_observer.dart';
 import 'package:mimic/modules/onboarding/on_boarding_screen.dart';
 import 'package:mimic/presentation/resourses/theme_manager.dart';
+import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
+import 'package:mimic/shared/network/locale/cache_helper.dart';
+import 'package:mimic/shared/network/remote/dio_helper.dart';
+import 'package:mimic/shared/services/security_services.dart';
 
 final videoPaths = [
   'assets/images/static/video_images/video1.png',
@@ -21,15 +27,28 @@ String getVideoImageRandom() {
   return videoPaths[Random.secure().nextInt(videoPaths.length)];
 }
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
+  SecurityServices.init();
+  await CacheHelper.init();
+  DioHelper.init();
+  await Firebase.initializeApp();
   BlocOverrides.runZoned(
     () {
       runApp(
         DevicePreview(
           enabled: !kReleaseMode,
-          builder: (context) => const MyApp(), // Wrap your app
+          builder: (context) => MyApp(), // Wrap your app
         ),
       );
     },
@@ -38,17 +57,23 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 820),
-      builder: () => MaterialApp(
-        title: 'MIMIC',
-        theme: getApplicationTheme(),
-        home: OnBoarding(),
+      builder: () => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthCubit(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'MIMIC',
+          debugShowCheckedModeBanner: false,
+          theme: getApplicationTheme(),
+          home: OnBoarding(),
+        ),
       ),
     );
   }

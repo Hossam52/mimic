@@ -4,6 +4,7 @@ import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/default_circular_progress.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 
 class DefaultButton extends StatelessWidget {
   const DefaultButton(
@@ -50,7 +51,7 @@ class DefaultButton extends StatelessWidget {
         child: Container(
           padding: padding,
           child: loading
-              ? const DefaultCircularProgress()
+              ? const LoadingProgress()
               : trailing == null
                   ? Text(text)
                   : Row(

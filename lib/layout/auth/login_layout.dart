@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mimic/layout/widgets/auth_layout_widget.dart';
 import 'package:mimic/modules/auth/widgets/background_color_widget.dart';
 import 'package:mimic/modules/auth/widgets/stack_card_with_button.dart';
@@ -7,9 +9,11 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/default_text_field.dart';
 import 'package:mimic/widgets/defulat_button.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 
 class LoginLayout extends StatelessWidget {
   const LoginLayout(
@@ -76,14 +80,45 @@ Widget _orLoginWithSocial() {
         textAlign: TextAlign.center,
         style: getRegularStyle(color: ColorManager.white),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: socailImages
-            .map(
-              (e) => SvgPicture.asset(e),
-            )
-            .toList(),
-      )
+      BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoginWithGoogleError) 
+          {
+            Fluttertoast.showToast(msg: state.message,
+            backgroundColor: ColorManager.error,
+            fontSize: FontSize.s16);
+          }
+          else if(state is AuthLoginWithGoogleSuccess)
+          {
+            Fluttertoast.showToast(msg: state.message,
+            backgroundColor: ColorManager.accentColor,
+            fontSize: FontSize.s16);
+            navigateReplacement(context, Routes.userMainLayout);
+          }
+        },
+        builder: (context, state) {
+          return Row(mainAxisAlignment: MainAxisAlignment.center, children: 
+          [
+            InkWell(
+                onTap: () {
+                  AuthCubit.get(context).signInWithGoogle();
+                },
+                child: state is AuthLoginWithGoogleLoading
+                    ? const LoadingProgress(color: Colors.white,)
+                    : SvgPicture.asset(socailImages[0])),
+            SvgPicture.asset(socailImages[1]),
+            SvgPicture.asset(socailImages[2]),
+          ]);
+        },
+      ),
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: socailImages
+      //       .map(
+      //         (e) => SvgPicture.asset(e),
+      //       )
+      //       .toList(),
+      // ),
     ],
   );
 }

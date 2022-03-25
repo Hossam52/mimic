@@ -35,7 +35,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         opacity: 0.7,
       ),
       content: Column(children: [
-        const CustomPinCode(),
+         CustomPinCode(codeController: TextEditingController()),
         _sentTo(context),
         const SizedBox(height: 10),
       ]),

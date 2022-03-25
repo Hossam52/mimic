@@ -19,13 +19,17 @@ class DefaultTextField extends StatelessWidget {
       this.labelText,
       this.enabled = true,
       this.borderRadius,
+      this.action = TextInputAction.next,
       this.suffix,
       this.prefix,
+      this.node,
       this.fillColor})
       : super(key: key);
   final String hintText;
   final bool isPassword;
+  final TextInputAction action;
   final TextEditingController controller;
+  final FocusNode? node;
   final String? Function(String?)? validator;
   final Widget? passwordWidget;
   final IconData? icon;
@@ -51,6 +55,8 @@ class DefaultTextField extends StatelessWidget {
         TextFormField(
           enabled: enabled,
           minLines: 1,
+          focusNode: node,
+          textInputAction: action,
           textAlign: TextAlign.start,
           maxLines: maxLines,
           controller: controller,

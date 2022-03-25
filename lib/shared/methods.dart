@@ -11,6 +11,13 @@ Future<T?> navigateTo<T>(BuildContext context, String? routeName) async {
       .push<T>(RouteGenerator.getRoute<T>(RouteSettings(name: routeName)));
 }
 
+Future<T?> navigateAndFinish<T>(BuildContext context, String? routeName,{Object? arguments}) async 
+{
+  return Navigator.of(context).pushAndRemoveUntil(
+      RouteGenerator.getRoute<T>(RouteSettings(name: routeName,arguments: arguments)),
+      (route) => false);
+}
+
 Future<T?> navigateReplacement<T>(
     BuildContext context, String? routeName) async {
   return Navigator.of(context).pushReplacement(

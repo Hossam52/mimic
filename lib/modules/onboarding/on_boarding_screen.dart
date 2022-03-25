@@ -24,7 +24,7 @@ class OnBoarding extends StatelessWidget {
               flex: 3,
               child: _logo(),
             ),
-            Expanded(child: _pages()),
+            Expanded(flex: 2, child: _pages()),
             _Indicator(controller: _pageController),
             Expanded(child: Container()),
           ],

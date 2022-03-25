@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FontConstants {
   static const String fontFamily = 'OpenSans';
@@ -21,9 +22,10 @@ class FontSize {
   static const double s11 = 11;
   static const double s12 = 12;
   static const double s14 = 14;
-  static const double s16 = 16;
+  static  double s16 = 16.sp;
   static const double s17 = 17;
   static const double s18 = 18;
   static const double s20 = 20;
   static const double s24 = 24;
+  
 }

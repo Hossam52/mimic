@@ -6,6 +6,8 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/shared/services/pickers_services.dart';
+import 'package:mimic/shared/services/video_services.dart';
 import 'package:mimic/widgets/default_text_field.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
@@ -39,26 +41,36 @@ class DraftScreen extends StatelessWidget {
                           controller: TextEditingController(),
                           maxLines: 5,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xffBECBFF),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Upload your video',
-                                  style: getBoldStyle(),
-                                ),
-                                const Spacer(),
-                                SvgPicture.asset(
-                                  'assets/images/upload.svg',
-                                  width: 17.w,
-                                  height: 17.w,
-                                ),
-                              ],
+                        InkWell(
+                          onTap: () async {
+                            final videoPicked =
+                                await PickerServices.pickVideo();
+                            if (videoPicked != null) 
+                            {
+                              await VideoServices.processedVideo(videoPicked);
+                            }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffBECBFF),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Upload your video',
+                                    style: getBoldStyle(),
+                                  ),
+                                  const Spacer(),
+                                  SvgPicture.asset(
+                                    'assets/images/upload.svg',
+                                    width: 17.w,
+                                    height: 17.w,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         )
