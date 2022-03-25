@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "542172288868",
+    "project_id": "mimic-acc45",
+    "storage_bucket": "mimic-acc45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542172288868:android:3d961e4d1920687e798c71",
+        "android_client_info": {
+          "package_name": "com.mimic2022.m.mimic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542172288868-6o9vj7qhjc63uk8ftnj25bsofj8cjb2f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mimic2022.m.mimic",
+            "certificate_hash": "5889aacbc5e170a4f09d4e16238595119de8dea3"
+          }
+        },
+        {
+          "client_id": "542172288868-j0hmlat6bk2dntreudg016er0m7htie8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBxB6ClPSfedBTwv6Z17ltV_38PNJutDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542172288868-j0hmlat6bk2dntreudg016er0m7htie8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
