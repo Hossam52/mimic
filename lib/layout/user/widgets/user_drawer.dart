@@ -9,6 +9,7 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
 import 'package:mimic/shared/methods.dart';
 
 class UserDrawer extends StatefulWidget {
@@ -50,6 +51,7 @@ class _UserDrawerState extends State<UserDrawer> {
                         imagePath: 'assets/images/drawer_icons/user/logout.svg',
                         title: 'Logout',
                         onPressed: (context) {
+                          AuthCubit.get(context).logout();
                           navigateReplacement(context, Routes.login);
                         }),
                     0,

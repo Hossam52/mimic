@@ -37,7 +37,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
                 trailing: const Icon(Icons.arrow_forward),
                 onPressed: () {
                   CategoriesCubit.get(context).submitCategoriesSelected();
-                  //  navigateTo(context, Routes.privacyPolicy);
                 },
                 backgroundColor: Theme.of(context).primaryColor,
                 radius: 10.r,

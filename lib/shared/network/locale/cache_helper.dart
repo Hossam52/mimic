@@ -19,7 +19,7 @@ class CacheHelper
     return await sharedPreferences.setDouble(key, value);
   }
 
-  static  dynamic getDate({@required key}) {
+  static  dynamic getDate({required key}) {
     return sharedPreferences.get(key);
   }
 

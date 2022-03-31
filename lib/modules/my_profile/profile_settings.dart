@@ -6,17 +6,29 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values_manager.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/widgets/cached_network_image.dart';
+import 'package:mimic/widgets/cached_network_image_circle.dart';
 import 'package:mimic/widgets/default_text_field.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
-class ProfileSettings extends StatelessWidget {
+class ProfileSettings extends StatefulWidget {
   const ProfileSettings({Key? key}) : super(key: key);
 
   @override
+  State<ProfileSettings> createState() => _ProfileSettingsState();
+}
+
+class _ProfileSettingsState extends State<ProfileSettings> {
+  final emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
+    emailController.text = ValuesManager.email;
     return Scaffold(
       appBar: const TransparentAppBar(title: 'Account settings'),
       body: Stack(
@@ -35,7 +47,7 @@ class ProfileSettings extends StatelessWidget {
                 const _ProfileImage(),
                 SizedBox(height: 10.h),
                 Text(
-                  'Maria Snow',
+                  ValuesManager.username,
                   style: getBoldStyle(),
                 ),
                 SizedBox(height: 5.h),
@@ -93,8 +105,10 @@ class _ProfileImage extends StatelessWidget {
       width: 80.w,
       child: Stack(
         children: [
-          RoundedImage(
-              imagePath: 'assets/images/static/avatar.png', size: 85.w),
+          cachedNetworkImageProvider(ValuesManager.imageUrl, 80.r),
+          //cachedNetworkImage(imageUrl: imageUrl, height: height, width: width)
+          // RoundedImage(
+          //     imagePath: 'assets/images/static/avatar.png', size: 85.w),
           Align(
             alignment: Alignment.bottomRight,
             child: Card(
@@ -147,7 +161,7 @@ class _AccountSettings extends StatelessWidget {
         Text('Account', style: getBoldStyle(fontSize: FontSize.s14)),
         const SizedBox(height: spaceAfterEnd),
         DefaultTextField(
-            hintText: 'hossam.hassan.fcis@gmail.com',
+            hintText: ValuesManager.email,
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,
             prefix: const _PrefixIconImage(
@@ -155,7 +169,7 @@ class _AccountSettings extends StatelessWidget {
             labelText: 'Email',
             iconColor: Theme.of(context).primaryColor),
         DefaultTextField(
-            hintText: 'User Name',
+            hintText: ValuesManager.username,
             labelText: 'User Name',
             controller: TextEditingController(),
             marginAfterEnd: spaceAfterEnd,

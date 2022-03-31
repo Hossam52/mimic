@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,8 +17,9 @@ import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
 
 class RegisterVerifyEmailScreen extends StatefulWidget {
-  const RegisterVerifyEmailScreen({Key? key}) : super(key: key);
-
+  const RegisterVerifyEmailScreen({Key? key, this.login = false})
+      : super(key: key);
+  final bool login;
   @override
   State<RegisterVerifyEmailScreen> createState() =>
       _RegisterVerifyEmailScreenState();
@@ -26,6 +29,7 @@ class _RegisterVerifyEmailScreenState extends State<RegisterVerifyEmailScreen> {
   final buttonHeight = 0.07.sh;
   final formKey = GlobalKey<FormState>();
   TextEditingController codeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return RegisterLayout(
@@ -46,8 +50,7 @@ class _RegisterVerifyEmailScreenState extends State<RegisterVerifyEmailScreen> {
                 if (state is AuthActiviteSuccess) {
                   navigateAndFinish(context, Routes.login);
                   navigateTo(context, Routes.interests);
-                } else if (state is AuthActiviteError) 
-                {
+                } else if (state is AuthActiviteError) {
                   Fluttertoast.showToast(
                       msg: state.message,
                       backgroundColor: ColorManager.error,
@@ -110,14 +113,15 @@ class _RegisterVerifyEmailScreenState extends State<RegisterVerifyEmailScreen> {
             ],
           ),
         ),
-        TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            style: ButtonStyle(
-                foregroundColor:
-                    getMaterialStateProperty(Theme.of(context).primaryColor)),
-            child: const Text('Change email'))
+        if (!widget.login)
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ButtonStyle(
+                  foregroundColor:
+                      getMaterialStateProperty(Theme.of(context).primaryColor)),
+              child: const Text('Change email'))
       ],
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mimic/layout/auth/login_layout.dart';
+import 'package:mimic/modules/auth/register/register_virefy_email.dart';
 import 'package:mimic/modules/auth/widgets/stack_card_with_button.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -50,6 +51,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontSize: FontSize.s16);
           } else if (state is AuthLoginSuccess) {
             navigateReplacement(context, Routes.userMainLayout);
+          } else if (state is AuthNavigateFillIntrestesState) {
+            navigateTo(context, Routes.interests);
+          } else if (state is AuthNavigateToVerifiyState) {
+            navigateToWithoutNaming(context,const RegisterVerifyEmailScreen(login: true),
+             );
           }
           // TODO: implement listener
         },
@@ -78,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: emailController),
         DefaultTextField(
             hintText: 'Password',
+            action: TextInputAction.done,
             node: passwordFocus,
             icon: Icons.lock_outline,
             isPassword: true,

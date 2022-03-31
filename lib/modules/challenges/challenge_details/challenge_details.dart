@@ -157,7 +157,7 @@ class ChallengeDetailsScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const HeaderName(
+         HeaderName(
           'TOP CHALLENGERS',
           fontSize: FontSize.s14,
           displaySelectedIndicator: false,

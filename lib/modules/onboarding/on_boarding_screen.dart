@@ -5,7 +5,9 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values_manager.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/shared/network/locale/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoarding extends StatelessWidget {
@@ -53,7 +55,10 @@ class OnBoarding extends StatelessWidget {
         ],
         scrollDirection: Axis.horizontal,
         onPageChanged: (value) {
-          if (value == 3) navigateTo(context, Routes.guestMainLayout);
+          if (value == 3) {
+            CacheHelper.saveDate(key:ValuesManager.onboardingKey ,value: true);
+            navigateTo(context, Routes.guestMainLayout);
+          }
         },
       );
     });
@@ -69,6 +74,7 @@ class _Indicator extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () {
+            CacheHelper.saveDate(key: ValuesManager.onboardingKey, value: true);
             navigateTo(context, Routes.guestMainLayout);
           },
           child: const Text('Skip'),

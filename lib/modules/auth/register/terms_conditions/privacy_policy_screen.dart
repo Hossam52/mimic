@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
@@ -40,10 +41,10 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           DefaultButton(
             text: 'Finish',
             onPressed: () {
-              navigateTo(context, Routes.userMainLayout);
+              navigateAndFinish(context, Routes.userMainLayout);
             },
             hasBorder: false,
-            radius: 15,
+            radius: 15.r,
             disabledColor: ColorManager.primary.withOpacity(0.5),
             foregroundColor: ColorManager.white,
             backgroundColor: Theme.of(context).primaryColor,

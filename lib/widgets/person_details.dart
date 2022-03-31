@@ -9,12 +9,12 @@ class PersonDetails extends StatelessWidget {
   const PersonDetails(
       {Key? key,
       this.imageRadius = 28,
-      this.nameSize = FontSize.s12,
+      this.nameSize ,
       this.timeAgoSize = FontSize.s10,
       this.textColor})
       : super(key: key);
   final double imageRadius;
-  final double nameSize;
+  final double? nameSize;
   final double timeAgoSize;
   final Color? textColor;
   @override
@@ -41,7 +41,7 @@ class PersonDetails extends StatelessWidget {
               Text(
                 'Ola ahmed',
                 style: getRegularStyle(
-                    color: textColor ?? ColorManager.white, fontSize: nameSize),
+                    color: textColor ?? ColorManager.white, fontSize: nameSize??FontSize.s12),
               ),
               Text(
                 '2 Min ago',
@@ -63,11 +63,11 @@ class PersonNameAndImage extends StatelessWidget {
   const PersonNameAndImage(
       {Key? key,
       this.imageRadius = 28,
-      this.nameSize = FontSize.s12,
+      this.nameSize ,
       this.textColor})
       : super(key: key);
   final double imageRadius;
-  final double nameSize;
+  final double? nameSize;
   final Color? textColor;
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class PersonNameAndImage extends StatelessWidget {
                   'Ola ahmed',
                   style: getRegularStyle(
                       color: textColor ?? ColorManager.white,
-                      fontSize: nameSize),
+                      fontSize: nameSize??FontSize.s12),
                 ),
               ],
             ),

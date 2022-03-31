@@ -9,8 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/bloc_observer.dart';
+import 'package:mimic/layout/guest/guest_main_layout.dart';
+import 'package:mimic/layout/user/user_main_layout.dart';
 import 'package:mimic/modules/onboarding/on_boarding_screen.dart';
 import 'package:mimic/presentation/resourses/theme_manager.dart';
+import 'package:mimic/presentation/resourses/values_manager.dart';
 import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
 import 'package:mimic/shared/network/locale/cache_helper.dart';
 import 'package:mimic/shared/network/remote/dio_helper.dart';
@@ -43,6 +46,17 @@ void main() async {
   await CacheHelper.init();
   DioHelper.init();
   await Firebase.initializeApp();
+  ValuesManager.username =
+      CacheHelper.getDate(key: ValuesManager.usernameKey) ?? 'Tour user';
+  ValuesManager.email =
+      CacheHelper.getDate(key: ValuesManager.emailKey) ?? 'user@exmaple.com';
+  ValuesManager.imageUrl =
+      CacheHelper.getDate(key: ValuesManager.imageKey) ?? '';
+  ValuesManager.tokenValue =
+      CacheHelper.getDate(key: ValuesManager.tokenKey) ?? '';
+  ValuesManager.onboarding =
+      CacheHelper.getDate(key: ValuesManager.onboardingKey) ?? false;
+
   BlocOverrides.runZoned(
     () {
       runApp(
@@ -54,6 +68,16 @@ void main() async {
     },
     blocObserver: MyBlocObserver(),
   );
+}
+
+Widget mainWidget() {
+  if (ValuesManager.tokenValue.isNotEmpty) {
+    return const UserMainLayout();
+  } else if (ValuesManager.onboarding) {
+    return const GuestMainLayout();
+  } else {
+    return OnBoarding();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -72,7 +96,7 @@ class MyApp extends StatelessWidget {
           title: 'MIMIC',
           debugShowCheckedModeBanner: false,
           theme: getApplicationTheme(),
-          home: OnBoarding(),
+          home: mainWidget(),
         ),
       ),
     );

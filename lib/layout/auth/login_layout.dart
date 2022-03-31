@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mimic/layout/widgets/auth_layout_widget.dart';
@@ -44,7 +45,7 @@ class LoginLayout extends StatelessWidget {
           contentFields,
           if (displayForgotPassword) Center(child: _forgotPassword()),
           if (displaySocialLogin) Center(child: _orLoginWithSocial()),
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h),
           Center(child: _dontHaveAccount()),
         ],
       );
@@ -56,7 +57,7 @@ Widget _forgotPassword() {
   return Builder(builder: (context) {
     return TextButton(
         onPressed: () {
-          navigateTo(context, Routes.forgetPassword);
+          navigateTo(context, Routes.sendCodeForget);
         },
         child: Text(
           'Forgot password?',
@@ -82,32 +83,54 @@ Widget _orLoginWithSocial() {
       ),
       BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is AuthLoginWithGoogleError) 
-          {
-            Fluttertoast.showToast(msg: state.message,
-            backgroundColor: ColorManager.error,
-            fontSize: FontSize.s16);
-          }
-          else if(state is AuthLoginWithGoogleSuccess)
-          {
-            Fluttertoast.showToast(msg: state.message,
-            backgroundColor: ColorManager.accentColor,
-            fontSize: FontSize.s16);
+          if (state is AuthLoginWithGoogleError) {
+            Fluttertoast.showToast(
+                msg: state.message,
+                backgroundColor: ColorManager.error,
+                fontSize: FontSize.s16);
+          } else if (state is AuthLoginWithGoogleSuccess) {
+            Fluttertoast.showToast(
+                msg: state.message,
+                backgroundColor: ColorManager.accentColor,
+                fontSize: FontSize.s16);
             navigateReplacement(context, Routes.userMainLayout);
+          }
+          if (state is AuthLoginWithFacebookError) {
+            Fluttertoast.showToast(
+                msg: state.message,
+                backgroundColor: ColorManager.error,
+                fontSize: FontSize.s16);
+          } else if (state is AuthLoginWithFacebookSuccess) {
+            Fluttertoast.showToast(
+                msg: state.message,
+                backgroundColor: ColorManager.accentColor,
+                fontSize: FontSize.s16);
+            navigateReplacement(context, Routes.userMainLayout);
+          } else if (state is AuthNavigateFillIntrestesState) {
+            navigateTo(context, Routes.interests);
           }
         },
         builder: (context, state) {
-          return Row(mainAxisAlignment: MainAxisAlignment.center, children: 
-          [
+          return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             InkWell(
                 onTap: () {
                   AuthCubit.get(context).signInWithGoogle();
                 },
                 child: state is AuthLoginWithGoogleLoading
-                    ? const LoadingProgress(color: Colors.white,)
+                    ? const LoadingProgress(
+                        color: Colors.white,
+                      )
                     : SvgPicture.asset(socailImages[0])),
-            SvgPicture.asset(socailImages[1]),
-            SvgPicture.asset(socailImages[2]),
+            InkWell(
+                onTap: () async {
+                  AuthCubit.get(context).signInWithFacebook();
+                },
+                child: state is AuthLoginWithFacebookLoading
+                    ? const LoadingProgress(
+                        color: Colors.white,
+                      )
+                    : SvgPicture.asset(socailImages[1])),
+            //  SvgPicture.asset(socailImages[2]),
           ]);
         },
       ),

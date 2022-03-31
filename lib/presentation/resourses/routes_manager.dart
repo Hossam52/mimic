@@ -4,6 +4,7 @@ import 'package:mimic/layout/guest/guest_main_layout.dart';
 import 'package:mimic/layout/user/user_main_layout.dart';
 import 'package:mimic/modules/auth/forgot_password/new_password_screen.dart';
 import 'package:mimic/modules/auth/forgot_password/forgot_password.dart';
+import 'package:mimic/modules/auth/forgot_password/send_code_for_email.dart';
 import 'package:mimic/modules/auth/login/login_screen.dart';
 import 'package:mimic/modules/auth/register/interests/interests_screen.dart';
 import 'package:mimic/modules/auth/register/register_screen.dart';
@@ -36,6 +37,7 @@ class Routes {
   static const String privacyPolicy = "/privacy_policy";
   static const String main = "/main";
   static const String forgetPassword = "/forget_password";
+  static const String sendCodeForget = '/SendCodeForEmailForgetScreen';
   static const String customerSupport = "/customer_support";
   static const String howToChallenge = "/how_to_challenge";
   static const String errorGuestPermissions = "/error_guest_permission";
@@ -59,6 +61,9 @@ class RouteGenerator {
     switch (routeSettings.name) {
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case Routes.sendCodeForget:
+        return MaterialPageRoute(
+            builder: (_) => const SendCodeForEmailForgetScreen());
       case Routes.forgetPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case Routes.newPassword:

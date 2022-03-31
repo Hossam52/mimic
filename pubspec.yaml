@@ -60,6 +60,7 @@ dependencies:
   convert: ^3.0.1
   #social
   google_sign_in: ^5.2.4
+  flutter_login_facebook: ^1.4.1
 
 dev_dependencies:
   flutter_test:

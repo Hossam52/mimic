@@ -10,4 +10,8 @@ class ConstantHelper {
   static const loginAccount = 'client/login';
   static const addToFavCategories = 'client/addYouFavouriteCategory';
   static const authSocial = 'client/authSocial';
+  static const changePasswordUrl = 'client/clientChangPassword';
+  static const forgetPasswordUrl = 'client/clientForgetPassword';
+  static const resetPasswordUrl = 'client/clientResetPassword';
+  static const authLogout = 'client/logout';
 }

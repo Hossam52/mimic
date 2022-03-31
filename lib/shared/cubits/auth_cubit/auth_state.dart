@@ -46,6 +46,11 @@ class AuthLoginError extends AuthState {
   final String message;
   AuthLoginError(this.message);
 }
+class AuthNavigateFillIntrestesState extends AuthState
+{}
+class AuthNavigateToVerifiyState extends AuthState
+{}
+//auth social google
 class AuthLoginWithGoogleLoading extends AuthState {}
 
 class AuthLoginWithGoogleSuccess extends AuthState 
@@ -57,4 +62,56 @@ class AuthLoginWithGoogleSuccess extends AuthState
 class AuthLoginWithGoogleError extends AuthState {
   final String message;
   AuthLoginWithGoogleError(this.message);
+}
+//auth social facebook
+class AuthLoginWithFacebookLoading extends AuthState {}
+
+class AuthLoginWithFacebookSuccess extends AuthState 
+{
+  final String message;
+  AuthLoginWithFacebookSuccess(this.message);
+}
+
+class AuthLoginWithFacebookError extends AuthState {
+  final String message;
+  AuthLoginWithFacebookError(this.message);
+}
+//change password 
+class AuthChangePasswordLoading extends AuthState {}
+
+class AuthChangePasswordSuccess extends AuthState 
+{
+  final String message;
+  AuthChangePasswordSuccess(this.message);
+}
+
+class AuthChangePasswordError extends AuthState {
+  final String message;
+  AuthChangePasswordError(this.message);
+}
+///forget password
+class AuthForgetPasswordLoading extends AuthState {}
+
+class AuthForgetPasswordSuccess extends AuthState 
+{
+  final String message;
+  AuthForgetPasswordSuccess(this.message);
+}
+
+class AuthForgetPasswordError extends AuthState {
+  final String message;
+  AuthForgetPasswordError(this.message);
+}
+//reset password
+class AuthResetPasswordLoading extends AuthState {}
+
+class AuthResetPasswordSuccess extends AuthState 
+{
+  final String message;
+  AuthResetPasswordSuccess(this.message);
+}
+
+class AuthResetPasswordError extends AuthState {
+  final String message;
+  AuthResetPasswordError(this.message);
 }

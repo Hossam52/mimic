@@ -58,11 +58,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       print(response.data);
       if (response.data['status']) {
         CacheHelper.saveDate(
-            key: ValuesManager.imageKey, value: ValuesManager.imageUrl);
-        CacheHelper.saveDate(
-            key: ValuesManager.usernameKey, value: ValuesManager.username);
-        CacheHelper.saveDate(
-            key: ValuesManager.tokenKey, value: ValuesManager.tokenValue);
+              key: ValuesManager.emailKey, value: ValuesManager.email);
+          CacheHelper.saveDate(
+              key: ValuesManager.imageKey, value: ValuesManager.imageUrl);
+          CacheHelper.saveDate(
+              key: ValuesManager.usernameKey, value: ValuesManager.username);
+          CacheHelper.saveDate(
+              key: ValuesManager.tokenKey, value: ValuesManager.tokenValue);
         emit(CategoriesSubmitSuccess());
       } else {
         emit(CategoriesSubmitError(response.data['message']));
