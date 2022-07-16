@@ -77,5 +77,9 @@ ThemeData getApplicationTheme() {
           borderRadius: BorderRadius.circular(AppSize.s8),
         ),
       ),
-      fontFamily: FontConstants.fontFamily);
+      fontFamily: FontConstants.fontFamily,
+      iconTheme: IconThemeData(
+        size: AppSize.iconSize,
+      )
+      );
 }

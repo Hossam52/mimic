@@ -9,6 +9,7 @@ class CustomNestedScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
       headerSliverBuilder: (context, innerBoxIsScrolled) => headerWidgets
           .map(
             (e) => SliverToBoxAdapter(

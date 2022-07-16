@@ -11,6 +11,9 @@ import 'package:mimic/layout/user/widgets/user_drawer.dart';
 import 'package:mimic/layout/widgets/bottom_bar_widgets.dart';
 import 'package:mimic/layout/widgets/mimic_bottom_bar.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
+import 'package:mimic/modules/home/home_cubit/home_cubit_cubit.dart';
+import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/mimic_logo.dart';
@@ -37,6 +40,7 @@ class _UserMainLayoutState extends State<UserMainLayout>
       TabController(length: 4, vsync: this);
   @override
   Widget build(BuildContext context) {
+    ProfileCubit.get(context).getProfileAllData();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -44,62 +48,83 @@ class _UserMainLayoutState extends State<UserMainLayout>
           lazy: false,
         ),
         BlocProvider(
-          create: (context) =>
-              MyChallengesCubit(tabBarController: myChallengesController),
+          create: (context) => HomeCubitCubit()..getHomeData(),
+          lazy: false,
+        ),
+        // BlocProvider(
+        //   create: (context) => ProfileCubit()..getProfileAllData(),
+        // ),
+        BlocProvider(
+          create: (context) => MyChallengesCubit(
+            tabBarController: myChallengesController,
+          ),
         ),
       ],
       child: Builder(builder: (context) {
         final instance = UserCubit.instance(context);
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          key: scaffoldKey,
-          appBar: AppBar(
-            centerTitle: true,
-            title: MimicLogoHorizontal(width: screenWidth(context) * 0.25),
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              onPressed: () {
-                scaffoldKey.currentState?.openDrawer();
-              },
-              icon: Icon(
-                MimicIcons.menu,
-                size: 18.r,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            actions: const [NotificationIcon()],
-          ),
-          drawer: const UserDrawer(),
-          body: BlocBuilder<UserCubit, UserStates>(
+        return WillPopScope(
+          onWillPop: () async {
+            if (instance.selectedScreenIndex == 0) {
+              return true;
+            } else {
+              instance.changeScreenIndex(context, 0);
+              return false;
+            }
+          },
+          child: BlocBuilder<UserCubit, UserStates>(
             builder: (context, state) {
-              return Column(
-                children: [
-                  Expanded(child: instance.screen),
-                  MimicBottomBar(
-                    selectedIndex: instance.selectedScreenIndex,
-                    onTap: (index) {
-                      instance.changeScreenIndex(context, index);
-                    },
-                    bottomBars: [
-                      MimicBottomBarItem(
-                          title: 'Home', widget: const HomeBottomBarWidget()),
-                      MimicBottomBarItem(
-                          title: 'Discover',
-                          widget: const SearchBottomBarWidget()),
-                      MimicBottomBarItem(
-                          title: '',
-                          widget: const AddChallengeBottomBarWidget()),
-                      MimicBottomBarItem(
-                          title: 'Challenges',
-                          widget: const ChallengesBottomBarWidget()),
-                      MimicBottomBarItem(
-                          title: 'Account',
-                          widget: const AccountBottomBarWidget()),
+              return Scaffold(
+                  resizeToAvoidBottomInset: false,
+                  key: scaffoldKey,
+                  appBar: AppBar(
+                    centerTitle: true,
+                    title:
+                        MimicLogoHorizontal(width: screenWidth(context) * 0.25),
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    leading: IconButton(
+                      onPressed: () {
+                        scaffoldKey.currentState?.openDrawer();
+                      },
+                      icon: Icon(
+                        MimicIcons.menu,
+                        size: 18.r,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    actions: const [
+                      NotificationIcon(),
                     ],
                   ),
-                ],
-              );
+                  drawer: const UserDrawer(),
+                  body: Column(
+                    children: [
+                      Expanded(child: instance.screen),
+                      MimicBottomBar(
+                        selectedIndex: instance.selectedScreenIndex,
+                        onTap: (index) {
+                          instance.changeScreenIndex(context, index);
+                        },
+                        bottomBars: [
+                          MimicBottomBarItem(
+                              title: AppStrings.home,
+                              widget: const HomeBottomBarWidget()),
+                          MimicBottomBarItem(
+                              title: AppStrings.discover,
+                              widget: const SearchBottomBarWidget()),
+                          MimicBottomBarItem(
+                              title: '',
+                              widget: const AddChallengeBottomBarWidget()),
+                          MimicBottomBarItem(
+                              title: AppStrings.challenges,
+                              widget: const ChallengesBottomBarWidget()),
+                          MimicBottomBarItem(
+                              title: AppStrings.account,
+                              widget: const AccountBottomBarWidget()),
+                        ],
+                      ),
+                    ],
+                  ));
             },
           ),
         );

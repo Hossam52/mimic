@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 
@@ -47,8 +48,8 @@ class AddChallengeBottomBarWidget extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(10.r)),
       child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: SvgPicture.asset('assets/images/add.svg'),
+        padding:  EdgeInsets.all(4.0.r),
+        child: SvgPicture.asset(ImageAssets.add),
       ),
       // Icon(
       //   Icons.add,
@@ -77,7 +78,7 @@ class AccountBottomBarWidget extends StatelessWidget {
       height: 50.h,
       width: 50.h,
       child: SvgPicture.asset(
-        'assets/images/account_bottom_tab.svg',
+        ImageAssets.accountBottomTab,
         color: ColorManager.commentsColor,
       ),
     );

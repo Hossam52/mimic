@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 
 class CustomSearchField extends StatelessWidget {
-  const CustomSearchField({Key? key, required this.searchTextHint})
+  const CustomSearchField(
+      {Key? key, required this.searchTextHint, required this.controller,required this.onChanged})
       : super(key: key);
   final String searchTextHint;
+  final TextEditingController controller;
+  final Function onChanged;
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
@@ -16,7 +20,7 @@ class CustomSearchField extends StatelessWidget {
       borderSide: BorderSide.none,
     );
     return SizedBox(
-      height: 45.h,
+      height: AppSize.s45.h,
       child: ShadowBox(
         child: Theme(
           data: Theme.of(context).copyWith(
@@ -25,7 +29,11 @@ class CustomSearchField extends StatelessWidget {
                 ),
           ),
           child: TextField(
-            controller: TextEditingController(),
+            controller: controller,
+            onChanged: (value)
+            {
+              onChanged(value);
+            },
             textAlignVertical: TextAlignVertical.center,
             style: getRegularStyle(fontSize: FontSize.s18),
             decoration: InputDecoration.collapsed(
@@ -40,16 +48,16 @@ class CustomSearchField extends StatelessWidget {
               enabledBorder: border,
               disabledBorder: border,
               prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: AppPadding.p8.w),
                 child: IntrinsicHeight(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
                         Icons.search,
-                        size: 24.r,
+                        size: AppSize.iconSize,
                       ),
-                      SizedBox(width: 10.w),
+                      SizedBox(width: AppSize.s10.w),
                       Text(
                         searchTextHint,
                         style: getRegularStyle(fontSize: FontSize.s10),
@@ -57,8 +65,8 @@ class CustomSearchField extends StatelessWidget {
                       SizedBox(width: 14.w),
                       VerticalDivider(
                         color: ColorManager.grey,
-                        indent: 8.h,
-                        endIndent: 8.h,
+                        indent: AppSize.s8.h,
+                        endIndent: AppSize.s8.h,
                         thickness: 1,
                       )
                     ],

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 
 class VideStatisticsItem extends StatelessWidget {
@@ -32,7 +33,7 @@ class VideStatisticsItem extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 15.r,
+                size: AppSize.smallIconSize,
                 color: filledColor ?? ColorManager.commentsColor,
               ),
               Text(

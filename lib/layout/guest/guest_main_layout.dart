@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/guest/error_guest_permissions.dart';
 import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
-import 'package:mimic/layout/my_challenges/my_challenges_layot.dart';
-import 'package:mimic/layout/my_profile/my_profile_layout.dart';
-import 'package:mimic/layout/search/search_layout.dart';
 import 'package:mimic/layout/widgets/bottom_bar_widgets.dart';
 import 'package:mimic/layout/widgets/mimic_bottom_bar.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
@@ -30,7 +26,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int selectedIndex = 0;
   final screens = [
-    GuestHomeScreen(),
+    //GuestHomeScreen(),
     const ErrorGuestPermission(),
     const ErrorGuestPermission(),
     const ErrorGuestPermission(),
@@ -80,7 +76,7 @@ class _GuestMainLayoutState extends State<GuestMainLayout> {
       //   ],
       // ),
       drawer: const GuestDrawer(),
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Column(

@@ -2,11 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/models/challenge_models/challenge_model.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/home/widgets/images_builder.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
@@ -17,9 +20,13 @@ import 'package:mimic/widgets/video_statistic_item.dart';
 
 class ChallenegItem extends StatelessWidget {
   const ChallenegItem(
-      {Key? key, this.onChallengeTapped, required this.onJoinTapped})
+      {Key? key,
+      this.onChallengeTapped,
+      required this.onJoinTapped,
+      required this.challange})
       : super(key: key);
   final VoidCallback? onChallengeTapped;
+  final Challange challange;
   final VoidCallback onJoinTapped;
   @override
   Widget build(BuildContext context) {
@@ -32,21 +39,21 @@ class ChallenegItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            // height: 220.h,
+            // height: 250.h,
             child: GestureDetector(
               onTap: onChallengeTapped,
               child: Stack(
+                alignment: AlignmentDirectional.bottomEnd,
                 children: [
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      VideoOverview(),
+                      VideoOverview(challange: challange),
                       SizedBox(height: halfButtonSize)
                     ],
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
+                  Align(
+                    alignment: AlignmentDirectional.bottomEnd,
                     child: SizedBox(
                         height: joinIconHeight,
                         child: _joinButton(joinIconHeight, onJoinTapped)),
@@ -61,20 +68,26 @@ class ChallenegItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Sports challenge details',
+                  challange.challangeTitle,
                   style: getBoldStyle(fontSize: FontSize.s14),
                 ),
-                SizedBox(height: 8.h),
-                Text(
-                  '12 People joined',
-                  style: getRegularStyle(),
-                ),
+                if (challange.peopleJoined.length > 1)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 8.h),
+                      Text(
+                        '${challange.peopleJoined.length} ${AppStrings.peopleJoined}',
+                        style: getRegularStyle(),
+                      ),
+                    ],
+                  ),
                 SizedBox(height: 8.h),
                 SizedBox(
                     height: 60.h,
-                    child: const Padding(
-                      padding: EdgeInsets.only(bottom: 8.0),
-                      child: ImagesBuilder(imagesCount: 7),
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 8.h),
+                      child: ImagesBuilder(users: challange.peopleJoined),
                     )),
               ],
             ),
@@ -92,7 +105,7 @@ class ChallenegItem extends StatelessWidget {
         child: InkWell(
           onTap: onJoinTapped,
           child: Text(
-            'Join',
+            AppStrings.join,
             style:
                 getBoldStyle(fontSize: FontSize.s14, color: ColorManager.white),
           ),
@@ -111,7 +124,7 @@ class _ChallenegePreview extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Image.asset(
-          'assets/images/static/video_preview.png',
+          ImageAssets.videoPreview,
           width: double.infinity,
           fit: BoxFit.fill,
         ),
@@ -125,9 +138,9 @@ class _ChallenegePreview extends StatelessWidget {
 
   Widget _challengeActions(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0.r),
       child: Wrap(
-        spacing: 10,
+        spacing: 10.w,
         children: [
           const FavoriteIcon(
             count: '12',
@@ -135,7 +148,7 @@ class _ChallenegePreview extends StatelessWidget {
           CommentIcon(
             count: '15',
             onPressed: () {
-              Dialogs.showCommentsDialog(context);
+              Dialogs.showCommentsDialog(context, 3);
             },
           ),
           const ViewIcon(count: '112'),

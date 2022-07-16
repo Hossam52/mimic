@@ -16,16 +16,18 @@ class FontWeightManager {
 }
 
 class FontSize {
-  static const double s8 = 8;
-  static const double s9 = 9;
-  static const double s10 = 10;
-  static const double s11 = 11;
+  static  double s8 = 8.sp;
+  static  double s9 = 9.sp;
+  static  double s10 = 10.sp;
+  static  double s11 = 11.sp;
   static  double s12 = 12.sp;
   static  double s14 = 14.sp;
   static  double s16 = 16.sp;
-  static const double s17 = 17;
-  static const double s18 = 18;
+  static  double s17 = 17.sp;
+  static  double s18 = 18.sp;
   static const double s20 = 20;
-  static const double s24 = 24;
+  static  double s24 = 24.sp;
+  static  double s25 = 25.sp;
+
   
 }

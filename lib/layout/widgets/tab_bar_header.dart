@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 
 class TabBarHeader extends StatelessWidget {
   const TabBarHeader(
@@ -30,8 +32,8 @@ class TabBarHeader extends StatelessWidget {
         controller: controller,
         onTap: onTap,
         labelStyle: getBoldStyle(fontSize: fontSize??FontSize.s12),
-        labelPadding: const EdgeInsets.all(4),
-        padding: const EdgeInsets.all(0),
+        labelPadding:  EdgeInsets.all(AppPadding.p4.r),
+        padding: EdgeInsets.zero,
         unselectedLabelColor: ColorManager.black,
         unselectedLabelStyle: getSemiBoldStyle(fontSize: fontSize??FontSize.s12),
         labelColor: ColorManager.black,

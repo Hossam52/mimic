@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimic/modules/challenges/get_all_comments_cubit/get_all_comments_cubit.dart';
 import 'package:mimic/modules/comments/comments_screen.dart';
 import 'package:mimic/modules/my_challenges/complain_dialog.dart';
 import 'package:mimic/modules/report/report_screen.dart';
@@ -7,10 +9,18 @@ import 'package:mimic/shared/dialog_widgets/post_for_review.dart';
 import 'package:mimic/shared/dialog_widgets/qr_dialog.dart';
 
 class Dialogs {
-  static Future<T?> showCommentsDialog<T>(BuildContext context) {
-    return showDialog<T?>(
+  static Future<T?> showCommentsDialog<T>(BuildContext context,int videoId,{int? commentsTotalNumber}) async {
+     bool dataFound =
+                  GetAllCommentsCubit.get(context).checkData(videoId);
+              if (!dataFound) {
+                GetAllCommentsCubit.get(context).getAllComments(videoId);
+              }
+    return await showDialog<T?>(
       context: context,
-      builder: (context) => const CommentsScreen(),
+      builder: (_) => BlocProvider.value(
+        value: GetAllCommentsCubit.get(context),
+        child: CommentsScreen(videoId: videoId,commentsTotalNumber:commentsTotalNumber!),
+      ),
     );
   }
 
@@ -52,7 +62,7 @@ class Dialogs {
   static Future<T?> postForReviewDialog<T>(BuildContext context) {
     return showDialog(
       context: context,
-      builder: (_) => const PostForReviewDialog(),
+      builder: (context) => const PostForReviewDialog(),
     );
   }
 

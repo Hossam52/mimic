@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_ffmpeg/log.dart';
+import 'package:flutter_ffmpeg/statistics.dart';
+
 import 'package:mimic/models/video_models/video_info_model.dart';
 import 'package:mimic/shared/services/upload_firebase_services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,6 +17,7 @@ class VideoServices {
   //2- get media info of the video
   static final FlutterFFprobe _probe = FlutterFFprobe();
   static final FlutterFFmpegConfig _config = FlutterFFmpegConfig();
+  static double videoDuration = 0;
 
   //-i => video path
   //-vframes to get one frame form video
@@ -48,42 +52,42 @@ class VideoServices {
     return aspect;
   }
 
-  static int getDuration(Map<dynamic, dynamic> info) {
-    //info['format']['duration']
-    return 59;
+  static double getDuration(Map<dynamic, dynamic> info) {
+    double _duration = double.parse(info['format']['duration']);
+    return double.parse(_duration.toStringAsFixed(2));
   }
 
 //encode video to hls files
-  static Future<String> encodeHLS(videoPath, outDirPath) async {
+  static Future<String> encodeHLS(
+      String videoPath, String outDirPath, String videoName) async {
     assert(File(videoPath).existsSync());
-
-    final arguments = '-y -i $videoPath ' +
-        '-preset ultrafast -g 48 -sc_threshold 0 ' +
-        '-map 0:0 -map 0:1 -map 0:0 -map 0:1 ' +
-        '-c✌0 libx264 -b✌0 2000k ' +
-        '-c✌1 libx264 -b✌1 365k ' +
-        '-c:a copy ' +
-        '-var_stream_map "v:0,a:0 v:1,a:1" ' +
-        '-master_pl_name master.m3u8 ' +
-        '-f hls -hls_time 6 -hls_list_size 0 ' +
-        '-hls_segment_filename "$outDirPath/%v_fileSequence_%d.ts" ' +
-        '$outDirPath/%v_playlistVariant.m3u8';
-    final arg = '-y ' +
-        '-i $videoPath ' +
-        '-preset ultrafast -g 48 -sc_threshold 0 ' +
-        '-map 0:0 -map 0:1 -map 0:0 -map 0:1 ' +
-        '-c✌0 libx264 -b✌0 2000k ' +
-        '-c✌1 libx264 -b✌1 365k ' +
-        '-c:a copy ' +
-        '-var_stream_map "v:0,a:0 v:1,a:1" ' +
-        '-master_pl_name master.m3u8 ' +
-        '-f hls -hls_time 6 -hls_list_size 0 ' +
-        '-hls_segment_filename "$outDirPath/%v_fileSequence_%d.ts" ' +
-        '$outDirPath/%v_playlistVariant.m3u8';
+    // final arguments = '-y -i $videoPath ' +
+    //     '-preset ultrafast -g 48 -sc_threshold 0 ' +
+    //     '-map 0:0 -map 0:1 -map 0:0 -map 0:1 ' +
+    //     '-c✌0 libx264 -b✌0 2000k ' +
+    //     '-c✌1 libx264 -b✌1 365k ' +
+    //     '-c:a copy ' +
+    //     '-var_stream_map "v:0,a:0 v:1,a:1" ' +
+    //     '-master_pl_name master.m3u8 ' +
+    //     '-f hls -hls_time 6 -hls_list_size 0 ' +
+    //     '-hls_segment_filename "$outDirPath/%v_${fileName}_%d.ts" ' +
+    //     '$outDirPath/%v_playlistVariant.m3u8';
+    // final arg = '-y ' +
+    //     '-i $videoPath ' +
+    //     '-preset ultrafast -g 48 -sc_threshold 0 ' +
+    //     '-map 0:0 -map 0:1 -map 0:0 -map 0:1 ' +
+    //     '-c✌0 libx264 -b✌0 2000k ' +
+    //     '-c✌1 libx264 -b✌1 365k ' +
+    //     '-c:a copy ' +
+    //     '-var_stream_map "v:0,a:0 v:1,a:1" ' +
+    //     '-master_pl_name master.m3u8 ' +
+    //     '-f hls -hls_time 6 -hls_list_size 0 ' +
+    //     '-hls_segment_filename "$outDirPath/%v_fileSequence_%d.ts" ' +
+    //     '$outDirPath/%v_playlistVariant.m3u8';
     //-b:0 360p -b:1 480 -b:2 720
     //-c:1 libx264 -b:1 365k
     final args =
-        '-i $videoPath -c:0 libx264 -b:0 365k -master_pl_name master.m3u8  -f hls -hls_time 10 -hls_list_size 0 -hls_segment_filename "$outDirPath/%v_fileSequence_%d.ts"  $outDirPath/%v_playlistVariant.m3u8';
+        '-i $videoPath -c:0 libx264 -b:0 365k -master_pl_name $videoName.m3u8  -f hls -hls_time 10 -hls_list_size 0 -hls_segment_filename "$outDirPath/%v_${videoName}_%d.ts"  $outDirPath/%v_$videoName.m3u8';
     final rc = await _encoder.execute(args);
 
     // final int rc = await _probe.executeWithArguments(
@@ -95,7 +99,8 @@ class VideoServices {
     return outDirPath;
   }
 
-  static Future<void> processedVideo(File videoPath) async {
+  static Future<VideoCompressed> processedVideo(
+      File videoPath, String randomVideoName) async {
     final Directory directory = await getApplicationDocumentsDirectory();
     final videoName = 'video${DateTime.now().millisecondsSinceEpoch}';
     final outputPath = '${directory.path}/mimicVideos/$videoName';
@@ -103,29 +108,50 @@ class VideoServices {
     outputDirectoryVideos.createSync(recursive: true);
     final videoInfoData = await getMediaInformation(videoPath.path);
     final aspectRatioVideo = getAspectRatio(videoInfoData!);
-    final videoDuration = getDuration(videoInfoData);
+    videoDuration = getDuration(videoInfoData);
     //1- generate thumbnail
     final imageThumbPath = await getThumb(videoPath.path, 200, 200);
-    final outputDirPath = await encodeHLS(videoPath.path, outputPath);
-    final thumbUrl = await UploadFirebaseServices.uploadFileToFirebase(
-        imageThumbPath, 'thumbnails');
-    final videoUrl =
-        await UploadFirebaseServices.uploadHLSFiles(outputDirPath, videoName);
-    //save video on firestore
-    final videoInfo = VideoInfo(
-      videoUrl: videoUrl,
-      thumbUrl: thumbUrl,
-      coverUrl: thumbUrl,
-      aspectRatio: aspectRatioVideo,
-      uploadedAt: DateTime.now().millisecondsSinceEpoch,
-      videoName: videoName,
+    final outputDirPath =
+        await encodeHLS(videoPath.path, outputPath, randomVideoName);
+    List<File>videoFiles=await getListOfVideoFile(outputDirPath);
+    VideoCompressed videoCompressed=VideoCompressed(thumbnail: File(imageThumbPath),
+    videoFiles: videoFiles,
     );
-    await FirebaseProvider.saveVideo(videoInfo);
+    // final thumbUrl = await UploadFirebaseServices.uploadFileToFirebase(
+    //     imageThumbPath, 'thumbnails');
+    // final videoUrl =
+    //     await UploadFirebaseServices.uploadHLSFiles(outputDirPath, videoName);
+    return videoCompressed;
+    //save video on firestore
+    // final videoInfo = VideoInfo(
+    //   videoUrl: videoUrl,
+    //   thumbUrl: thumbUrl,
+    //   coverUrl: thumbUrl,
+    //   aspectRatio: aspectRatioVideo,
+    //   uploadedAt: DateTime.now().millisecondsSinceEpoch,
+    //   videoName: videoName,
+    // );
+    // await FirebaseProvider.saveVideo(videoInfo);
+  }
+
+  //get list of video files
+  static Future<List<File>> getListOfVideoFile(String dirPath) async {
+    final videosDir = Directory(dirPath);
+    log(dirPath);
+    log('Files Before');
+    log(videosDir.path);
+    final files = videosDir.listSync(recursive: true);
+    return files.map((e) => File(e.path)).toList();
   }
 
   //to get statisitcs
-  static void enableStatisticsCallback(Function cb) {
-    return _config.enableStatisticsCallback((statistics) => cb(statistics));
+  static void enableStatisticsCallback({required Function cb}) {
+    return _config.enableStatisticsCallback((statistics) {
+      cb(statistics);
+      // log(statistics.time.toString());
+      // log(statistics.speed.toString());
+      // log(statistics.size.toString());
+    });
   }
 
   static Future<void> cancel() async {

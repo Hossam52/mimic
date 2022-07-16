@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mimic/layout/user/cubit/user_cubit.dart';
 import 'package:mimic/layout/user/widgets/user_custom_drawer_header.dart';
 import 'package:mimic/layout/widgets/drawer_item.dart';
+import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
 import 'package:mimic/shared/methods.dart';
@@ -22,45 +26,50 @@ class UserDrawer extends StatefulWidget {
 class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        width: 260.w,
-        child: Drawer(
-          child: Column(
-            children: [
-              const UserCustomDrawerHeader(),
-              SizedBox(height: 14.h),
-              Expanded(
-                flex: 6,
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    for (int i = 0; i < _DrawerItemState.items.length; i++)
-                      _drawerItem(_DrawerItemState.items[i], i),
-                  ],
-                )),
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        return SafeArea(
+          child: SizedBox(
+            width: 260.w,
+            child: Drawer(
+              child: Column(
+                children: [
+                  const UserCustomDrawerHeader(),
+                  SizedBox(height: 14.h),
+                  Expanded(
+                    flex: 6,
+                    child: SingleChildScrollView(
+                        child: Column(
+                      children: [
+                        for (int i = 0; i < _DrawerItemState.items.length; i++)
+                          _drawerItem(_DrawerItemState.items[i], i),
+                      ],
+                    )),
+                  ),
+                  Divider(
+                    color: ColorManager.darkGrey,
+                    thickness: 1,
+                    endIndent: 80.w,
+                  ),
+                  Expanded(
+                    child: _drawerItem(
+                        _DrawerItemState(
+                            imagePath:
+                                ImageAssets.logout,
+                            title: AppStrings.logout,
+                            onPressed: (context) {
+                              AuthCubit.get(context).logout();
+                              navigateReplacement(context, Routes.login);
+                            }),
+                        0,
+                        color: ColorManager.darkGrey),
+                  )
+                ],
               ),
-              Divider(
-                color: ColorManager.darkGrey,
-                thickness: 1,
-                endIndent: 80.w,
-              ),
-              Expanded(
-                child: _drawerItem(
-                    _DrawerItemState(
-                        imagePath: 'assets/images/drawer_icons/user/logout.svg',
-                        title: 'Logout',
-                        onPressed: (context) {
-                          AuthCubit.get(context).logout();
-                          navigateReplacement(context, Routes.login);
-                        }),
-                    0,
-                    color: ColorManager.darkGrey),
-              )
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -179,7 +188,7 @@ class _SubSectionContainer extends StatelessWidget {
             color: ColorManager.drawerFillColor,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding:  EdgeInsets.all(4.0.r),
             child: child,
           ),
         ),
@@ -208,9 +217,9 @@ class _DrawerItemState {
   });
   static List<_DrawerItemState> items = [
     _DrawerItemState(
-        imagePath: 'assets/images/drawer_icons/user/profile.svg',
-        title: 'Profile',
-        iconSize: 24,
+        imagePath: ImageAssets.profile,
+        title: AppStrings.profile,
+        iconSize: 24.r,
         onPressed: (BuildContext context) {},
         subSections: [
           _DrawerItemSubSection(
@@ -218,8 +227,8 @@ class _DrawerItemState {
                 Navigator.pop(context);
                 navigateTo(context, Routes.profileSettings);
               },
-              imagePath: 'assets/images/drawer_icons/user/edit_profile.svg',
-              title: 'Edit My profile'),
+              imagePath: ImageAssets.editProfile,
+              title: AppStrings.editmyProfile),
           _DrawerItemSubSection(
               onTap: (context) {
                 Navigator.pop(context);
@@ -227,45 +236,45 @@ class _DrawerItemState {
                 UserCubit.instance(context)
                     .navigateToMyNewRequestChallenges(context);
               },
-              imagePath: 'assets/images/drawer_icons/user/my_requests.svg',
-              title: 'My requests'),
+              imagePath: ImageAssets.myRequests,
+              title: AppStrings.myRequests),
           _DrawerItemSubSection(
               onTap: (context) {
                 Navigator.pop(context);
 
                 navigateTo(context, Routes.allRanks);
               },
-              imagePath: 'assets/images/drawer_icons/user/my_rank.svg',
-              title: 'My rank'),
+              imagePath: ImageAssets.myRank,
+              title: AppStrings.myRank),
           _DrawerItemSubSection(
               onTap: (context) {
                 Navigator.pop(context);
                 UserCubit.instance(context)
                     .navigateToMyChallengesApproved(context);
               },
-              imagePath: 'assets/images/drawer_icons/user/my_challenges.svg',
-              title: 'My challenges'),
+              imagePath: ImageAssets.myChallanges,
+              title: AppStrings.myChallanges),
           _DrawerItemSubSection(
               onTap: (context) {
                 Navigator.pop(context);
 
                 UserCubit.instance(context).navigateToMyProfile(context);
               },
-              imagePath: 'assets/images/drawer_icons/user/my_videos.svg',
-              title: 'My videos'),
+              imagePath: ImageAssets.myVideos,
+              title: AppStrings.myVideos),
           _DrawerItemSubSection(
               onTap: (context) {
                 Navigator.pop(context);
 
                 navigateTo(context, Routes.notifications);
               },
-              imagePath: 'assets/images/drawer_icons/user/my_notifications.svg',
-              title: 'My Notifications'),
+              imagePath: ImageAssets.myNotifications,
+              title: AppStrings.myNotification),
         ]),
     _DrawerItemState(
-        imagePath: 'assets/images/drawer_icons/user/discover.svg',
+        imagePath: ImageAssets.discover,
         onPressed: (BuildContext context) {},
-        title: 'Discover challenges',
+        title: AppStrings.discoverChallanges,
         subSections: [
           _DrawerItemSubSection(
               onTap: (context) {
@@ -273,8 +282,8 @@ class _DrawerItemState {
 
                 UserCubit.instance(context).navigateToSearch(context);
               },
-              imagePath: 'assets/images/drawer_icons/user/socceer.svg',
-              title: 'Soccer',
+              imagePath: ImageAssets.soccer,
+              title: AppStrings.soccer,
               count: '+3'),
           _DrawerItemSubSection(
               onTap: (context) {
@@ -282,45 +291,45 @@ class _DrawerItemState {
 
                 UserCubit.instance(context).navigateToSearch(context);
               },
-              imagePath: 'assets/images/drawer_icons/user/basketball.svg',
-              title: 'Basketballs',
+              imagePath: ImageAssets.basketball,
+              title: AppStrings.basketBalls,
               count: '+3'),
         ]),
     _DrawerItemState(
-      imagePath: 'assets/images/drawer_icons/user/help.svg',
+      imagePath: ImageAssets.help,
       onPressed: (BuildContext context) {
         Navigator.pop(context);
 
         navigateTo(context, Routes.howToChallenge);
       },
-      title: 'How to challenge',
+      title: AppStrings.howToChallange,
     ),
     _DrawerItemState(
-      imagePath: 'assets/images/drawer_icons/user/customer_service.svg',
+      imagePath: ImageAssets.customerServieces,
       onPressed: (BuildContext context) {
         Navigator.pop(context);
 
         navigateTo(context, Routes.customerSupport);
       },
-      title: 'Support',
+      title: AppStrings.support,
     ),
     _DrawerItemState(
-      imagePath: 'assets/images/drawer_icons/user/our_parteners.svg',
+      imagePath: ImageAssets.ourPartner,
       onPressed: (BuildContext context) {},
-      title: 'Our partners',
+      title: AppStrings.ourPartners,
     ),
     _DrawerItemState(
-        imagePath: 'assets/images/drawer_icons/user/language.svg',
+        imagePath: ImageAssets.language,
         onPressed: (BuildContext context) {},
-        title: 'Language',
+        title: AppStrings.language,
         subSections: [
           _DrawerItemSubSection(
-              imagePath: 'assets/images/drawer_icons/user/done.svg',
-              title: 'Arabic',
+              imagePath: ImageAssets.done,
+              title: AppStrings.arabic,
               iconColor: ColorManager.black),
           _DrawerItemSubSection(
-              imagePath: 'assets/images/drawer_icons/user/done.svg',
-              title: 'English',
+              imagePath: ImageAssets.done,
+              title: AppStrings.english,
               iconColor: Colors.transparent),
         ])
   ];

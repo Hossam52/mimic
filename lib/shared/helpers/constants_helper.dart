@@ -14,4 +14,30 @@ class ConstantHelper {
   static const forgetPasswordUrl = 'client/clientForgetPassword';
   static const resetPasswordUrl = 'client/clientResetPassword';
   static const authLogout = 'client/logout';
+  static const createChallange = 'client/Challenge/store';
+  static const addVideoToChallange = 'client/Video/store';
+  static const myVideosUrl = 'client/Video/getMyVideos';
+  static const getProfileUrl = 'client/getProfile';
+  static const getMyChallenges = 'client/Challenge/getMyChallenges';
+  static const getHashtags = 'client/Hashtag/SearchHastage';
+  static const String countriesUrl = 'guest/getAllCountries';
+  static const String editProfileUrl = 'client/updateProfile';
+  static const String getCurrentChallanges =
+      'client/Challenge/getCurrentChallenges';
+  static const String addStoryUrl = 'client/Story/store';
+  static const String getChallangeVideos =
+      'client/Challenge/getCurrentChallengesVideos';
+  static const String getChallangeDetails = 'client/Challenge/getChallengeById';
+  static const String getAllStories = 'client/Story/getStories';
+  static const String watchVideo = 'client/WatchOrShare/watch';
+  static const String toggleLike = 'client/Like/toggleLike';
+  static const String discoverPeople = 'client/searchClients';
+  static const String getAllCommnetsByVideoId =
+      'client/Comment/getCommentsByVideoId';
+  static const String storeComment = 'client/Comment/store';
+  static const String updateComment = 'client/Comment/update';
+  static const String deleteComment = 'client/Comment/delete';
+  static const String getClientById = 'client/ClientById';
+  static const String getChallangesByCreatorId =
+      'client/Challenge/getChallengesByCreaterId';
 }

@@ -20,6 +20,7 @@ class DefaultTextField extends StatelessWidget {
       this.enabled = true,
       this.borderRadius,
       this.action = TextInputAction.next,
+      this.onTap,
       this.suffix,
       this.prefix,
       this.node,
@@ -43,16 +44,22 @@ class DefaultTextField extends StatelessWidget {
   final double? borderRadius;
   final Widget? suffix;
   final Color? fillColor;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(borderRadius ?? 10),
+      borderRadius: BorderRadius.circular(borderRadius ?? 10.r),
       borderSide: BorderSide(color: ColorManager.grey),
     );
     return Column(
       children: [
         TextFormField(
+          onTap: () {
+            if (onTap != null) {
+              onTap!();
+            }
+          },
           enabled: enabled,
           minLines: 1,
           focusNode: node,
@@ -94,7 +101,7 @@ class DefaultTextField extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: marginAfterEnd ?? 20,
+          height: marginAfterEnd ?? 20.h,
         ),
       ],
     );

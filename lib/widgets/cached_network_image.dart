@@ -8,7 +8,9 @@ Widget cachedNetworkImage({
   required double width,
 }) 
 {
-  return CachedNetworkImage(
+  return 
+  
+    CachedNetworkImage(
     imageUrl: imageUrl,
     fit: BoxFit.cover,
     placeholder: (context, url) => const LoadingProgress(),

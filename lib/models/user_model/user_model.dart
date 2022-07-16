@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mimic/models/user_model/user.dart';
 
 class UserModel {
@@ -5,11 +7,10 @@ class UserModel {
   final String message;
   final User user;
   UserModel({required this.message, required this.status, required this.user});
-  factory UserModel.fromJson(Map<String, dynamic> data) 
-  {
+  factory UserModel.fromJson(Map<String, dynamic> data) {
     return UserModel(
-        message: data['message'],
-        status: data['status'],
+        message: data['message'] ?? '',
+        status: data['status'] ?? false,
         user: User.fromJson(data['RC']));
   }
 }

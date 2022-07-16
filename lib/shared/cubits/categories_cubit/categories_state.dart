@@ -23,3 +23,13 @@ class CategoriesSubmitError extends CategoriesState {
   final String message;
   CategoriesSubmitError(this.message);
 }
+///hashTag states
+
+class HashTagsLoading extends CategoriesState {}
+
+class HashTagsSuccess extends CategoriesState {}
+
+class HashTagsError extends CategoriesState {
+  final String message;
+  HashTagsError(this.message);
+}

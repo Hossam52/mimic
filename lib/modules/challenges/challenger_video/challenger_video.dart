@@ -29,11 +29,11 @@ class ChallengerVideo extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Expanded(
-                      child: PersonDetails(
-                    imageRadius: 30,
-                    textColor: ColorManager.black,
-                  )),
+                  // Expanded(
+                  //     child: PersonDetails(
+                  //   imageRadius: 30,
+                  //   textColor: ColorManager.black,
+                  // )),
                   const ReportPopupMenuButton(),
                 ],
               ),
@@ -42,9 +42,9 @@ class ChallengerVideo extends StatelessWidget {
               SizedBox(height: 15.h),
               _statistics(context),
               SizedBox(height: 13.h),
-              const ChallengeTitle(),
+            //  const ChallengeTitle(),
               SizedBox(height: 10.h),
-              const ChallengeDescription(),
+              //const ChallengeDescription(),
             ],
           ),
         ),
@@ -106,7 +106,7 @@ class ChallengerVideo extends StatelessWidget {
         count: '12',
         textColor: ColorManager.black,
         onPressed: () {
-          Dialogs.showCommentsDialog(context);
+          Dialogs.showCommentsDialog(context,3);
         },
       ),
       ViewIcon(

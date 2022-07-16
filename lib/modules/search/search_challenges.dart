@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/search/widgets/search_text_field.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/widgets/custom_drop_down.dart';
 import 'package:mimic/widgets/custom_nested_scroll_view.dart';
 import 'package:mimic/widgets/person_details.dart';
@@ -18,21 +20,21 @@ class SearchChallenges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0.h).copyWith(bottom: 0),
+      padding: EdgeInsets.all(AppPadding.p16.h).copyWith(bottom: 0),
       child: CustomNestedScrollView(
         headerWidgets: [
-          const CustomSearchField(
-            searchTextHint: 'Challenge title',
-          ),
-          SizedBox(height: 15.h),
+          //  CustomSearchField(
+          //   searchTextHint: AppStrings.challangeTitle,
+          // ),
+          SizedBox(height: AppSize.s15.h),
           Row(
             children: [
               const Expanded(child: _CategoryDropDown()),
-              SizedBox(width: 20.w),
+              SizedBox(width: AppSize.s20.w),
               const Expanded(child: _CategoryDatePublished()),
             ],
           ),
-          SizedBox(height: 60.h),
+          SizedBox(height: AppSize.s60.h),
         ],
         body: _searchedChallenges(),
       ),
@@ -41,9 +43,9 @@ class SearchChallenges extends StatelessWidget {
 
   Widget _searchedChallenges() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.p16.w),
       child: ShadowBox(
-        radius: 12.r,
+        radius: AppSize.s12.r,
         shadow: 0,
         child: GridView.builder(
             itemCount: 14,
@@ -51,8 +53,8 @@ class SearchChallenges extends StatelessWidget {
                 crossAxisCount: 2,
                 // mainAxisExtent: 260.h,
                 childAspectRatio: 140.w / 210.h,
-                mainAxisSpacing: 20.h,
-                crossAxisSpacing: 20.w),
+                mainAxisSpacing: AppSize.s20.h,
+                crossAxisSpacing: AppSize.s20.w),
             itemBuilder: (_, index) {
               return const _SearchedChallengeItem();
             }),
@@ -70,9 +72,9 @@ class _CategoryDropDown extends StatelessWidget {
       child: CustomDropDown(
         child: DropdownButton<String>(
           icon: Icon(Icons.keyboard_arrow_down,
-              size: 25.r, color: ColorManager.commentsColor),
+              size: AppSize.iconSize, color: ColorManager.commentsColor),
           hint: Text(
-            'Category',
+            AppStrings.category,
             style: getRegularStyle(),
           ),
           items: [
@@ -107,9 +109,9 @@ class _CategoryDatePublished extends StatelessWidget {
       child: CustomDropDown(
         child: DropdownButton<String>(
           icon: Icon(Icons.keyboard_arrow_down,
-              size: 25.r, color: ColorManager.commentsColor),
+              size: AppSize.iconSize.r, color: ColorManager.commentsColor),
           hint: Text(
-            'Date published',
+            AppStrings.datePublished,
             style: getRegularStyle(),
           ),
           items: [
@@ -141,7 +143,7 @@ class _SearchedChallengeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSize.s12.r)),
       clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
@@ -151,7 +153,7 @@ class _SearchedChallengeItem extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(8.h),
+              padding: EdgeInsets.all(AppPadding.p8.h),
               child: Image.asset(
                 _paths[Random.secure().nextInt(_paths.length)],
                 width: double.infinity,

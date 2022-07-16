@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:mimic/presentation/resourses/values_manager.dart';
-import 'package:mimic/shared/helpers/constants_helper.dart';
 import 'package:mimic/shared/network/remote/dio_helper.dart';
 
 class HandlingApis {

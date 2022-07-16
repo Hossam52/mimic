@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 
@@ -17,7 +20,7 @@ class MyRank extends StatelessWidget {
       child: Column(
         children: [
           Wrap(
-            spacing: 5.w,
+            spacing: AppSize.s5.w,
             children: [
               _RankItem(
                 title: 'MIMIC JUNIOR',
@@ -35,7 +38,7 @@ class MyRank extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 35.h),
+          SizedBox(height: AppSize.s36.h),
           Text(
             'Congratulations !! ',
             style: getSemiBoldStyle(fontSize: FontSize.s18),
@@ -44,18 +47,18 @@ class MyRank extends StatelessWidget {
             'You have reached to MIMIC LORD Rank',
             style: getRegularStyle(),
           ),
-          SizedBox(height: 60.h),
+          SizedBox(height: AppSize.s60.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 70.0.w),
             child: DefaultButton(
-                text: 'View All Ranks',
+                text: AppStrings.viewAllRanks,
                 onPressed: () {
                   navigateTo(context, Routes.allRanks);
                 },
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding:  EdgeInsets.symmetric(horizontal: AppPadding.p15.w),
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: ColorManager.white,
-                radius: 16.r),
+                radius: AppSize.s16.r),
           )
         ],
       ),
@@ -77,8 +80,8 @@ class _RankItem extends StatelessWidget {
       children: [
         Expanded(
           flex: 4,
-          child: SvgPicture.asset('assets/images/crown.svg',
-              width: 90.w, height: 90.w),
+          child: SvgPicture.asset(ImageAssets.crown,
+              width: AppSize.s90.w, height: AppSize.s90.h),
         ),
         Expanded(child: Text(title, style: getSemiBoldStyle())),
         Expanded(
@@ -95,7 +98,7 @@ class _RankItem extends StatelessWidget {
       child: Container(
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.r),
+            borderRadius: BorderRadius.circular(AppSize.s16.r),
             color: color ?? ColorManager.unAchievedRank,
           ),
           child: color == null ? _stack(rank) : rank),

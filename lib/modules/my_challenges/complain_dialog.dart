@@ -5,6 +5,7 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
@@ -17,20 +18,20 @@ class ComplainDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding:  EdgeInsets.all(AppPadding.p8.r),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+              padding:  EdgeInsets.only(top:AppPadding.p18.h),
               child: Text(
-                'Admin rejected your video',
+                AppStrings.adminRejectedYourVideo,
                 style: getSemiBoldStyle(
                     fontSize: FontSize.s14,
                     color: Theme.of(context).primaryColor),
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: AppSize.s16.h),
             SizedBox(
               height: 210.h,
               child: SingleChildScrollView(
@@ -48,13 +49,13 @@ class ComplainDialog extends StatelessWidget {
                     color: ColorManager.complain.withOpacity(0.57)),
                 children: [
                   TextSpan(
-                    text: 'Complain',
+                    text: AppStrings.complain,
                     style: getBoldStyle(color: ColorManager.complain),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: AppSize.s16.h),
           ],
         ),
       ),
@@ -84,13 +85,13 @@ class _RejectedActionsState extends State<_RejectedActions> {
                   flex: 4,
                   child: DefaultButton(
                     height: screenHeight(context) * 0.06,
-                    text: 'Ok',
+                    text: AppStrings.ok,
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     backgroundColor: Theme.of(context).primaryColor,
                     foregroundColor: ColorManager.white,
-                    radius: 10,
+                    radius: AppSize.s10.r,
                     hasBorder: false,
                   ),
                 ),
@@ -99,14 +100,14 @@ class _RejectedActionsState extends State<_RejectedActions> {
                   flex: 4,
                   child: DefaultButton(
                     height: screenHeight(context) * 0.06,
-                    text: 'Complain',
+                    text: AppStrings.complain,
                     onPressed: () {
                       setState(() {
                         displayComplainTextField = !displayComplainTextField;
                       });
                     },
                     foregroundColor: Theme.of(context).primaryColor,
-                    radius: 10,
+                    radius: AppSize.s10.r,
                     hasBorder: true,
                   ),
                 )

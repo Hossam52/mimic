@@ -1,44 +1,63 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/models/challenge_models/challenge_model.dart';
+import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
+import 'package:mimic/modules/video_play_test.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/widgets/hashtag_item.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
 class MyChallengeItem extends StatelessWidget {
   const MyChallengeItem(
-      {Key? key, this.stackItems = const [], this.displayBlackOpacity = true})
+      {Key? key,
+      this.stackItems = const [],
+      this.displayBlackOpacity = true,
+      required this.challange})
       : super(key: key);
   final List<Widget> stackItems;
   final bool displayBlackOpacity;
+  final Challange challange;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 20.h),
+      padding: EdgeInsets.only(top: AppPadding.p20.h),
       child: SizedBox(
-        height: 220.h,
+        height: 260.h,
         child: Card(
+          clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(AppSize.s8.r),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(AppPadding.p10.r),
             child: Column(
               children: [
                 Row(
-                  children: const [
-                    Center(child: _ChallengePerson()),
-                    Spacer(),
-                    HashtagItem(title: 'Music'),
+                  children: [
+                    Center(child: _ChallengePerson(user: challange.creator)),
+                    const Spacer(),
+                    const HashtagItem(title: 'MUSIC'),
                   ],
                 ),
                 Expanded(
-                    child: _Video(
-                        stackItems: stackItems,
-                        displayBlackOpacity: displayBlackOpacity)),
+                    child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppSize.s8.r),
+                  child: VideoItemPlayer(
+                      video: challange.videos.first,
+                      controller: challange.videos),
+                )
+                    //  _Video(
+                    //     stackItems: stackItems,
+                    //     displayBlackOpacity: displayBlackOpacity)
+                    ),
               ],
             ),
           ),
@@ -49,16 +68,21 @@ class MyChallengeItem extends StatelessWidget {
 }
 
 class _ChallengePerson extends StatelessWidget {
-  const _ChallengePerson({Key? key}) : super(key: key);
+  const _ChallengePerson({Key? key, required this.user}) : super(key: key);
+  final User user;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RoundedImage(imagePath: 'assets/images/static/avatar.png', size: 27.w),
+        //  RoundedImage(imagePath: ImageAssets.avater, size: 27.w),
+        CircleAvatar(
+          backgroundImage: CachedNetworkImageProvider(user.image),
+          radius: 27.w,
+        ),
         SizedBox(width: 10.w),
         Text(
-          'Rahma Ahmed',
+          user.name,
           style: getBoldStyle(fontSize: FontSize.s12),
         )
       ],
@@ -78,12 +102,12 @@ class _Video extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       clipBehavior: Clip.hardEdge,
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: AppMargin.m10.h),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.r)),
       child: Stack(
         children: [
           Image.asset(
-            'assets/images/static/video_preview.png',
+            ImageAssets.videoPreview,
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.fill,
@@ -92,9 +116,7 @@ class _Video extends StatelessWidget {
           Align(alignment: Alignment.topLeft, child: _challengeNameAndTime()),
           ...stackItems,
           Align(
-            child: PlayVideoIcon(
-              size: 40.w,
-            ),
+            child: PlayVideoIcon(size: AppSize.largeIconSize),
           )
         ],
       ),
@@ -103,13 +125,14 @@ class _Video extends StatelessWidget {
 
   Widget _challengeNameAndTime() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 4.w),
+      padding: EdgeInsets.symmetric(
+          vertical: AppPadding.p10.h, horizontal: AppPadding.p4.w),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Challenge Name',
+              AppStrings.challangeTitle,
               style: getSemiBoldStyle(
                   color: ColorManager.white, fontSize: FontSize.s10),
             ),

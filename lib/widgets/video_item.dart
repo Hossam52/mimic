@@ -1,20 +1,30 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/main.dart';
+import 'package:mimic/models/challenge_models/challenge_model.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
-import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/modules/video_play_test.dart';
+import 'package:mimic/widgets/cached_network_image.dart';
 import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 class VideoOverview extends StatelessWidget {
-  const VideoOverview({Key? key, this.defaultIconColor, this.borderRadius})
+  const VideoOverview(
+      {Key? key,
+      this.defaultIconColor,
+      this.borderRadius,
+      required this.challange})
       : super(key: key);
+  final Challange challange;
   final Color? defaultIconColor;
   final double? borderRadius;
   @override
   Widget build(BuildContext context) {
+    log('thumbnail :' + challange.videoCreator.thumNailUrl);
     return Container(
       height: 200.h,
       width: double.infinity,
@@ -24,41 +34,47 @@ class VideoOverview extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Image.asset(
-            getVideoImageRandom(),
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.fill,
-          ),
+          // const VideoPlayTest(),
+          // Image.asset(
+          //   getVideoImageRandom(),
+          //   width: double.infinity,
+          //   height: double.infinity,
+          //   fit: BoxFit.fill,
+          // ),
+          cachedNetworkImage(
+              imageUrl: challange.videoCreator.thumNailUrl,
+              height: 200.h,
+              width: double.maxFinite),
           const BlackOpacity(
             opacity: 0.37,
           ),
           PlayVideoIcon(size: 66.r),
-          Align(alignment: Alignment.topLeft, child: const PersonDetails()),
+          //  const Align(alignment: Alignment.topLeft, child: PersonDetails()),
           Align(
-              alignment: Alignment.bottomLeft,
-              child: _challengeActions(context)),
+              alignment: AlignmentDirectional.bottomStart,
+              child: _challengeActions(context, challange)),
         ],
       ),
     );
   }
 
-  Widget _challengeActions(BuildContext context) {
+  Widget _challengeActions(BuildContext context, Challange challange) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Wrap(
         spacing: 10.w,
         children: [
-          const FavoriteIcon(
-            count: '12',
+          FavoriteIcon(
+            count: challange.likesNumber.toString(),
           ),
           CommentIcon(
-            count: '15',
+            count: challange.commentsNumber.toString(),
             onPressed: () {
-              Dialogs.showCommentsDialog(context);
+              Dialogs.showCommentsDialog(context,3);
             },
           ),
-          ViewIcon(count: '112', iconColor: defaultIconColor),
+          ViewIcon(
+              count: challange.views.toString(), iconColor: defaultIconColor),
         ],
       ),
     );

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/main.dart';
+import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
+import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
+import 'package:mimic/widgets/cached_network_image_circle.dart';
 import 'package:mimic/widgets/hashtag_item.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/profile_statistics.dart';
@@ -16,51 +24,73 @@ import 'package:mimic/widgets/rounded_image.dart';
 import 'package:mimic/widgets/video_item.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
+import 'cubit/challanger_profile_cubit.dart';
+
 class ChallengerProfile extends StatelessWidget {
   const ChallengerProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: getBoldStyle(fontSize: FontSize.s14),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        leading: BackButton(color: ColorManager.commentsColor),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Dialogs.showQrSaveShare(context);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: SvgPicture.asset('assets/images/scan_qr.svg',
-                  color: ColorManager.commentsColor, width: 24.w, height: 24.w),
+    int challangerId = ModalRoute.of(context)!.settings.arguments as int;
+    return BlocProvider(
+      create: (context) =>
+          ChallangerProfileCubit()..getAllDataChallenger(challangerId),
+      child: BlocBuilder<ChallangerProfileCubit, ChallangerProfileState>(
+        builder: (context, state) {
+          if (state is ChallangerProfileLoading && state.isFirst) {
+            return const Scaffold(
+              body: LoadingProgress(),
+            );
+          } else if (state is ChallangerProfileError) {
+            return Scaffold(
+              body: BuildErrorWidget(state.error),
+            );
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                AppStrings.profile.translateString(context),
+                style: getBoldStyle(fontSize: FontSize.s14),
+              ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              leading: BackButton(color: ColorManager.commentsColor),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Dialogs.showQrSaveShare(context);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                    child: SvgPicture.asset(ImageAssets.scanQr,
+                        color: ColorManager.commentsColor,
+                        width: 24.w,
+                        height: 24.w),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.w),
-          child: Column(
-            children: [
-              const _ProfileInfo(),
-              SizedBox(height: 25.h),
-              const ProfileStatistics(),
-              SizedBox(height: 32.h),
-              const _Rank(),
-              SizedBox(height: 40.h),
-              const _JoinedAndCreatedRowButtons(),
-              SizedBox(height: 24.h),
-              _videos()
-            ],
-          ),
-        ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w),
+                child: Column(
+                  children: [
+                    _ProfileInfo(challenger: ChallangerProfileCubit.get(context).challenger.user,),
+                    SizedBox(height: 25.h),
+                     ProfileStatistics(),
+                    SizedBox(height: 32.h),
+                    const _Rank(),
+                    SizedBox(height: 40.h),
+                    const _JoinedAndCreatedRowButtons(),
+                    SizedBox(height: 24.h),
+                    _videos()
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -77,21 +107,22 @@ class ChallengerProfile extends StatelessWidget {
 }
 
 class _ProfileInfo extends StatelessWidget {
-  const _ProfileInfo({Key? key}) : super(key: key);
-
+  const _ProfileInfo({Key? key, required this.challenger}) : super(key: key);
+  final User challenger;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RoundedImage(
-          imagePath: 'assets/images/static/avatar.png',
-          size: 65.r,
-        ),
+        cachedNetworkImageProvider(challenger.image, 65.r),
+        // RoundedImage(
+        //   imagePath: ImageAssets.avater,
+        //   size: 65.r,
+        // ),
         SizedBox(width: 8.w),
         Column(
           children: [
             Text(
-              'Maria Snow',
+              challenger.name,
               style: getRegularStyle(
                       fontSize: FontSize.s14, color: ColorManager.profileName)
                   .copyWith(
@@ -99,7 +130,7 @@ class _ProfileInfo extends StatelessWidget {
                       fontWeight: FontWeight.w500),
             ),
             Text(
-              'San Francisco, CA',
+              '${challenger.country}, ${challenger.city}',
               style: getRegularStyle(
                       fontSize: FontSize.s9,
                       color: ColorManager.profileLocation)
@@ -126,10 +157,12 @@ class _Rank extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('My Rank', style: getBoldStyle(fontSize: FontSize.s18)),
+                Text(AppStrings.myRank.translateString(context),
+                    style: getBoldStyle(fontSize: FontSize.s18)),
                 Padding(
                   padding: EdgeInsets.only(left: 12.w),
-                  child: Text('Rank 2', style: getBoldStyle(fontSize: 14)),
+                  child: Text('Rank 2',
+                      style: getBoldStyle(fontSize: FontSize.s14)),
                 ),
                 SizedBox(height: 10.h),
                 RatingBarIndicator(
@@ -148,7 +181,7 @@ class _Rank extends StatelessWidget {
             ),
             const Spacer(),
             SvgPicture.asset(
-              'assets/images/crown.svg',
+              ImageAssets.crown,
               width: 100.w,
               height: 100.w,
             )
@@ -240,8 +273,8 @@ class _VideoOverview extends StatelessWidget {
                   opacity: 0.37,
                 ),
                 PlayVideoIcon(size: 66.r),
-                const Align(
-                    alignment: Alignment.topLeft, child: PersonDetails()),
+                // const Align(
+                //     alignment: Alignment.topLeft, child: PersonDetails()),
                 Padding(
                   padding: EdgeInsets.all(8.w),
                   child: Align(
@@ -292,7 +325,7 @@ class _VideoOverview extends StatelessWidget {
             count: '15',
             textColor: ColorManager.black,
             onPressed: () {
-              Dialogs.showCommentsDialog(context);
+              Dialogs.showCommentsDialog(context, 3);
             },
           ),
           ViewIcon(

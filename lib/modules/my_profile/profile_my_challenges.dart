@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/hashtag_item.dart';
 import 'package:mimic/widgets/video_item.dart';
@@ -14,7 +16,7 @@ class ProfileMyChallenges extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
         separatorBuilder: (_, index) {
-          return SizedBox(height: 10.h);
+          return SizedBox(height: AppSize.s10.h);
         },
         shrinkWrap: true,
         itemCount: 5,
@@ -34,13 +36,13 @@ class _MyChallengeItem extends StatelessWidget {
     return Container(
       height: 190.h,
       width: double.infinity,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppSize.s10.r)),
       clipBehavior: Clip.hardEdge,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Image.asset(
-            'assets/images/static/video_preview.png',
+            ImageAssets.videoPreview,
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.fill,
@@ -68,9 +70,9 @@ class _MyChallengeItem extends StatelessWidget {
 
   Widget _challengeActions(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.all(AppPadding.p8.r),
       child: Wrap(
-        spacing: 10.w,
+        spacing: AppSize.s10.w,
         children: [
           const FavoriteIcon(
             count: '12',
@@ -78,7 +80,7 @@ class _MyChallengeItem extends StatelessWidget {
           CommentIcon(
             count: '15',
             onPressed: () {
-              Dialogs.showCommentsDialog(context);
+              Dialogs.showCommentsDialog(context,3);
             },
           ),
           ViewIcon(count: '112', iconColor: defaultIconColor),

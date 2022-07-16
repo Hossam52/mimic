@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -87,7 +89,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final response =
           await authRepository.loginAccount(email: email, password: password);
-      print(response.data);
+      log(response.data.toString());
       if (response.data['status']) {
         this.email = email;
         if (response.data['type'] != 0) {
@@ -116,7 +118,7 @@ class AuthCubit extends Cubit<AuthState> {
           emit(AuthNavigateToVerifiyState());
         }
       } else {
-        emit(AuthLoginError(response.data['message']));
+        emit(AuthLoginError(response.data['message'].toString()));
       }
     } catch (e) {
       emit(AuthLoginError(e.toString()));
@@ -155,7 +157,7 @@ class AuthCubit extends Cubit<AuthState> {
       // print(googleUser.email);
       final response = await authRepository.loginWithSocial(
           socialId: googleUser.id, username: googleUser.displayName!);
-      print(response.data);
+      log(response.data.toString());
       if (response.data['status']) {
         CacheHelper.saveDate(
             key: ValuesManager.socialKey, value: SocialLogin.google.index);
@@ -229,13 +231,14 @@ class AuthCubit extends Cubit<AuthState> {
               emit(AuthNavigateFillIntrestesState());
             } else {
               CacheHelper.saveDate(
-              key: ValuesManager.emailKey, value: ValuesManager.email);
-          CacheHelper.saveDate(
-              key: ValuesManager.imageKey, value: ValuesManager.imageUrl);
-          CacheHelper.saveDate(
-              key: ValuesManager.usernameKey, value: ValuesManager.username);
-          CacheHelper.saveDate(
-              key: ValuesManager.tokenKey, value: ValuesManager.tokenValue);
+                  key: ValuesManager.emailKey, value: ValuesManager.email);
+              CacheHelper.saveDate(
+                  key: ValuesManager.imageKey, value: ValuesManager.imageUrl);
+              CacheHelper.saveDate(
+                  key: ValuesManager.usernameKey,
+                  value: ValuesManager.username);
+              CacheHelper.saveDate(
+                  key: ValuesManager.tokenKey, value: ValuesManager.tokenValue);
               emit(AuthLoginWithFacebookSuccess('LoginSuccessfully'));
             }
           }

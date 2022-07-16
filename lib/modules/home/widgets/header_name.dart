@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -34,7 +35,7 @@ class HeaderName extends StatelessWidget {
             ),
           ),
           if (selected && displaySelectedIndicator)
-            CircleAvatar(backgroundColor: ColorManager.black, radius: 3),
+            CircleAvatar(backgroundColor: ColorManager.black, radius: 3.r),
         ],
       ),
     );

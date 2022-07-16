@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/widgets/custom_drop_down.dart';
 import 'package:mimic/widgets/shadow_box.dart';
@@ -28,7 +29,7 @@ class _AllCategoriesDropDownState extends State<AllCategoriesDropDown> {
             focusColor: ColorManager.white,
             value: selectedVal,
             hint: Text(
-              'All Categories',
+              AppStrings.allCategories,
               style: getRegularStyle(),
             ),
             items: [

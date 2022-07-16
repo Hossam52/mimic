@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:convert/convert.dart';
-import 'package:dart_des/des_padding.dart';
 
-import 'package:flutter_des/flutter_des.dart';
 import 'package:dart_des/dart_des.dart';
 
 class SecurityServices {
@@ -26,7 +24,7 @@ class SecurityServices {
     //return await FlutterDes.encryptToHex(plainText, key, iv: iv);
   }
 
-  static String decrypt(String cipherText)  {
+  static String decrypt(String cipherText) {
     //cipher tp plain
     DES des = DES(
       mode: DESMode.CBC,

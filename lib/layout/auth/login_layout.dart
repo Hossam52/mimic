@@ -4,16 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mimic/layout/widgets/auth_layout_widget.dart';
-import 'package:mimic/modules/auth/widgets/background_color_widget.dart';
-import 'package:mimic/modules/auth/widgets/stack_card_with_button.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
 import 'package:mimic/shared/methods.dart';
-import 'package:mimic/widgets/default_text_field.dart';
-import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
 
 class LoginLayout extends StatelessWidget {

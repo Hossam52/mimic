@@ -5,6 +5,8 @@ import 'package:mimic/shared/services/handling_apis.dart';
 class CategoriesServices {
   Future<Response> getAllCategories() async =>
       await HandlingApis.getData(url: ConstantHelper.getAllCategories);
+  Future<Response>getHashTagsCategory({required int categoryId})async=>await HandlingApis.postData(url: 
+  ConstantHelper.getHashtags,data: {'category_id':categoryId});
   Future<Response> addToMyFav(
     {
      required List<int>categoriesIds,

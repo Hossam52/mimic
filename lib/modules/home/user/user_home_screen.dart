@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/modules/home/home_cubit/home_cubit_cubit.dart';
+import 'package:mimic/modules/home/stories/manage_stories_cubit/manage_stories_cubit.dart';
 import 'package:mimic/modules/home/widgets/challenge_item.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
-import 'package:mimic/modules/home/widgets/highlight_item.dart';
 import 'package:mimic/modules/home/widgets/highlights.dart';
+import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
+import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
+import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 
 class UserHomeScreen extends StatelessWidget {
   UserHomeScreen({Key? key}) : super(key: key);
@@ -13,28 +22,53 @@ class UserHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      primary: true,
-      child: Padding(
-        padding: EdgeInsets.only(left: 16.w),
-        child: Column(
-          children: [
-            const Highlights(),
-            SizedBox(height: 16.h),
-            Padding(
-              padding: EdgeInsets.only(right: 11.w),
-              child: const _CurrentChallenges(),
+    return BlocProvider(
+      create: (context) => ManageStoriesCubit()..getAllStories(),
+      child: BlocBuilder<ManageStoriesCubit, ManageStoriesState>(
+        builder: (context, state) 
+        {
+          return RefreshIndicator(
+            onRefresh: () async 
+            {
+              HomeCubitCubit.get(context).getHomeData();
+            },
+            child: BlocBuilder<HomeCubitCubit, HomeCubitState>(
+              builder: (context, state) {
+                if (state is HomeCubitSuccess) {
+                  HomeCubitCubit homeCubitCubit = HomeCubitCubit.get(context);
+                  return SingleChildScrollView(
+                    primary: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.only(
+                          start: AppPadding.p10.w, end: AppPadding.p10.w),
+                      child: Column(
+                        children: [
+                          const Highlights(),
+                          SizedBox(height: AppPadding.p16.h),
+                          _CurrentChallenges(homeCubitCubit: homeCubitCubit),
+                        ],
+                      ),
+                    ),
+                  );
+                } else if (state is HomeCubitError) {
+                  return BuildErrorWidget(state.error);
+                } else {
+                  return const LoadingProgress();
+                }
+              },
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
 
 class _CurrentChallenges extends StatefulWidget {
-  const _CurrentChallenges({Key? key}) : super(key: key);
-
+  const _CurrentChallenges({Key? key, required this.homeCubitCubit})
+      : super(key: key);
+  final HomeCubitCubit homeCubitCubit;
   @override
   State<_CurrentChallenges> createState() => _CurrentChallengesState();
 }
@@ -45,13 +79,13 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
-        padding: EdgeInsets.only(right: 4.0.w),
+        padding: EdgeInsets.only(right: AppPadding.p4.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             HeaderName(
-              'Current Challenges',
-              fontSize: 18.sp,
+              AppStrings.currentChallanges.translateString(context),
+              fontSize: FontSize.s18,
               selected: selectedHeader == _HeaderEnum.currentChallenges,
               onTap: () {
                 setState(() {
@@ -60,8 +94,8 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
               },
             ),
             HeaderName(
-              'Marked',
-              fontSize: 18.sp,
+              AppStrings.marked.translateString(context),
+              fontSize: FontSize.s18,
               selected: selectedHeader == _HeaderEnum.marked,
               onTap: () {
                 setState(() {
@@ -72,19 +106,28 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
           ],
         ),
       ),
-      SizedBox(height: 16.h),
-      ListView.builder(
-          primary: false,
-          shrinkWrap: true,
-          itemCount: 14,
-          itemBuilder: (_, index) {
-            return ChallenegItem(
-              onJoinTapped: () {},
-              onChallengeTapped: () {
-                navigateTo(context, Routes.challengeDetails);
-              },
-            );
-          })
+      SizedBox(height: AppSize.s18.h),
+      widget.homeCubitCubit.challanges.isEmpty
+          ? Center(
+              child: Text(
+              AppStrings.noAvailableChallanges,
+              style: getSemiBoldStyle(),
+              textAlign: TextAlign.center,
+            ))
+          : ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: widget.homeCubitCubit.challanges.length,
+              itemBuilder: (_, index) {
+                return ChallenegItem(
+                  challange: widget.homeCubitCubit.challanges[index],
+                  onJoinTapped: () {},
+                  onChallengeTapped: () {
+                    navigateTo(context, Routes.challengeDetails,
+                        arguments: widget.homeCubitCubit.challanges[index].id);
+                  },
+                );
+              })
     ]);
   }
 }

@@ -11,6 +11,7 @@ import 'package:mimic/modules/auth/register/register_screen.dart';
 import 'package:mimic/modules/auth/register/register_virefy_email.dart';
 import 'package:mimic/modules/auth/register/terms_conditions/privacy_policy_screen.dart';
 import 'package:mimic/modules/challenger_profile/challenger_profile.dart';
+import 'package:mimic/modules/challenges/add_video_to_challange/add_video_to_challange.dart';
 import 'package:mimic/modules/challenges/all_challengers/all_challengers.dart';
 import 'package:mimic/modules/challenges/challenge_details/challenge_details.dart';
 import 'package:mimic/modules/challenges/challenger_video/challenger_video.dart';
@@ -19,6 +20,8 @@ import 'package:mimic/modules/draft/draft_screen.dart';
 import 'package:mimic/modules/home/customer_support.dart';
 import 'package:mimic/modules/home/home_screen.dart';
 import 'package:mimic/modules/home/how_to_challenge.dart';
+import 'package:mimic/modules/home/stories/add_story_screen.dart';
+import 'package:mimic/modules/home/stories/view_my_stories_screen.dart';
 import 'package:mimic/modules/my_profile/all_ranks.dart';
 import 'package:mimic/modules/my_profile/profile_change_password.dart';
 import 'package:mimic/modules/my_profile/profile_settings.dart';
@@ -54,6 +57,9 @@ class Routes {
   static const String allRanks = '/allRanks';
   static const String createChallenge = '/create_challenge';
   static const String challengerProfile = '/challenger_profile';
+  static const String addStory = '/addStory';
+  static const String viewMyStories = '/viewMyStories';
+  static const String addVideoToChallange = '/addVideoToChallangeScreen';
 }
 
 class RouteGenerator {
@@ -77,6 +83,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const InterestsScreen());
       case Routes.privacyPolicy:
         return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
+      case Routes.addStory:
+        return MaterialPageRoute(builder: (_) => const AddStoryScreen());
       // case Routes.main:
       //   return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.customerSupport:
@@ -91,7 +99,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const GuestMainLayout());
       case Routes.challengeDetails:
         return MaterialPageRoute(
-            builder: (_) => const ChallengeDetailsScreen());
+            builder: (_) => const ChallengeDetailsScreen(),
+            settings: routeSettings);
       case Routes.allChallengers:
         return MaterialPageRoute(builder: (_) => const AllChallengers());
       case Routes.challengerVideo:
@@ -111,7 +120,13 @@ class RouteGenerator {
       case Routes.createChallenge:
         return MaterialPageRoute(builder: (_) => const CreateChallenge());
       case Routes.challengerProfile:
-        return MaterialPageRoute(builder: (_) => const ChallengerProfile());
+        return MaterialPageRoute(builder: (_) => const ChallengerProfile(),settings: routeSettings);
+      case Routes.addVideoToChallange:
+        return MaterialPageRoute(
+            builder: (_) => const AddVideoToChallangeScreen(),settings: routeSettings);
+      case Routes.viewMyStories:
+        return MaterialPageRoute(
+            builder: (_) => ViewMyStoriesScreen(), settings: routeSettings);
 
       default:
         return unDefinedRoute();

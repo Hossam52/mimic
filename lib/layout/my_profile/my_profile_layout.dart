@@ -1,17 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/widgets/tab_bar_header.dart';
+import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/my_profile/my_rank.dart';
 import 'package:mimic/modules/my_profile/my_videos.dart';
+import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
 import 'package:mimic/modules/my_profile/profile_my_challenges.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/widgets/cached_network_image_circle.dart';
 import 'package:mimic/widgets/custom_nested_scroll_view.dart';
+import 'package:mimic/widgets/default_text_button.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/profile_statistics.dart';
@@ -21,7 +31,7 @@ import 'package:mimic/widgets/video_item.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 final List<CustomTabBarItem> _profileTabs = [
-  CustomTabBarItem(name: 'My videos', widget: const MyVideos()),
+  CustomTabBarItem(name: 'My videos', widget: const Text('')),
   CustomTabBarItem(name: 'MyRank', widget: const MyRank()),
   CustomTabBarItem(name: 'My challenges', widget: const ProfileMyChallenges()),
 ];
@@ -31,36 +41,45 @@ class MyProfileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final divider = VerticalDivider(
-      thickness: 2,
-      color: ColorManager.black,
-      indent: 22,
-    );
-
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(15.w),
-          child: DefaultTabController(
-            length: _profileTabs.length,
-            child: CustomNestedScrollView(
-              headerWidgets: [
-                const _MyProfileDetails(),
-                SizedBox(height: 22.h),
-                const ProfileStatistics(),
-                SizedBox(height: 36.h),
-                TabBarHeader(
-                  fontSize: FontSize.s12,
-                  tabBars: _profileTabs,
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            if (state is! ProfileGetAllDataLoading &&
+                state is! ProfileGetAllDataError) {
+              var cubit = ProfileCubit.get(context);
+              return Padding(
+                padding: EdgeInsets.all(AppPadding.p15.r),
+                child: DefaultTabController(
+                  length: _profileTabs.length,
+                  child: CustomNestedScrollView(
+                    headerWidgets: [
+                      _MyProfileDetails(user: cubit.userModel.user),
+                      SizedBox(height: AppSize.s22.h),
+                      const ProfileStatistics(),
+                      SizedBox(height: AppSize.s36.h),
+                      TabBarHeader(
+                        fontSize: FontSize.s12,
+                        tabBars: _profileTabs,
+                      ),
+                    ],
+                    body: Padding(
+                      padding: EdgeInsets.only(top: AppPadding.p15.h),
+                      child: TabBarView(children: [
+                        MyVideos(videos: cubit.videosModel.videos),
+                        const MyRank(),
+                        const ProfileMyChallenges(),
+                      ]
+                          //   _profileTabs.map((e) => e.widget).toList()
+                          ),
+                    ),
+                  ),
                 ),
-              ],
-              body: Padding(
-                padding: EdgeInsets.only(top: 15.h),
-                child: TabBarView(
-                    children: _profileTabs.map((e) => e.widget).toList()),
-              ),
-            ),
-          ),
+              );
+            } else {
+              return const LoadingProgress();
+            }
+          },
         ),
       ),
     );
@@ -68,78 +87,82 @@ class MyProfileLayout extends StatelessWidget {
 }
 
 class _MyProfileDetails extends StatelessWidget {
-  const _MyProfileDetails({Key? key}) : super(key: key);
-
+  final User user;
+  const _MyProfileDetails({required this.user});
   @override
   Widget build(BuildContext context) {
     final imageSize = 90.w;
     final crownSize = imageSize / 2;
 
-    return Column(
-      children: [
-        SizedBox(
-          width: imageSize,
-          height: imageSize,
-          child: Stack(
-            children: [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: crownSize / 2),
-                  child: RoundedImage(
-                    imagePath: 'assets/images/static/avatar.png',
-                    size: imageSize - crownSize / 2,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: SvgPicture.asset(
-                  'assets/images/crown_rotated.svg',
-                  height: crownSize,
-                  width: crownSize,
-                  fit: BoxFit.fill,
-                ),
-              )
-            ],
-          ),
-        ),
-        Row(
+    return RefreshIndicator(
+      onRefresh: () => ProfileCubit.get(context).getProfileAllData(),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
           children: [
-            const Spacer(),
-            Column(
+            SizedBox(
+              width: imageSize,
+              height: imageSize,
+              child: Stack(
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: crownSize / 2),
+                      child: cachedNetworkImageProvider(
+                          user.image, imageSize - crownSize / 2),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: SvgPicture.asset(
+                      'assets/images/crown_rotated.svg',
+                      height: crownSize,
+                      width: crownSize,
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Row(
               children: [
-                Text(
-                  'Maria Snow',
-                  style: getRegularStyle(
-                          fontSize: FontSize.s24,
-                          color: ColorManager.profileName)
-                      .copyWith(
-                          fontFamily: FontConstants.gibsonFamily,
-                          fontWeight: FontWeight.w500),
+                const Spacer(),
+                Column(
+                  children: [
+                    Text(
+                      user.name,
+                      style: getRegularStyle(
+                              fontSize: FontSize.s24,
+                              color: ColorManager.profileName)
+                          .copyWith(
+                              fontFamily: FontConstants.gibsonFamily,
+                              fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      '${user.city}, ${user.country}',
+                      style: getRegularStyle(
+                              fontSize: FontSize.s16,
+                              color: ColorManager.profileLocation)
+                          .copyWith(fontFamily: FontConstants.gibsonFamily),
+                    ),
+                  ],
                 ),
-                Text(
-                  'San Francisco, CA',
-                  style: getRegularStyle(
-                          fontSize: FontSize.s16,
-                          color: ColorManager.profileLocation)
-                      .copyWith(fontFamily: FontConstants.gibsonFamily),
-                ),
+                Expanded(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _scanQR(context),
+                    SizedBox(width: 19.w),
+                    _settings(context),
+                    SizedBox(width: 19.w),
+                  ],
+                ))
               ],
             ),
-            Expanded(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                _scanQR(context),
-                SizedBox(width: 19.w),
-                _settings(context),
-                SizedBox(width: 19.w),
-              ],
-            ))
           ],
         ),
-      ],
+      ),
     );
   }
 

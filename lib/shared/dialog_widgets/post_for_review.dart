@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mimic/layout/user/cubit/user_cubit.dart';
+import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 
 class PostForReviewDialog extends StatelessWidget {
@@ -19,16 +23,20 @@ class PostForReviewDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'This video is posted for review will be posted soon',
+              AppStrings.thisVideoIsPostedForReviewWillBePostedSoon
+                  .translateString(context),
               style: getSemiBoldStyle(fontSize: FontSize.s14),
             ),
-            SvgPicture.asset('assets/images/upload_done.svg',
+            SvgPicture.asset(ImageAssets.uploadDone,
                 width: 120.w, height: 120.h),
             SizedBox(height: 28.h),
             DefaultButton(
-                text: 'View Other challenges',
+                text: AppStrings.viewOtherChallanges,
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  UserCubit.instance(context).changeScreenIndex(context, 3);
                 },
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: ColorManager.white,
