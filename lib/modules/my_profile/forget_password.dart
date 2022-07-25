@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/auth/register/register_virefy_email.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
-import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/default_text_field.dart';
 import 'package:mimic/widgets/defulat_button.dart';

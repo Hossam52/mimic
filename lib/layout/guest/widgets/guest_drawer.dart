@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/guest/widgets/guest_custom_drawer_header.dart';
-import 'package:mimic/layout/widgets/drawer_icon_image.dart';
 import 'package:mimic/layout/widgets/drawer_item.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
-import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
-import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/mimic_logo.dart';
-import 'package:mimic/widgets/sized_icon.dart';
 
 class GuestDrawer extends StatelessWidget {
   const GuestDrawer({Key? key}) : super(key: key);

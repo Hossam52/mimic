@@ -4,7 +4,6 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/widgets/bottom_navigation.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 
 class MimicBottomBar extends StatelessWidget {
   const MimicBottomBar(

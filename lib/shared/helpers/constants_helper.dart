@@ -24,12 +24,16 @@ class ConstantHelper {
   static const String editProfileUrl = 'client/updateProfile';
   static const String getCurrentChallanges =
       'client/Challenge/getCurrentChallenges';
+  static const String getFavChallenges = 'client/Favourite/getMyFavouriteChallenge';
   static const String addStoryUrl = 'client/Story/store';
+  static const String getViewsMyStory = 'client/Like/getReacts';
   static const String getChallangeVideos =
       'client/Challenge/getCurrentChallengesVideos';
   static const String getChallangeDetails = 'client/Challenge/getChallengeById';
+  static const String toggleFavChallenge = 'client/Favourite/toggleFavourite';
   static const String getAllStories = 'client/Story/getStories';
   static const String watchVideo = 'client/WatchOrShare/watch';
+  static const String watchStoryFriend = 'client/WatchOrShare/watchStory';
   static const String toggleLike = 'client/Like/toggleLike';
   static const String discoverPeople = 'client/searchClients';
   static const String getAllCommnetsByVideoId =
@@ -37,7 +41,20 @@ class ConstantHelper {
   static const String storeComment = 'client/Comment/store';
   static const String updateComment = 'client/Comment/update';
   static const String deleteComment = 'client/Comment/delete';
+  static const String storeReplay = 'client/Reply/store';
+  static const String deleteReplay = 'client/Reply/delete';
+  static const String getAllReplaiesByCommentId =
+      'client/Reply/getReplysByCommentId';
   static const String getClientById = 'client/ClientById';
   static const String getChallangesByCreatorId =
       'client/Challenge/getChallengesByCreaterId';
+  static const String getChallangesJoindedById =
+      'client/Challenge/joinChallenges';
+  static const String searchOnChallangesByHashTagId =
+      'client/Challenge/SearchByHashtagIDInCurrentChallenges';
+  static const String searchByUsername = 'client/searchClients';
+  static const String searchOnChallanges =
+      'client/Challenge/searchInChallenges';
+  static const String reactStory = 'client/Like/reactStory';
+  static const String watchStory = 'client/WatchOrShare/watchStory';
 }

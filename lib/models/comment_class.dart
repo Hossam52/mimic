@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/shared/services/security_services.dart';
@@ -22,10 +21,13 @@ class Comment with MainCommentData {
 
   late final bool userComment;
   late final String hour;
-  late final List<Replay> replies;
+  Replay? replay;
+  List<Replay> replies = [];
+  int numOfReplies=0;
 
   Comment.fromJson(Map<String, dynamic> json) {
     id = int.parse(SecurityServices.decrypt(json['R0']));
+    numOfReplies = int.parse(SecurityServices.decrypt(json['R29']));
     text = json['R28'] == null ? '' : SecurityServices.decrypt(json['R28']);
 
     user = User.fromJson(json['RC']);
@@ -39,9 +41,10 @@ class Comment with MainCommentData {
             : true;
     image =
         json['image'] == null ? null : SecurityServices.decrypt(json['image']);
-    replies = json['RP'] == null
-        ? []
-        : List.from(json['RP']).map((e) => Replay.fromJson(e)).toList();
+    // replies = json['RP'] == null
+    //     ? []
+    //     : List.from(json['RP']).map((e) => Replay.fromJson(e)).toList();
+    replay = json['LRP'] == null ? null : Replay.fromJson(json['LRP']);
     date = SecurityServices.decrypt(json['R30']);
     liked = json['AL'];
     // json['AL'] == ''
@@ -74,10 +77,6 @@ class Replay extends MainCommentData {
             ? false
             : true;
     date = SecurityServices.decrypt(json['R33']);
-    liked = json['R32'] == null
-        ? false
-        : SecurityServices.decrypt(json['R32']) == 'false'
-            ? false
-            : true;
+    liked = json['R32'];
   }
 }

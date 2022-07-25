@@ -38,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
         this.email = email;
         emit(AuthRegisterSuccess());
       } else {
-        emit(AuthRegisterError(response.data['message']));
+        emit(AuthRegisterError(response.data['message'].toString()));
       }
     } catch (e) {
       emit(AuthRegisterError('Error ${e.toString()}'));

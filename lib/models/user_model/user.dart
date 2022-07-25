@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:mimic/shared/services/security_services.dart';
 

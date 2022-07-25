@@ -2,14 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
-import 'package:flutter_ffmpeg/log.dart';
-import 'package:flutter_ffmpeg/statistics.dart';
 
 import 'package:mimic/models/video_models/video_info_model.dart';
-import 'package:mimic/shared/services/upload_firebase_services.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'firestore_services.dart';
 
 class VideoServices {
   //1- generate thumbnail with w*h of the video
@@ -28,7 +24,7 @@ class VideoServices {
 
     final String outPath = '$videoPath.jpg';
     final arguments =
-        '-y -i $videoPath -vframes 1 -an -s ${width}x${height} -ss 1 $outPath';
+        '-y -i $videoPath -vframes 1 -an -s ${width}x$height -ss 1 $outPath';
 
     final int rc = await _encoder.execute(arguments);
     assert(rc == 0);

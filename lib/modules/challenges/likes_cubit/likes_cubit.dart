@@ -1,10 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:mimic/modules/challenges/likes_cubit/likes_repository.dart';
-import 'package:mimic/shared/helpers/constants_helper.dart';
 import 'package:mimic/shared/network/check_network_state/check_network_state.dart';
-import 'package:mimic/shared/services/handling_apis.dart';
 
 part 'likes_state.dart';
 
@@ -49,6 +46,25 @@ class LikesCubit extends Cubit<LikesState> {
       } catch (e) {
         liked = liked;
         emit(LikesError(liked, commentId));
+      }
+    }
+  }
+  Future<void> toggleLikeReplay(int replayId, {required bool liked}) async {
+    liked = !liked;
+    selectedId = replayId;
+    if (await checkInternetConnecation()) {
+      emit(LikesLoading(liked, selectedId));
+      try {
+        final response = await _likesRepository.toggleLikeReplay(replayId);
+        if (response.data['status']) {
+          emit(LikesSuccess(liked, replayId));
+        } else {
+          liked = liked;
+          emit(LikesError(liked, replayId));
+        }
+      } catch (e) {
+        liked = liked;
+        emit(LikesError(liked, replayId));
       }
     }
   }

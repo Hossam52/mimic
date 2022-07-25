@@ -1,5 +1,7 @@
 class UserAbstract {
   final int id;
   final String image;
-  UserAbstract({required this.id, required this.image});
+  String? name;
+  int? countReacts;
+  UserAbstract({required this.id, required this.image, this.name,this.countReacts});
 }

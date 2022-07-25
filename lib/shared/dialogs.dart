@@ -7,19 +7,26 @@ import 'package:mimic/modules/report/report_screen.dart';
 import 'package:mimic/shared/dialog_widgets/notification_accept_reject_dialog.dart';
 import 'package:mimic/shared/dialog_widgets/post_for_review.dart';
 import 'package:mimic/shared/dialog_widgets/qr_dialog.dart';
+import 'package:mimic/shared/helpers/helper_methods.dart';
 
 class Dialogs {
-  static Future<T?> showCommentsDialog<T>(BuildContext context,int videoId,{int? commentsTotalNumber}) async {
-     bool dataFound =
-                  GetAllCommentsCubit.get(context).checkData(videoId);
-              if (!dataFound) {
-                GetAllCommentsCubit.get(context).getAllComments(videoId);
-              }
+  static Future<T?> showCommentsDialog<T>(BuildContext context, int videoId,
+      {int? commentsTotalNumber}) async {
+    bool dataFound = GetAllCommentsCubit.get(context).checkData(videoId);
+    if (!dataFound) {
+      GetAllCommentsCubit.get(context).getAllComments(videoId);
+    }
     return await showDialog<T?>(
       context: context,
       builder: (_) => BlocProvider.value(
         value: GetAllCommentsCubit.get(context),
-        child: CommentsScreen(videoId: videoId,commentsTotalNumber:commentsTotalNumber!),
+        child: WillPopScope(
+            onWillPop: () async {
+              HelperMethods.closeKeyboard(context);
+              return true;
+            },
+            child: CommentsScreen(
+                videoId: videoId, commentsTotalNumber: commentsTotalNumber!)),
       ),
     );
   }

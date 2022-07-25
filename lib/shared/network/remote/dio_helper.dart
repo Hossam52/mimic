@@ -47,6 +47,7 @@ class DioHelper {
     Map<String, dynamic>? query,
     @required dynamic data,
     String? token = '',
+    Function? progressSend,
   }) async {
     dio!.options.headers = {
       'Accept': 'application/json',
@@ -54,10 +55,12 @@ class DioHelper {
       "Apipassword": 'mimic2022',
       'lang': CacheHelper.getDate(key: ConstantHelper.languageCode) ?? 'ar',
     };
-    return dio!.post(
-      url,
-      queryParameters: query,
-      data: data,
-    );
+    return dio!.post(url, queryParameters: query, data: data,
+        onSendProgress: (sent, total) {
+      if (progressSend != null) 
+      {
+        progressSend(sent, total);
+      }
+    });
   }
 }

@@ -49,7 +49,7 @@ class CountriesCubit extends Cubit<CountriesCubitState> {
       }
     } catch (e) {
       emit(CountriesCubitError(_errorHandler.getErrorHappen(e).message));
-      throw e;
+      rethrow;
     }
   }
 

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:mimic/models/global_models/pegination_model.dart';
 import 'package:mimic/models/video_models/video.dart';
@@ -22,12 +21,12 @@ class Videos {
     required this.videos,
     required this.links,
   });
-  late final List<Video> videos;
+  List<Story> videos = [];
   late final Links links;
 
   factory Videos.fromJson(Map<String, dynamic> json) {
     return Videos(
-        videos: List.from(json['data']).map((e) => Video.fromJson(e)).toList(),
+        videos: List.from(json['data']).map((e) => Story.fromJson(e)).toList(),
         links: Links.fromJson(json['links']));
   }
 }

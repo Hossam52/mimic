@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/shared/services/security_services.dart';
 
@@ -9,22 +11,33 @@ class Story {
     required this.thumbNail,
     required this.MVD,
     required this.R25,
+    required this.authView,
   });
-  late final String id;
+  late final int id;
   late final User user;
   late final String storyUrl;
   late final String thumbNail;
   late final String MVD;
   late final String R25;
+  late bool authView;
+  late int watchCount;
 
-  Story.fromJson(Map<String, dynamic> json) 
-  {
-    id = SecurityServices.decrypt(json['R0']);
+  Story.fromJson(Map<String, dynamic> json) {
+    // log('story message');
+    // log(json.toString());
+    // log('myStory');
+    // log(json.toString());
+    id = int.parse(SecurityServices.decrypt(json['R0']));
+
+    String watch = SecurityServices.decrypt(json['WC']);
+    watchCount = watch.isEmpty ? 0 : int.parse(watch);
     user = User.fromJson(json['RC']);
     storyUrl = SecurityServices.decrypt(json['VD']);
-    thumbNail =SecurityServices.decrypt( json['TH']);
+    thumbNail = SecurityServices.decrypt(json['TH']);
     MVD = SecurityServices.decrypt(json['MVD']);
-    R25 = json['R25'];
+
+    authView = json['AW'];
+    R25 = json['R25'] == null ? '' : SecurityServices.decrypt(json['R25']);
   }
 
   // Map<String, dynamic> toJson() {

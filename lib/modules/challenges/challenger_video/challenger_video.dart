@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/main.dart';
-import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
-import 'package:mimic/modules/challenges/widgets/challenge_title_and_discription.dart';
 import 'package:mimic/modules/challenges/widgets/report_popup_menu_button.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
-import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
-import 'package:mimic/shared/methods.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 
 class ChallengerVideo extends StatelessWidget {
@@ -28,13 +23,13 @@ class ChallengerVideo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: [
+                children: const [
                   // Expanded(
                   //     child: PersonDetails(
                   //   imageRadius: 30,
                   //   textColor: ColorManager.black,
                   // )),
-                  const ReportPopupMenuButton(),
+                  ReportPopupMenuButton(),
                 ],
               ),
               SizedBox(height: 10.h),

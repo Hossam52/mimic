@@ -1,8 +1,6 @@
-import 'dart:developer';
-
+import 'package:mimic/models/challenge_models/hashtag_model.dart';
 import 'package:mimic/models/global_models/pegination_model.dart';
 import 'package:mimic/models/user_model/user.dart';
-import 'package:mimic/models/user_model/user_abstract.dart';
 import 'package:mimic/models/user_model/user_abstract_model.dart';
 import 'package:mimic/models/video_models/video.dart';
 import 'package:mimic/shared/services/security_services.dart';
@@ -26,12 +24,16 @@ class Challenges {
     required this.data,
     required this.links,
   });
-  late final List<Challange> data;
+  List<Challange> data = [];
   late final Links links;
 
   Challenges.fromJson(Map<String, dynamic> json) {
-    data = List.from(json['data']).map((e) => Challange.fromJson(e)).toList();
-    links = Links.fromJson(json['links']);
+    data = json['data'] == null
+        ? []
+        : List.from(json['data']).map((e) => Challange.fromJson(e)).toList();
+    links = json['links'] == null
+        ? Links(next: null)
+        : Links.fromJson(json['links']);
   }
 }
 
@@ -59,15 +61,16 @@ class Challange {
   late final String endDate;
   late final String status;
   late bool authJoined;
+  bool authFavorite = false;
   late final List<UserAbstractModel> peopleJoined;
   late final String createdAt;
   late final User creator;
-  late final Video videoCreator;
+  late final Story videoCreator;
 
-  late final List<String> hashtags;
+  late final List<HashTag> hashtags;
   late final String shareCount;
   late final bool authCreator;
-  List<Video> videos = [];
+  List<Story> videos = [];
   late int commentsNumber;
   late int likesNumber;
   late int views;
@@ -80,6 +83,7 @@ class Challange {
     endDate = SecurityServices.decrypt(json['R14']);
     creator = User.fromJson(json['R15']);
     authJoined = json['R44'];
+    authFavorite = json['AF'];
     peopleJoined = json['R22'] == null
         ? []
         : json['R22'] is String
@@ -88,20 +92,17 @@ class Challange {
                 .map((e) => UserAbstractModel.fromJson(e))
                 .toList();
     createdAt = SecurityServices.decrypt(json['R16']);
-    log(json['R17'].toString());
-    hashtags = List.from(json['R17'])
-        .map((e) => SecurityServices.decrypt(e['R8']))
-        .toList();
+    hashtags = List.from(json['R17']).map((e) => HashTag.fromJson(e)).toList();
     //   List.from(json['R17']).map((e) => SecurityServices.decrypt(e)).toList();
 
     shareCount = SecurityServices.decrypt(json['R19']);
     authCreator =
         SecurityServices.decrypt(json['R20']) == "true" ? true : false;
-    log(json['R21'].toString());
-    videoCreator = Video.fromJson(json['R21']);
+    // log(json['R21'].toString());
+    videoCreator = Story.fromJson(json['R21']);
     //videos = [];
-    commentsNumber =
-        true ? 3 : int.parse(SecurityServices.decrypt(json['R40']));
+    String comments = SecurityServices.decrypt(json['R40']);
+    commentsNumber = comments.isEmpty ? 0 : int.parse(comments);
     likesNumber = int.parse(SecurityServices.decrypt(json['R42']));
     views = int.parse(SecurityServices.decrypt(json['R43']));
     //  json['R21'] == null

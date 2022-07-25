@@ -9,18 +9,12 @@ import 'package:mimic/modules/challenges/challange_data_cubit/challange_data_cub
 import 'package:mimic/modules/challenges/get_all_comments_cubit/get_all_comments_cubit.dart';
 import 'package:mimic/modules/challenges/likes_cubit/likes_cubit.dart';
 import 'package:mimic/modules/challenges/watch_video_challanger_cubit/watch_video_challanger_cubit.dart';
-import 'package:mimic/modules/challenges/widgets/challenge_person_details.dart';
-import 'package:mimic/modules/video_player_challanger.dart';
-import 'package:mimic/modules/video_player_only.dart';
+import 'package:mimic/shared/video_players_widgets/video_player_challanger.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/cached_network_image.dart';
-import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
-import 'package:mimic/presentation/resourses/routes_manager.dart';
-import 'package:mimic/shared/methods.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 
 class ChallengesGridView extends StatelessWidget {
@@ -36,7 +30,7 @@ class ChallengesGridView extends StatelessWidget {
   //final ChallangeDataCubit challangeDataCubit;
   @override
   Widget build(BuildContext context) {
-    List<Video> videos = ChallangeDataCubit.get(context).videosChallengers;
+    List<Story> videos = ChallangeDataCubit.get(context).videosChallengers;
     log(videos.length.toString());
     return GridView.builder(
         primary: false,
@@ -61,7 +55,7 @@ class _ChallengeItemPreview extends StatelessWidget {
   _ChallengeItemPreview({Key? key, this.showPlayIcon = true, this.video})
       : super(key: key);
   final bool showPlayIcon;
-  Video? video;
+  Story? video;
   @override
   Widget build(BuildContext context) {
     log(video!.id);
@@ -112,7 +106,7 @@ class _ChallengeItemPreview extends StatelessWidget {
   }
 
   Widget _videoStatistics(context,
-      {required Video video, required int videoId}) {
+      {required Story video, required int videoId}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.0.h),
       child: Wrap(
@@ -219,7 +213,7 @@ class _ChallengeItemPreview extends StatelessWidget {
 
 class VideoPopUp extends StatelessWidget {
   VideoPopUp({Key? key, this.video, this.contextCubit}) : super(key: key);
-  Video? video;
+  Story? video;
   BuildContext? contextCubit;
   @override
   Widget build(BuildContext context) {
@@ -282,7 +276,7 @@ class VideoPopUp extends StatelessWidget {
 
   Widget _statistics(
     BuildContext context, {
-    required Video video,
+    required Story video,
     required int videoId,
   }) {
     return Wrap(

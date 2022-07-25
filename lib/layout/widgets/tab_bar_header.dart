@@ -5,6 +5,7 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
 
 class TabBarHeader extends StatelessWidget {
   const TabBarHeader(
@@ -31,13 +32,16 @@ class TabBarHeader extends StatelessWidget {
       child: TabBar(
         controller: controller,
         onTap: onTap,
-        labelStyle: getBoldStyle(fontSize: fontSize??FontSize.s12),
-        labelPadding:  EdgeInsets.all(AppPadding.p4.r),
+        labelStyle: getBoldStyle(fontSize: fontSize ?? FontSize.s12),
+        labelPadding: EdgeInsets.all(AppPadding.p4.r),
         padding: EdgeInsets.zero,
         unselectedLabelColor: ColorManager.black,
-        unselectedLabelStyle: getSemiBoldStyle(fontSize: fontSize??FontSize.s12),
+        unselectedLabelStyle:
+            getSemiBoldStyle(fontSize: fontSize ?? FontSize.s12),
         labelColor: ColorManager.black,
-        tabs: tabBars.map((e) => Center(child: Text(e.name))).toList(),
+        tabs: tabBars
+            .map((e) => Center(child: Text(e.name.translateString(context))))
+            .toList(),
         indicatorWeight: 2,
         indicatorColor: ColorManager.tabBarIndicator,
       ),

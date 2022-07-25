@@ -1,11 +1,10 @@
-import 'dart:developer';
 
 import 'package:better_player/better_player.dart';
 import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/shared/services/security_services.dart';
 
-class Video {
-  Video({
+class Story {
+  Story({
     required this.id,
     required this.R12,
     required this.user,
@@ -36,8 +35,8 @@ class Video {
   late BetterPlayerController controller =
       BetterPlayerController(const BetterPlayerConfiguration());
 
-  factory Video.fromJson(Map<String, dynamic> json) {
-    return Video(
+  factory Story.fromJson(Map<String, dynamic> json) {
+    return Story(
         id: SecurityServices.decrypt(json['R0']),
         R12: SecurityServices.decrypt(json['R12']),
         user: User.fromJson(json['RC']),

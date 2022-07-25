@@ -16,7 +16,6 @@ import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
-import 'package:mimic/presentation/resourses/values_manager.dart';
 import 'package:mimic/shared/cubits/categories_cubit/categories_cubit.dart';
 import 'package:mimic/shared/cubits/helper_cubit/helper_cubit.dart';
 import 'package:mimic/shared/dialogs.dart';
@@ -55,7 +54,7 @@ class _DraftScreenState extends State<DraftScreen> {
     return GestureDetector(
       onTap: () => HelperMethods.closeKeyboard(context),
       child: Scaffold(
-        appBar: const TransparentAppBar(title: AppStrings.draft),
+        appBar:  TransparentAppBar(title: AppStrings.draft.translateString(context)),
         body: BlocProvider(
           create: (context) => CategoriesCubit()..getAllCategories(),
           child: BlocBuilder<CategoriesCubit, CategoriesState>(
@@ -126,9 +125,10 @@ class _DraftScreenState extends State<DraftScreen> {
                           title: AppStrings.chooseCategory
                               .translateString(context),
                           validator: (String? value) {
-                            if (value == null)
+                            if (value == null) {
                               return AppStrings.thisFieldRequired
                                   .translateString(context);
+                            }
                             return null;
                           },
                           onChanged: (value) {
@@ -158,110 +158,94 @@ class _DraftScreenState extends State<DraftScreen> {
                         if (state is HashTagsLoading)
                           const LoadingProgress()
                         else if (state is HashTagsSuccess)
-                          CategoriesCubit.get(context)
-                                  .hashTagModel
-                                  .hashtags
-                                  .isEmpty
-                              ? Center(
-                                  child: Text(
-                                    AppStrings.noAvailableHashtags
-                                        .translateString(context),
-                                    style: getMediumStyle(),
-                                  ),
-                                )
-                              : Align(
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        AppStrings.selectoraddhashtags,
-                                        style: getMediumStyle(),
-                                      ),
-                                      SizedBox(
-                                        height: AppSize.s10,
-                                      ),
-                                      DefaultTextField(
-                                        hintText: AppStrings.newHashtag
-                                            .translateString(context),
-                                        controller: newHashtag,
-                                        suffix: defaultTextButton(
-                                            onPressed: () {
-                                              if (newHashtag.text.length >= 2) {
-                                                if (CategoriesCubit.get(context)
-                                                    .chekHashtagNotFound(
-                                                        newHashtag.text)) {
-                                                
-                                                  int id = DateTime.now()
-                                                      .millisecondsSinceEpoch;
-                                                  CategoriesCubit.get(context)
-                                                      .addNewHashtag(HashTag(
-                                                          id: id,
-                                                          name:
-                                                              newHashtag.text));
+                          Align(
+                            alignment: AlignmentDirectional.topStart,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  AppStrings.selectoraddhashtags,
+                                  style: getMediumStyle(),
+                                ),
+                                SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                DefaultTextField(
+                                  hintText: AppStrings.newHashtag
+                                      .translateString(context),
+                                  controller: newHashtag,
+                                  suffix: defaultTextButton(
+                                      // textColor: ColorManager.primary,
+                                      onPressed: () {
+                                        if (newHashtag.text.length >= 2) {
+                                          if (CategoriesCubit.get(context)
+                                              .chekHashtagNotFound(
+                                                  newHashtag.text)) {
+                                            int id = DateTime.now()
+                                                .millisecondsSinceEpoch;
+                                            CategoriesCubit.get(context)
+                                                .addNewHashtag(HashTag(
+                                                    id: id,
+                                                    name: newHashtag.text));
 
-                                                  CategoriesCubit.get(context)
-                                                      .selectNewHashtag(
-                                                          id.toString());
-                                                  HelperMethods.closeKeyboard(
-                                                      context);
-                                                  newHashtag.clear();
-                                                } else {
-                                                  Fluttertoast.showToast(
-                                                      msg: AppStrings
-                                                          .hashTagexist,
-                                                      fontSize: FontSize.s16);
-                                                }
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg: AppStrings
-                                                        .hashTagHasMeaning,
-                                                    fontSize: FontSize.s16);
-                                              }
-                                            },
-                                            text: AppStrings.add
-                                                .translateString(context),
-                                            borderColor: ColorManager.primary,
-                                            buttonColor: ColorManager.white),
-                                        validator: (value) {
-                                          return null;
-                                        },
-                                      ),
-                                      SizedBox(
-                                        height: AppSize.s10,
-                                      ),
-                                      Text(
-                                        AppStrings.hashTagsAvailable,
-                                        style: getMediumStyle(),
-                                      ),
-                                      SizedBox(
-                                        height: AppSize.s10,
-                                      ),
-                                      Wrap(
-                                        spacing: AppSize.s10,
-                                        children: CategoriesCubit.get(context)
-                                            .hashTagModel
-                                            .hashtags
-                                            .map(
-                                              (e) => HashtagChip(
-                                                  hashTagTitle: e.name,
-                                                  selected: CategoriesCubit.get(
-                                                          context)
-                                                      .selectedHashtags
-                                                      .contains(
-                                                          e.id.toString()),
-                                                  onPressed: () {
-                                                    CategoriesCubit.get(context)
-                                                        .selectNewHashtag(
-                                                            e.id.toString());
-                                                  }),
-                                            )
-                                            .toList(),
-                                      ),
-                                    ],
-                                  ),
-                                )
+                                            CategoriesCubit.get(context)
+                                                .selectNewHashtag(
+                                                    id.toString());
+                                            HelperMethods.closeKeyboard(
+                                                context);
+                                            newHashtag.clear();
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg: AppStrings.hashTagexist,
+                                                fontSize: FontSize.s16);
+                                          }
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg: AppStrings.hashTagHasMeaning,
+                                              fontSize: FontSize.s16);
+                                        }
+                                      },
+                                      text: AppStrings.add
+                                          .translateString(context),
+                                      borderColor: ColorManager.primary,
+                                      buttonColor: ColorManager.white),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                Text(
+                                  AppStrings.hashTagsAvailable,
+                                  style: getMediumStyle(),
+                                ),
+                                SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                Wrap(
+                                  spacing: AppSize.s10,
+                                  children: CategoriesCubit.get(context)
+                                      .hashTagModel
+                                      .hashtags
+                                      .map(
+                                        (e) => HashtagChip(
+                                            hashTagTitle: e.name,
+                                            selected:
+                                                CategoriesCubit.get(context)
+                                                    .selectedHashtags
+                                                    .contains(e.id.toString()),
+                                            onPressed: () {
+                                              CategoriesCubit.get(context)
+                                                  .selectNewHashtag(
+                                                      e.id.toString());
+                                            }),
+                                      )
+                                      .toList(),
+                                ),
+                              ],
+                            ),
+                          )
                         else if (state is HashTagsError)
                           Center(
                             child: Text(
@@ -342,71 +326,85 @@ class _DraftScreenState extends State<DraftScreen> {
                                           progress: state.progress,
                                         )
                                       : state is CreateChallangeUploadLoading
-                                          ?  VideoUploadWidget()
-                                          : DefaultButton(
-                                              text: AppStrings.publish
-                                                  .translateString(context),
-                                              width: 200.w,
-                                              onPressed: () {
-                                                if (formKey.currentState!
-                                                    .validate()) {
-                                                  if (pickedVide != null) {
-                                                    if (CategoriesCubit.get(
-                                                            context)
-                                                        .selectedHashtags
-                                                        .isNotEmpty) {
-                                                      CreateChallangeCubit.get(
-                                                              context)
-                                                          .createChallange(
-                                                        challangeTitle:
-                                                            challengeTitle.text,
-                                                        challangeDescription:
-                                                            challangeDetails
-                                                                .text,
-                                                        categoryId: int.parse(
-                                                            selectedCategory!),
-                                                        endDate: selectedEndDate
-                                                            .text,
-                                                        videoFile: pickedVide,
-                                                        newHashtagsData:CategoriesCubit.get(context).newHashtags,
-                                                          
-                                                        hashTag: CategoriesCubit
-                                                                .get(context)
-                                                            .selectedHashtags,
-                                                      );
-                                                    } else {
-                                                      Fluttertoast.showToast(
-                                                          msg: AppStrings
-                                                              .pleaseChooseAtLeastOneHashtag
-                                                              .translateString(
-                                                                  context),
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 15.sp,
-                                                          backgroundColor:
-                                                              ColorManager
-                                                                  .error);
+                                          ? VideoUploadWidget()
+                                          : state is CreateChallangeProgressUploadingLoading
+                                              ? VideoPreparingWidget(
+                                                  progress: state.progress,
+                                                  uploadTime: true,
+                                                )
+                                              : DefaultButton(
+                                                  text: AppStrings.publish
+                                                      .translateString(context),
+                                                  width: 200.w,
+                                                  onPressed: () {
+                                                    if (formKey.currentState!
+                                                        .validate()) {
+                                                      if (pickedVide != null) {
+                                                        if (CategoriesCubit.get(
+                                                                context)
+                                                            .selectedHashtags
+                                                            .isNotEmpty) {
+                                                          CreateChallangeCubit
+                                                                  .get(context)
+                                                              .createChallange(
+                                                            challangeTitle:
+                                                                challengeTitle
+                                                                    .text,
+                                                            challangeDescription:
+                                                                challangeDetails
+                                                                    .text,
+                                                            categoryId: int.parse(
+                                                                selectedCategory!),
+                                                            endDate:
+                                                                selectedEndDate
+                                                                    .text,
+                                                            videoFile:
+                                                                pickedVide,
+                                                            newHashtagsData:
+                                                                CategoriesCubit.get(
+                                                                        context)
+                                                                    .newHashtags,
+                                                            hashTag: CategoriesCubit
+                                                                    .get(
+                                                                        context)
+                                                                .selectedHashtags,
+                                                          );
+                                                        } else {
+                                                          Fluttertoast.showToast(
+                                                              msg: AppStrings
+                                                                  .pleaseChooseAtLeastOneHashtag
+                                                                  .translateString(
+                                                                      context),
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 15.sp,
+                                                              backgroundColor:
+                                                                  ColorManager
+                                                                      .error);
+                                                        }
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                            msg: AppStrings
+                                                                .pleaseChooseVideo
+                                                                .translateString(
+                                                                    context),
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 15.sp,
+                                                            backgroundColor:
+                                                                ColorManager
+                                                                    .error);
+                                                      }
                                                     }
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                        msg: AppStrings
-                                                            .pleaseChooseVideo
-                                                            .translateString(
-                                                                context),
-                                                        textColor: Colors.white,
-                                                        fontSize: 15.sp,
-                                                        backgroundColor:
-                                                            ColorManager.error);
-                                                  }
-                                                }
-                                              },
-                                              backgroundColor: Theme.of(context)
-                                                  .primaryColor,
-                                              foregroundColor:
-                                                  ColorManager.white,
-                                              hasBorder: false,
-                                              radius: 7.r,
-                                            );
+                                                  },
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .primaryColor,
+                                                  foregroundColor:
+                                                      ColorManager.white,
+                                                  hasBorder: false,
+                                                  radius: 7.r,
+                                                );
                             },
                           ),
                         ),
@@ -442,7 +440,7 @@ class _Chip extends StatelessWidget {
     return Chip(
       labelPadding: const EdgeInsets.only(left: 8.0),
       label: Text(label),
-      deleteIcon: Icon(
+      deleteIcon: const Icon(
         Icons.close,
         size: 18,
       ),

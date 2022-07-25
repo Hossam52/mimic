@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:mimic/shared/helpers/constants_helper.dart';
@@ -17,13 +16,14 @@ class ProfileRepository {
 
   Future<Response> getMyVideosData({int page=1}) async {
     final response =
-        await HandlingApis.postData(url: ConstantHelper.myVideosUrl,data: {'page':page});
+        await HandlingApis.postData(url: ConstantHelper.myVideosUrl,quary: {'page':page});
     return response;
   }
 
-  Future<Response> getMyChallengs() async {
+  Future<Response> getMyChallengs({int page=1}) async {
     final response =
-        await HandlingApis.postData(url: ConstantHelper.getMyChallenges);
+        await HandlingApis.postData(url: ConstantHelper.getMyChallenges,
+        quary: {'page':page});
     return response;
   }
 

@@ -1,11 +1,9 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/layout/widgets/tab_bar_header.dart';
 import 'package:mimic/models/user_model/user.dart';
-import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/modules/my_profile/my_rank.dart';
 import 'package:mimic/modules/my_profile/my_videos.dart';
 import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
@@ -13,26 +11,19 @@ import 'package:mimic/modules/my_profile/profile_my_challenges.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
-import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/cached_network_image_circle.dart';
 import 'package:mimic/widgets/custom_nested_scroll_view.dart';
-import 'package:mimic/widgets/default_text_button.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
-import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/profile_statistics.dart';
-import 'package:mimic/widgets/rounded_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mimic/widgets/video_item.dart';
-import 'package:mimic/widgets/video_statistic_item.dart';
 
 final List<CustomTabBarItem> _profileTabs = [
   CustomTabBarItem(name: 'My videos', widget: const Text('')),
-  CustomTabBarItem(name: 'MyRank', widget: const MyRank()),
+  CustomTabBarItem(name: 'My Rank', widget: const MyRank()),
   CustomTabBarItem(name: 'My challenges', widget: const ProfileMyChallenges()),
 ];
 
@@ -53,10 +44,12 @@ class MyProfileLayout extends StatelessWidget {
                 child: DefaultTabController(
                   length: _profileTabs.length,
                   child: CustomNestedScrollView(
-                    headerWidgets: [
+                  
+                    headerWidgets: 
+                    [
                       _MyProfileDetails(user: cubit.userModel.user),
                       SizedBox(height: AppSize.s22.h),
-                      const ProfileStatistics(),
+                       ProfileStatistics(staticticsData: cubit.userModel.staticticsData),
                       SizedBox(height: AppSize.s36.h),
                       TabBarHeader(
                         fontSize: FontSize.s12,
@@ -77,7 +70,7 @@ class MyProfileLayout extends StatelessWidget {
                 ),
               );
             } else {
-              return const LoadingProgress();
+              return const LoadingProgressSearchChallanges();
             }
           },
         ),

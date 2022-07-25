@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/widgets/camera._icon.dart';
 import 'package:mimic/widgets/gallery_icon.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 
 class ScanQrScreen extends StatelessWidget {
   const ScanQrScreen({Key? key}) : super(key: key);

@@ -26,26 +26,35 @@ class AddCommentLoading extends GetAllCommentsState {}
 
 class AddCommentSuccess extends GetAllCommentsState {}
 
-class AddCommentError extends GetAllCommentsState 
-{
+class AddCommentError extends GetAllCommentsState {
   final String error;
   AddCommentError(this.error);
 }
+
 class DeleteCommentLoading extends GetAllCommentsState {}
 
 class DeleteCommentSuccess extends GetAllCommentsState {}
 
-class DeleteCommentError extends GetAllCommentsState 
-{
+class DeleteCommentError extends GetAllCommentsState {
   final String error;
   DeleteCommentError(this.error);
 }
 
-class ToggleLikeLoading extends GetAllCommentsState {}
+// class GetAllReplaiesLoading extends GetAllCommentsState {
+//   final bool isFirst;
+//   GetAllReplaiesLoading(this.isFirst);
+// }
+// class GetAllReplaiesSuccess extends GetAllCommentsState {
+// }
+// class GetAllReplaiesError extends GetAllCommentsState {
+//   final String error;
+//   GetAllReplaiesError(this.error);
+// }
+// class ToggleLikeLoading extends GetAllCommentsState {}
 
-class ToggleLikeSuccess extends GetAllCommentsState {}
+// class ToggleLikeSuccess extends GetAllCommentsState {}
 
-class ToggleLikeError extends GetAllCommentsState {}
+// class ToggleLikeError extends GetAllCommentsState {}
 
 class AddCommentOrReplyLoadingState extends GetAllCommentsState {}
 

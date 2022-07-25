@@ -2,9 +2,8 @@ import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/models/user_model/user_abstract_model.dart';
 import 'package:mimic/models/video_models/video.dart';
 
-class MainChallangeDetails
-{
-   late final String id;
+class MainChallangeDetails {
+  late final String id;
   late final String r8;
   late final String challangeTitle;
   late final String description;
@@ -14,7 +13,7 @@ class MainChallangeDetails
   late final List<UserAbstractModel> peopleJoined;
   late final String createdAt;
   late final User creator;
-  late final Video videoCreator;
+  late final Story videoCreator;
 
   late final String hashtags;
   late final String shareCount;
@@ -37,5 +36,4 @@ class MainChallangeDetails
     required this.creator,
     //  required this.R21,
   });
-  
 }

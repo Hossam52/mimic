@@ -4,9 +4,12 @@ import 'package:mimic/shared/network/remote/dio_helper.dart';
 
 class HandlingApis {
   static Future<Response> postData(
-      {required String url, dynamic data, Map<String, dynamic>? quary}) async {
+      {required String url, dynamic data, Map<String, dynamic>? quary,
+      Function? onSendProgress}) async {
     return await DioHelper.postData(
-        url: url, data: data, token:  ValuesManager.tokenValue, query: quary);
+        url: url, data: data, token:  ValuesManager.tokenValue, query: quary,
+        progressSend: onSendProgress,
+        );
   }
 
   static Future<Response> getData(

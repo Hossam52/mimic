@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,12 +7,9 @@ import 'package:mimic/modules/home/widgets/images_builder.dart';
 import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
-import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
-import 'package:mimic/shared/methods.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/video_item.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
@@ -52,12 +48,13 @@ class ChallenegItem extends StatelessWidget {
                       SizedBox(height: halfButtonSize)
                     ],
                   ),
-                  Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: SizedBox(
-                        height: joinIconHeight,
-                        child: _joinButton(joinIconHeight, onJoinTapped)),
-                  )
+                  if (!challange.authJoined)
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: SizedBox(
+                          height: joinIconHeight,
+                          child: _joinButton(joinIconHeight, onJoinTapped)),
+                    )
                 ],
               ),
             ),

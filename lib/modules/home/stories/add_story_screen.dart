@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mimic/modules/draft/videlo_upload_loading.dart';
 import 'package:mimic/modules/draft/video_preparing_widget.dart';
 import 'package:mimic/modules/home/stories/manage_stories_cubit/manage_stories_cubit.dart';
-import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
@@ -14,13 +15,14 @@ import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
 import 'package:mimic/shared/services/pickers_services.dart';
-import 'package:mimic/widgets/loading_brogress.dart';
 
 class AddStoryScreen extends StatelessWidget {
-  const AddStoryScreen({Key? key}) : super(key: key);
-
+  AddStoryScreen({Key? key}) : super(key: key);
+  File? videoPicked;
   @override
   Widget build(BuildContext context) {
+    BuildContext contextCubit =
+        ModalRoute.of(context)!.settings.arguments as BuildContext;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -33,12 +35,14 @@ class AddStoryScreen extends StatelessWidget {
             color: ColorManager.primary,
           ),
           child: SafeArea(
-            child: BlocProvider(
-              create: (context) => ManageStoriesCubit(),
+            child: BlocProvider.value(
+              value: ManageStoriesCubit.get(contextCubit),
               child: BlocConsumer<ManageStoriesCubit, ManageStoriesState>(
                 listener: (context, state) {
                   if (state is ManageStoriesSucceessUploading) {
-                    Navigator.pop(context);
+                    Navigator.pop(
+                      context,
+                    );
                     Fluttertoast.showToast(
                       msg: AppStrings.storyAddedSuccessfully,
                       backgroundColor: ColorManager.white,
@@ -48,10 +52,42 @@ class AddStoryScreen extends StatelessWidget {
                   }
                 },
                 builder: (context, state) {
-                  if (state is ManageStoriesInitial) {
+                  if (state is ManageStoriesPrepareLoading) {
+                    return SizedBox(
+                      height: 1.sh,
+                      child: VideoPreparingWidget(
+                        progress: state.number,
+                        color: ColorManager.white,
+                      ),
+                    );
+                  } else if (state is ManageStoriesSucceessUploading &&
+                      videoPicked != null) {
+                    return Center(
+                        child: SizedBox(
+                            height: 1.sh,
+                            child: const Text('Story Uploaded Success')));
+                  } else if (state is ManageStoriesErrorUploading) {
+                    return SizedBox(
+                      height: 1.sh,
+                      child: BuildErrorWidget(state.error),
+                    );
+                  } else if (state is ManageStoriesLoadingUploading) {
+                    return VideoUploadWidget(
+                      color: ColorManager.white,
+                    );
+                  } else if (state is ManageStoriesLoadingProgressUploading) {
+                    return SizedBox(
+                      height: 1.sh,
+                      child: VideoPreparingWidget(
+                        progress: double.parse(state.progress.toStringAsFixed(1)),
+                        color: ColorManager.white,
+                        uploadTime: true,
+                      ),
+                    );
+                  } else {
                     return InkWell(
                       onTap: () async {
-                        final videoPicked = await PickerServices.pickVideo();
+                        videoPicked = await PickerServices.pickVideo();
                         if (videoPicked != null) {
                           ManageStoriesCubit.get(context)
                               .createStory(videoFile: videoPicked);
@@ -85,26 +121,6 @@ class AddStoryScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    );
-                  } else if (state is ManageStoriesPrepareLoading) {
-                    return SizedBox(
-                      height: 1.sh,
-                      child: VideoPreparingWidget(
-                        progress: state.number,
-                        color: ColorManager.white,
-                      ),
-                    );
-                  } else if (state is ManageStoriesSucceessUploading) {
-                    return Center(
-                        child: SizedBox(
-                            height: 1.sh,
-                            child: const Text('Story Uploaded Success')));
-                  } else if (state is ManageStoriesErrorUploading) {
-                    return SizedBox(
-                        height: 1.sh, child: BuildErrorWidget(state.error));
-                  } else {
-                    return VideoUploadWidget(
-                      color: ColorManager.white,
                     );
                   }
                 },

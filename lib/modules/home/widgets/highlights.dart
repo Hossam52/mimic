@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/home/stories/manage_stories_cubit/manage_stories_cubit.dart';
 import 'package:mimic/modules/home/widgets/header_name.dart';
@@ -18,6 +17,7 @@ class Highlights extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ManageStoriesCubit manageStoriesCubit = ManageStoriesCubit.get(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,65 +31,92 @@ class Highlights extends StatelessWidget {
         SizedBox(
           height: 160.h,
           child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
-                mainAxisSpacing: 15,
+                mainAxisSpacing: 15.w,
                 // childAspectRatio: 150 / 106,
                 // mainAxisExtent: 106.w,
                 childAspectRatio: 150 / 116),
             itemBuilder: (_, index) {
-              if (index == 0) 
-              {
+              if (index == 0) {
                 return GestureDetector(
-                   onLongPress: ()=>navigateTo(context, Routes.viewMyStories,arguments: ManageStoriesCubit.get(context).getStories),
+                    // onLongPress: manageStoriesCubit.getStories.myStories.isEmpty
+                    //     ? null
+                    //     : () => navigateTo(context, Routes.viewMyStories,
+                    //         arguments:
+                    //             ManageStoriesCubit.get(context).getStories),
                     onTap: () {
-                      navigateTo(context, Routes.addStory);
+                      if (manageStoriesCubit.getStories.myStories.isEmpty) {
+                        navigateTo(context, Routes.addStory,
+                            arguments: context);
+                      } else {
+                        navigateTo(context, Routes.viewMyStories,
+                            arguments:
+                                ManageStoriesCubit.get(context).getStories);
+                      }
                     },
                     child: Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
-                        const HighlightItem(),
-                        Container(
-                          height: 60.h,
-                          width: double.maxFinite,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Add to story',
-                            style: getBoldStyle(fontSize: FontSize.s14),
-                          ),
-                          decoration: BoxDecoration(
-                            color: ColorManager.white,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(12.r),
-                              bottomRight: Radius.circular(12.r),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 40.h,
-                          child: Align(
+                        HighlightItem(
+                            story:
+                                manageStoriesCubit.getStories.myStories.isEmpty
+                                    ? null
+                                    : manageStoriesCubit
+                                        .getStories.myStories.first),
+                        if (manageStoriesCubit.getStories.myStories.isEmpty)
+                          Container(
+                            height: 60.h,
+                            width: double.maxFinite,
                             alignment: Alignment.center,
-                            child: Container(
-                              padding: EdgeInsets.all(5.r),
-                              child: Icon(
-                                Icons.add,
-                                color: ColorManager.black,
-                                size: AppSize.largeIconSize,
+                            child: Text(
+                              AppStrings.addToStory.translateString(context),
+                              style: getBoldStyle(fontSize: FontSize.s14),
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorManager.white,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(12.r),
+                                bottomRight: Radius.circular(12.r),
                               ),
-                              decoration: BoxDecoration(
-                                  color: ColorManager.white,
-                                  shape: BoxShape.circle,
-                                  border:
-                                      Border.all(color: ColorManager.white)),
                             ),
                           ),
-                        )
+                        if (manageStoriesCubit.getStories.myStories.isEmpty)
+                          Positioned(
+                            bottom: 40.h,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                padding: EdgeInsets.all(5.r),
+                                child: Icon(
+                                  Icons.add,
+                                  color: ColorManager.black,
+                                  size: AppSize.largeIconSize,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: ColorManager.white,
+                                    shape: BoxShape.circle,
+                                    border:
+                                        Border.all(color: ColorManager.white)),
+                              ),
+                            ),
+                          )
                       ],
                     ));
               }
-              return const HighlightItem();
+              return InkWell(
+                  onTap: () {
+                    navigateTo(context, Routes.viewFriendsStories, arguments: {
+                      'friends': manageStoriesCubit.getStories.OSV,
+                      'index': index - 1
+                    });
+                  },
+                  child: HighlightItem(
+                      story:
+                          manageStoriesCubit.getStories.OSV.data[index - 1]));
             },
-            itemCount: 5,
+            itemCount: manageStoriesCubit.getStories.OSV.data.length + 1,
             scrollDirection: Axis.horizontal,
           ),
         )

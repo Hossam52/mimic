@@ -5,4 +5,6 @@ abstract class HelperState {}
 
 class HelperInitial extends HelperState {}
 class HelperRebuild extends HelperState {}
+class HelperRebuildConfetti extends HelperState {}
+
 

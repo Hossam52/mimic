@@ -19,46 +19,63 @@ import 'package:mimic/widgets/loading_brogress.dart';
 class UserHomeScreen extends StatelessWidget {
   UserHomeScreen({Key? key}) : super(key: key);
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final ScrollController challengesController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ManageStoriesCubit()..getAllStories(),
-      child: BlocBuilder<ManageStoriesCubit, ManageStoriesState>(
-        builder: (context, state) 
-        {
-          return RefreshIndicator(
-            onRefresh: () async 
-            {
-              HomeCubitCubit.get(context).getHomeData();
-            },
-            child: BlocBuilder<HomeCubitCubit, HomeCubitState>(
-              builder: (context, state) {
-                if (state is HomeCubitSuccess) {
-                  HomeCubitCubit homeCubitCubit = HomeCubitCubit.get(context);
-                  return SingleChildScrollView(
-                    primary: true,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.only(
-                          start: AppPadding.p10.w, end: AppPadding.p10.w),
-                      child: Column(
-                        children: [
-                          const Highlights(),
-                          SizedBox(height: AppPadding.p16.h),
-                          _CurrentChallenges(homeCubitCubit: homeCubitCubit),
-                        ],
-                      ),
+    challengesController.addListener(() {
+      if (challengesController.position.maxScrollExtent ==
+          challengesController.offset) {
+        if (HomeCubitCubit.get(context).getChallengesNext) {
+          HomeCubitCubit.get(context).getHomeData();
+        }
+      }
+    });
+    return RefreshIndicator(
+      onRefresh: () async {
+        HomeCubitCubit.get(context).getHomeData();
+        HomeCubitCubit.get(context).clear();
+        ManageStoriesCubit.get(context).getAllStories();
+      },
+      child: BlocBuilder<HomeCubitCubit, HomeCubitState>(
+        builder: (context, state) {
+          if (state is HomeCubitLoading && state.isFirst) {
+            return const LoadingProgressSearchChallanges();
+          } else if (state is HomeCubitError &&
+              HomeCubitCubit.get(context).challanges.isEmpty) {
+            return BuildErrorWidget(state.error);
+          } else {
+            HomeCubitCubit homeCubitCubit = HomeCubitCubit.get(context);
+            return SingleChildScrollView(
+              controller: challengesController,
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(
+                    start: AppPadding.p10.w, end: AppPadding.p10.w),
+                child: Column(
+                  children: [
+                    BlocBuilder<ManageStoriesCubit, ManageStoriesState>(
+                      builder: (context, state) {
+                        if (state is ManageStoriesLoadingData) {
+                          return const LoadingProgress();
+                        } else if (state is ManageStoriesSuccessData ||
+                            state is ManageStoriesSucceessUploading) {
+                          return const Highlights();
+                        } else {
+                          return const BuildErrorWidget('error');
+                        }
+                      },
                     ),
-                  );
-                } else if (state is HomeCubitError) {
-                  return BuildErrorWidget(state.error);
-                } else {
-                  return const LoadingProgress();
-                }
-              },
-            ),
-          );
+                    SizedBox(height: AppPadding.p16.h),
+                    _CurrentChallenges(homeCubitCubit: homeCubitCubit),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    if (state is HomeCubitLoading) const LoadingProgress(),
+                  ],
+                ),
+              ),
+            );
+          }
         },
       ),
     );
@@ -93,16 +110,16 @@ class _CurrentChallengesState extends State<_CurrentChallenges> {
                 });
               },
             ),
-            HeaderName(
-              AppStrings.marked.translateString(context),
-              fontSize: FontSize.s18,
-              selected: selectedHeader == _HeaderEnum.marked,
-              onTap: () {
-                setState(() {
-                  selectedHeader = _HeaderEnum.marked;
-                });
-              },
-            ),
+            // HeaderName(
+            //   AppStrings.marked.translateString(context),
+            //   fontSize: FontSize.s18,
+            //   selected: selectedHeader == _HeaderEnum.marked,
+            //   onTap: () {
+            //     setState(() {
+            //       selectedHeader = _HeaderEnum.marked;
+            //     });
+            //   },
+            // ),
           ],
         ),
       ),

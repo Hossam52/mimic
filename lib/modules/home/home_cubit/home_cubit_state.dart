@@ -5,7 +5,10 @@ abstract class HomeCubitState {}
 
 class HomeCubitInitial extends HomeCubitState {}
 
-class HomeCubitLoading extends HomeCubitState {}
+class HomeCubitLoading extends HomeCubitState {
+  final bool isFirst;
+  HomeCubitLoading(this.isFirst);
+}
 
 class HomeCubitSuccess extends HomeCubitState {}
 

@@ -16,11 +16,11 @@ Widget defaultTextButton(
       },
       child:Text(text,style: getSemiBoldStyle(),),
       style: TextButton.styleFrom(
-          shadowColor: Color(0xff575757),
-          backgroundColor: buttonColor ?? Color(0xffEFEFEF),
+          shadowColor: const Color(0xff575757),
+          backgroundColor: buttonColor ?? const Color(0xffEFEFEF),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
-              side: BorderSide(color: borderColor ?? Color(0xffDCDCDC)))),
+              side: BorderSide(color: borderColor ?? const Color(0xffDCDCDC)))),
     ),
   );
 }

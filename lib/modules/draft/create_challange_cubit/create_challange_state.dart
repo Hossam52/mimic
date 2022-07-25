@@ -13,6 +13,10 @@ class CreateChallangeProgressLoading extends CreateChallangeState {
   final double progress;
   CreateChallangeProgressLoading(this.progress);
 }
+class CreateChallangeProgressUploadingLoading extends CreateChallangeState {
+  final double progress;
+  CreateChallangeProgressUploadingLoading(this.progress);
+}
 
 class CreateChallangeSuccess extends CreateChallangeState {}
 

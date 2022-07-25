@@ -14,11 +14,9 @@ import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
-import 'package:mimic/widgets/custom_drop_down.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
-import 'package:mimic/widgets/shadow_box.dart';
 
 class NewChallengeRequests extends StatelessWidget {
   const NewChallengeRequests({Key? key}) : super(key: key);

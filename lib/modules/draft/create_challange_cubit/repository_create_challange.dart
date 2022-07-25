@@ -17,9 +17,10 @@ class CreateChallangeRepository {
     required List<String> hashTag,
     required List<String> newHashTags,
     required String videoName,
+    required Function onProgress,
   }) async {
-    log(newHashTags.toString());
-    log(hashTag.toString());
+    // log(newHashTags.toString());
+    // log(hashTag.toString());
 
     List<MultipartFile> files = [];
     MultipartFile thumbFile = await uploadFile(thumbNail);
@@ -41,6 +42,7 @@ class CreateChallangeRepository {
     return await HandlingApis.postData(
       url: ConstantHelper.createChallange,
       data: formData,
+      onSendProgress: onProgress,
     );
   }
 }

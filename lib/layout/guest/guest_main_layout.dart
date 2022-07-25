@@ -5,7 +5,6 @@ import 'package:mimic/layout/guest/widgets/guest_drawer.dart';
 import 'package:mimic/layout/widgets/bottom_bar_widgets.dart';
 import 'package:mimic/layout/widgets/mimic_bottom_bar.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
-import 'package:mimic/modules/home/guest/guest_home_screen.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';

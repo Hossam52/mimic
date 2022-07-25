@@ -1,0 +1,4 @@
+enum ChallengesUserEnum {
+  created,
+  joined,
+}

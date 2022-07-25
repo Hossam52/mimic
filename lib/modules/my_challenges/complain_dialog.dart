@@ -8,7 +8,6 @@ import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/defulat_button.dart';
-import 'package:mimic/widgets/mimic_icons.dart';
 
 class ComplainDialog extends StatelessWidget {
   const ComplainDialog({Key? key}) : super(key: key);

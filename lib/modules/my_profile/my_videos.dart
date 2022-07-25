@@ -1,17 +1,10 @@
-import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/models/video_models/reusable_video_list_controller.dart';
 import 'package:mimic/models/video_models/videos_model.dart';
-import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
-import 'package:mimic/modules/video_play_test.dart';
-import 'package:mimic/presentation/resourses/color_manager.dart';
+import 'package:mimic/shared/video_players_widgets/video_play_test.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
-import 'package:mimic/presentation/resourses/values.dart';
-import 'package:mimic/widgets/default_text_button.dart';
-import 'package:mimic/widgets/video_item.dart';
 
 class MyVideos extends StatelessWidget {
   final Videos videos;

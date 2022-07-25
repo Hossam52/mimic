@@ -1,14 +1,12 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:mimic/models/comment_class.dart';
 import 'package:mimic/models/comments_model.dart';
+import 'package:mimic/models/replaies_model.dart';
 import 'package:mimic/modules/challenges/get_all_comments_cubit/comments_repository.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
-import 'package:mimic/shared/helpers/constants_helper.dart';
 import 'package:mimic/shared/network/check_network_state/check_network_state.dart';
 
 part 'get_all_comments_state.dart';
@@ -17,6 +15,8 @@ class GetAllCommentsCubit extends Cubit<GetAllCommentsState> {
   GetAllCommentsCubit() : super(GetAllCommentsIdle());
   static GetAllCommentsCubit get(context) => BlocProvider.of(context);
   late CommentsModel commentsModel;
+  late ReplaiesModel replaiesModel;
+  List<Replay> allReplies = [];
   int? videoId;
   int page = 1;
   late List<Comment> comments = [];
@@ -58,12 +58,16 @@ class GetAllCommentsCubit extends Cubit<GetAllCommentsState> {
     }
   }
 
-  Future<void> addComment({required int videoId, required String text}) async {
+  Future<void> addComment(
+      {required int videoId,
+      required String text,
+      required List<String> idsMention}) async {
+    log(idsMention.toString());
     if (await checkInternetConnecation()) {
       emit(AddCommentLoading());
       try {
         final response = await _commentsRepository.storeNewComment(
-            videoId: videoId, body: text);
+            videoId: videoId, body: text, idsMention: idsMention);
         if (response.data['status']) {
           Comment _comment = Comment.fromJson(response.data['CO']);
           allComments.add(_comment);
@@ -78,16 +82,16 @@ class GetAllCommentsCubit extends Cubit<GetAllCommentsState> {
       emit(AddCommentError(AppStrings.checkInternet));
     }
   }
-  Future<void>deleteComment({required Comment comment})async
-  {
-     if (await checkInternetConnecation()) {
+
+  Future<void> deleteComment({required Comment comment}) async {
+    if (await checkInternetConnecation()) {
       emit(DeleteCommentLoading());
       try {
-        final response = await _commentsRepository.deleteComment(
-          commentId: comment.id);
+        final response =
+            await _commentsRepository.deleteComment(commentId: comment.id);
         if (response.data['status']) {
-    commentsModel.comments!.comment.remove(comment);
-          
+          commentsModel.comments!.comment.remove(comment);
+
           emit(DeleteCommentSuccess());
         } else {
           emit(DeleteCommentError(''));
@@ -99,11 +103,14 @@ class GetAllCommentsCubit extends Cubit<GetAllCommentsState> {
       emit(DeleteCommentError(AppStrings.checkInternet));
     }
   }
-  void deleteCommentUI(Comment comment) {
-    commentsModel.comments!.comment.remove(comment);
-    emit(GetAllCommentsRebuild());
-  }
 
+  // void deleteCommentUI(Comment comment) {
+  //   commentsModel.comments!.comment.remove(comment);
+  //   emit(GetAllCommentsRebuild());
+  // }
+
+  Future<void> storeNewReplay(int commentId) async {}
+  Future<void> deleteReplay(int replayId) async {}
   void rebuild() {
     emit(GetAllCommentsRebuild());
   }

@@ -12,6 +12,11 @@ class AddVideoToChallangePrepareing extends AddVideoToChallangeState {
   AddVideoToChallangePrepareing(this.progress);
 }
 
+class AddVideoToChallangeUploadPreparing extends AddVideoToChallangeState {
+  final double progress;
+  AddVideoToChallangeUploadPreparing(this.progress);
+}
+
 class AddVideoToChallangeSuccess extends AddVideoToChallangeState {}
 
 class AddVideoToChallangeError extends AddVideoToChallangeState {

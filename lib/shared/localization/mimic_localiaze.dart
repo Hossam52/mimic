@@ -55,7 +55,7 @@ class _DemoLocalizationsDelegate
   @override
   Future<MimicLocalizations> load(Locale locale) async {
     // return SynchronousFuture<DemoLocalizations>(DemoLocalizations(locale));
-    late MimicLocalizations localizations = new MimicLocalizations(locale);
+    late MimicLocalizations localizations = MimicLocalizations(locale);
     await localizations.load();
     return localizations;
   }

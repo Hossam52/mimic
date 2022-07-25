@@ -87,7 +87,7 @@ class AppStrings {
   static const String newRequests = 'New Request';
   static const String approved = 'Approved';
   static const String rejected = 'Rejected';
-  static const String draft = 'Draft';
+  static const String draft = 'Create challenge';
   static const String allCategories = 'All Categories';
   static const String adminRejectedYourVideo = 'Admin rejected your video';
   static const String complain = 'Complain';
@@ -112,5 +112,22 @@ class AppStrings {
   static const String uploadYourOwnVideo = 'Upload your own video';
   static const String edit = 'Edit';
   static const String delete = 'Delete';
+  static const String copy = 'Copy';
   static const String report = 'Report';
+  static const String videosUploaded = 'Video uploaded';
+  static const String likes = 'Likes';
+  static const String contribution = 'Contribution';
+  static const String noAvailableChallangesInThisHashtag =
+      'No available challanges in this hashtag';
+  static const String topChallangers = 'TOP CHALLENGERS';
+  static const String addToStory = 'Add to story';
+  static const String lastWeek = 'lastWeek';
+  static const String lastMonth = 'lastMonth';
+  static const String lastYear = 'lastYear';
+  static const String noChallengesCreatedBy = 'No challenges created by';
+  static const String noChallenges = 'No challenges';
+  static const String joinedToThem = 'joined to them';
+  static const String joined = 'joined';
+  static const String created = 'created';
+  static const String saveChanges = 'Save Changes';
 }

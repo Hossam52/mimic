@@ -31,8 +31,26 @@
     "new hashtag":"new hashtag",
     "Add":"Add",
     "Upload your video":"Upload your video",
+    "Marked":"Marked",
     "Category":"Category",
     "Date published":"Date published",
-    "New Request":"New Request"
-    
+    "New Request":"New Requests",
+    "lastWeek":"Last week",
+    "lastMonth":"Last month",
+    "lastYear":"Last year",
+    "People":"People",
+    "Approved":"Approved",
+    "Create challenge":"Create challenge",
+    "My Rank":"My Rank",
+    "Rejected":"Rejected",
+    "Draft":"Draft",
+    "TOP CHALLENGERS":"TOP CHALLENGERS",
+    "No challenges created by":"No challenges created by",
+    "No challenges":"No challenges",
+    "joined to them":"joined to them",
+    "joined":"Joined",
+    "created":"created",
+    "Video uploaded":"Video uploaded",
+    "Likes":"Likes",
+    "Contribution":"Contribution"
 }

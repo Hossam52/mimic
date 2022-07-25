@@ -18,6 +18,7 @@ import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/presentation/resourses/values_manager.dart';
 import 'package:mimic/shared/cubits/countries_cubit/countries_cubit_cubit.dart';
 import 'package:mimic/shared/cubits/helper_cubit/helper_cubit.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/helpers/helper_methods.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/shared/network/locale/cache_helper.dart';
@@ -257,7 +258,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                 },
                                 builder: (context, state) {
                                   return DefaultButton(
-                                    text: 'Save Changes',
+                                    text: AppStrings.saveChanges.translateString(context),
                                     loading: state is ProfileEditLoading,
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {

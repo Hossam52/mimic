@@ -1,4 +1,5 @@
 const String imagePath = 'assets/images';
+const String lottiePath = 'assets/lottie';
 
 class ImageAssets {
   static const String splashLogo = '$imagePath/splash.png';
@@ -33,5 +34,10 @@ class ImageAssets {
   static const String crown = '$imagePath/crown.svg';
   static const String scanQr = '$imagePath/scan_qr.svg';
   static const String upload = '$imagePath/upload.svg';
-  static const String uploadDone='$imagePath/upload_done.svg';
+  static const String uploadDone = '$imagePath/upload_done.svg';
+}
+
+class LottieAssets {
+  static const String searchUsers = '$lottiePath/search_users.json';
+  static const String searchChallanges = '$lottiePath/search_challanges.json';
 }

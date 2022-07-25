@@ -3,7 +3,6 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
-import 'package:mimic/widgets/default_circular_progress.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
 
 class DefaultButton extends StatelessWidget {
@@ -51,7 +50,9 @@ class DefaultButton extends StatelessWidget {
         child: Container(
           padding: padding,
           child: loading
-              ? const LoadingProgress()
+              ? LoadingProgress(
+                  color: ColorManager.white,
+                )
               : trailing == null
                   ? Text(text)
                   : Row(

@@ -21,7 +21,7 @@ class DialogCard extends StatelessWidget {
       insetPadding: const EdgeInsets.all(20),
       backgroundColor: backgroundColor ?? ColorManager.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: Container(
+      child: SizedBox(
         height: height,
         child: Scaffold(
           resizeToAvoidBottomInset: true,

@@ -2,12 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mimic/main.dart';
 import 'package:mimic/models/challenge_models/challenge_model.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
-import 'package:mimic/modules/video_play_test.dart';
 import 'package:mimic/widgets/cached_network_image.dart';
-import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
-import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 
 class ChallengeTitle extends StatelessWidget {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/modules/challenges/challange_data_cubit/challange_data_cubit.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
-import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 class VideoStatistics extends StatelessWidget {
@@ -20,9 +19,9 @@ class VideoStatistics extends StatelessWidget {
       CommentIcon(
         count: challangeDataCubit.challangeDetails.commentsNumber.toString(),
         textColor: ColorManager.black,
-        onPressed: () {
-          Dialogs.showCommentsDialog(context,3);
-        },
+        // onPressed: () {
+        //   Dialogs.showCommentsDialog(context,3);
+        // },
       ),
       ViewIcon(
         count: challangeDataCubit.challangeDetails.views.toString(),

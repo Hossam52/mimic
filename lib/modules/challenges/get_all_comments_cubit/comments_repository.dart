@@ -11,9 +11,11 @@ class CommentsRepository {
   }
 
   Future<Response> storeNewComment(
-      {required int videoId, required String body}) async {
+      {required int videoId,
+      required String body,
+      required List<String> idsMention}) async {
     FormData formData = FormData.fromMap({
-      'mentions[]': [],
+      'mentions[]': idsMention,
       'video_id': videoId,
       'body': body,
     });
@@ -30,19 +32,19 @@ class CommentsRepository {
       'mentions[]': [],
       'video_id': videoId,
       'body': body,
-      'comment_id':commentId,
+      'comment_id': commentId,
     });
     return await HandlingApis.postData(
       url: ConstantHelper.updateComment,
       data: formData,
     );
   }
-  Future<Response>deleteComment({required int commentId})async
-  {
-    return await HandlingApis.postData(url: ConstantHelper.deleteComment,
-    data: {
-      'comment_id':commentId,
-    }
-    );
+
+  Future<Response> deleteComment({required int commentId}) async {
+    return await HandlingApis.postData(
+        url: ConstantHelper.deleteComment,
+        data: {
+          'comment_id': commentId,
+        });
   }
 }

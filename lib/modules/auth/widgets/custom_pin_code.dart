@@ -7,7 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomPinCode extends StatelessWidget {
   final TextEditingController codeController;
-  CustomPinCode({Key? key, required this.codeController}) : super(key: key);
+  const CustomPinCode({Key? key, required this.codeController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,7 @@ class CustomPinCode extends StatelessWidget {
       textStyle: getRegularStyle(),
       validator: (value) {
         if (value!.length < 4) return 'Please Enter All Of Code';
+        return null;
       },
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       animationType: AnimationType.fade,

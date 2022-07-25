@@ -77,12 +77,10 @@ class DefaultTextField extends StatelessWidget {
             hintText: hintText,
             suffixIcon: suffix != null
                 ? suffix
-                : icon == null
-                    ? null
-                    : Icon(
-                        icon,
-                        color: iconColor ?? ColorManager.grey,
-                      ),
+                : Icon(
+                    icon,
+                    color: iconColor ?? ColorManager.grey,
+                  ),
             prefixIcon: prefix != null
                 ? prefix
                 : prefixIcon == null

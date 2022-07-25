@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:mimic/modules/my_challenges/challenges_draft.dart';
 import 'package:mimic/modules/my_challenges/new_challenge_requests.dart';
 import 'package:mimic/modules/my_challenges/rejected_challenges.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
-import 'package:mimic/shared/helpers/error_handling/failure_model.dart';
 import 'package:mimic/shared/network/check_network_state/check_network_state.dart';
 
 class MyChallengesCubit extends Cubit<MyChallengesStateState> {

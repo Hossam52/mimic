@@ -6,11 +6,11 @@ class PeopleModel {
     required this.users,
   });
   late final bool status;
-  late final List<User> users;
-  
-  PeopleModel.fromJson(Map<String, dynamic> json){
+  List<User> users = [];
+
+  PeopleModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    users = List.from(json['RC']).map((e)=>User.fromJson(e)).toList();
+    users = List.from(json['RC']).map((e) => User.fromJson(e)).toList();
   }
 
   // Map<String, dynamic> toJson() {
@@ -20,5 +20,3 @@ class PeopleModel {
   //   return _data;
   // }
 }
-
-

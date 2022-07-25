@@ -11,7 +11,9 @@ class ManageVideosChallangersRepository {
       required File file,
       required int challangeId,
       required String challangeName,
-      required String videoName}) async {
+      required String videoName,
+      required Function onProgressUpload,
+      }) async {
     List<MultipartFile> videoFiles = [];
     for (int index = 0; index < video.length; index++) {
       videoFiles.add(await uploadFile(video[index]));
@@ -27,6 +29,7 @@ class ManageVideosChallangersRepository {
     return await HandlingApis.postData(
       url: ConstantHelper.addVideoToChallange,
       data: formData,
+      onSendProgress: onProgressUpload,
     );
   }
 }

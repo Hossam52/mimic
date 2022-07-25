@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:mimic/models/challenge_models/challenge_model.dart';
 import 'package:mimic/models/user_model/user_model.dart';
 import 'package:mimic/models/video_models/videos_model.dart';
 import 'package:mimic/modules/my_profile/profile_cubit/profile_repository.dart';
@@ -25,6 +25,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ErrorHandler _errorHandler = ErrorHandler();
   late UserModel userModel;
   late VideosModel videosModel;
+  late ChallengesModel challengesModel;
   late Failure _failure;
   Future<void> getProfileAllData() async {
     emit(ProfileGetAllDataLoading());
@@ -33,10 +34,12 @@ class ProfileCubit extends Cubit<ProfileState> {
         final responses = await Future.wait([
           _profileRepository.getProfileData(),
           _profileRepository.getMyVideosData(),
+          _profileRepository.getMyChallengs(),
         ]);
         userModel = UserModel.fromJson(responses[0].data);
-        log(responses[1].data.toString());
+        //log(responses[1].data.toString());
         videosModel = VideosModel.fromJson(responses[1].data);
+        challengesModel = ChallengesModel.fromJson(responses[2].data);
         emit(ProfileGetAllDataSuccess());
       } else {
         emit(ProfileGetAllDataNetworkDisable(AppStrings.checkInternet));

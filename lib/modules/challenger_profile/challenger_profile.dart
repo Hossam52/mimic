@@ -1,110 +1,220 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mimic/main.dart';
+import 'package:mimic/models/challenge_models/challenge_model.dart';
+import 'package:mimic/models/enums/challengesUser.dart';
 import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
 import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
+import 'package:mimic/shared/methods.dart';
+import 'package:mimic/widgets/cached_network_image.dart';
 import 'package:mimic/widgets/cached_network_image_circle.dart';
+import 'package:mimic/widgets/default_appbar.dart';
 import 'package:mimic/widgets/hashtag_item.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
-import 'package:mimic/widgets/person_details.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/profile_statistics.dart';
-import 'package:mimic/widgets/rounded_image.dart';
-import 'package:mimic/widgets/video_item.dart';
 import 'package:mimic/widgets/video_statistic_item.dart';
 
 import 'cubit/challanger_profile_cubit.dart';
+import 'joined_and_created_row_buttons.dart';
 
 class ChallengerProfile extends StatelessWidget {
-  const ChallengerProfile({Key? key}) : super(key: key);
-
+  ChallengerProfile({Key? key}) : super(key: key);
+  final ScrollController createdController = ScrollController();
+  final ScrollController joinedController = ScrollController();
+  late ChallangerProfileCubit _challangerProfileCubit;
   @override
   Widget build(BuildContext context) {
-    int challangerId = ModalRoute.of(context)!.settings.arguments as int;
+    dynamic challangerId = ModalRoute.of(context)!.settings.arguments;
+
+    createdController.addListener(() {
+      if (createdController.position.maxScrollExtent ==
+          createdController.offset) {
+        if (_challangerProfileCubit.selectedFilter == 0) {
+          _challangerProfileCubit.getMoreChallengesCreated();
+        } else {
+          _challangerProfileCubit.getMoreChallengesJoined();
+        }
+        log('message');
+      }
+    });
     return BlocProvider(
       create: (context) =>
           ChallangerProfileCubit()..getAllDataChallenger(challangerId),
       child: BlocBuilder<ChallangerProfileCubit, ChallangerProfileState>(
         builder: (context, state) {
           if (state is ChallangerProfileLoading && state.isFirst) {
-            return const Scaffold(
-              body: LoadingProgress(),
+            return Scaffold(
+              appBar: defaultAppbar(
+                title: AppStrings.profile.translateString(context),
+              ),
+              body: const LoadingProgress(),
             );
           } else if (state is ChallangerProfileError) {
             return Scaffold(
+              appBar: defaultAppbar(
+                title: AppStrings.profile.translateString(context),
+              ),
               body: BuildErrorWidget(state.error),
             );
-          }
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                AppStrings.profile.translateString(context),
-                style: getBoldStyle(fontSize: FontSize.s14),
+          } else {
+            _challangerProfileCubit = ChallangerProfileCubit.get(context);
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  AppStrings.profile.translateString(context),
+                  style: getBoldStyle(fontSize: FontSize.s14),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                leading: BackButton(color: ColorManager.commentsColor),
+                actions: [
+                  GestureDetector(
+                    onTap: () {
+                      Dialogs.showQrSaveShare(context);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                      child: SvgPicture.asset(ImageAssets.scanQr,
+                          color: ColorManager.commentsColor,
+                          width: 24.w,
+                          height: 24.w),
+                    ),
+                  ),
+                ],
               ),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-              leading: BackButton(color: ColorManager.commentsColor),
-              actions: [
-                GestureDetector(
-                  onTap: () {
-                    Dialogs.showQrSaveShare(context);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                    child: SvgPicture.asset(ImageAssets.scanQr,
-                        color: ColorManager.commentsColor,
-                        width: 24.w,
-                        height: 24.w),
+              body: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                controller: createdController,
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 3.h),
+                  child: Column(
+                    children: [
+                      _ProfileInfo(
+                        challenger:
+                            ChallangerProfileCubit.get(context).challenger.user,
+                      ),
+                      SizedBox(height: 25.h),
+                      ProfileStatistics(
+                          staticticsData: ChallangerProfileCubit.get(context)
+                              .challenger
+                              .staticticsData),
+                      SizedBox(height: 32.h),
+                      const _Rank(),
+                      SizedBox(height: 40.h),
+                      JoinedAndCreatedRowButtons(),
+                      SizedBox(height: 24.h),
+                      ChallangerProfileCubit.get(context).selectedFilter ==
+                              ChallengesUserEnum.created.index
+                          ? ChallangerProfileCubit.get(context)
+                                  .challengesCreatedByUser
+                                  .isEmpty
+                              ? BuildErrorWidget(AppStrings
+                                      .noChallengesCreatedBy
+                                      .translateString(context) +
+                                  ' ' +
+                                  ChallangerProfileCubit.get(context)
+                                      .challenger
+                                      .user
+                                      .name)
+                              : challengesUser(
+                                  challenges:
+                                      ChallangerProfileCubit.get(context)
+                                          .challengesCreatedByUser,
+                                  controller: createdController,
+                                  context: context)
+                          : ChallangerProfileCubit.get(context)
+                                  .challengesJoinedByUser
+                                  .isEmpty
+                              ? BuildErrorWidget(AppStrings.noChallenges
+                                      .translateString(context) +
+                                  ChallangerProfileCubit.get(context)
+                                      .challenger
+                                      .user
+                                      .name +
+                                  ' ' +
+                                  AppStrings.joinedToThem
+                                      .translateString(context))
+                              : challengesUser(
+                                  challenges:
+                                      ChallangerProfileCubit.get(context)
+                                          .challengesJoinedByUser,
+                                  controller: createdController,
+                                  context: context,
+                                ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      if (state is ChallangerProfileLoading)
+                        const LoadingProgress(),
+                      //     ChallengesUser(
+                      // challenges: ChallangerProfileCubit.get(context)
+                      //     .challengesCreatedByUser,),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.w),
-                child: Column(
-                  children: [
-                    _ProfileInfo(challenger: ChallangerProfileCubit.get(context).challenger.user,),
-                    SizedBox(height: 25.h),
-                     ProfileStatistics(),
-                    SizedBox(height: 32.h),
-                    const _Rank(),
-                    SizedBox(height: 40.h),
-                    const _JoinedAndCreatedRowButtons(),
-                    SizedBox(height: 24.h),
-                    _videos()
-                  ],
-                ),
               ),
-            ),
-          );
+            );
+          }
         },
       ),
     );
   }
-
-  Widget _videos() {
-    return ListView.separated(
-      separatorBuilder: (_, index) => SizedBox(height: 16.h),
-      shrinkWrap: true,
-      primary: false,
-      itemBuilder: (_, index) => const _VideoOverview(),
-      itemCount: 10,
-    );
-  }
 }
+
+Widget challengesUser(
+    {required ScrollController controller,
+    required BuildContext context,
+    required List<Challange> challenges}) {
+  return ListView.separated(
+    separatorBuilder: (_, index) => SizedBox(height: 16.h),
+    shrinkWrap: true,
+    primary: false,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (_, index) => InkWell(
+        onTap: () => navigateTo(context, Routes.challengeDetails,
+            arguments: challenges[index].id),
+        child: _VideoOverview(challange: challenges[index])),
+    itemCount: challenges.length,
+  );
+}
+
+// class ChallengesUser extends StatelessWidget {
+//   const ChallengesUser(
+//       {Key? key, required this.challenges, required this.controller})
+//       : super(key: key);
+//   final List<Challange> challenges;
+//   final ScrollController controller;
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.separated(
+//       controller: controller,
+//       separatorBuilder: (_, index) => SizedBox(height: 16.h),
+//       shrinkWrap: true,
+//       //primary: false,
+//       itemBuilder: (_, index) => InkWell(
+//           onTap: () => navigateTo(context, Routes.challengeDetails,
+//               arguments: challenges[index].id),
+//           child: _VideoOverview(challange: challenges[index])),
+//       itemCount: challenges.length,
+//     );
+//   }
+// }
 
 class _ProfileInfo extends StatelessWidget {
   const _ProfileInfo({Key? key, required this.challenger}) : super(key: key);
@@ -113,7 +223,7 @@ class _ProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        cachedNetworkImageProvider(challenger.image, 65.r),
+        cachedNetworkImageProvider(challenger.image, 60.r),
         // RoundedImage(
         //   imagePath: ImageAssets.avater,
         //   size: 65.r,
@@ -192,61 +302,16 @@ class _Rank extends StatelessWidget {
   }
 }
 
-class _JoinedAndCreatedRowButtons extends StatefulWidget {
-  const _JoinedAndCreatedRowButtons({Key? key}) : super(key: key);
-
-  @override
-  State<_JoinedAndCreatedRowButtons> createState() =>
-      _JoinedAndCreatedRowButtonsState();
-}
-
-class _JoinedAndCreatedRowButtonsState
-    extends State<_JoinedAndCreatedRowButtons> {
-  int selected = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => setState(() {
-              selected = 0;
-            }),
-            child: Text('Joined',
-                style: getSemiBoldStyle(
-                    fontSize: FontSize.s20,
-                    color: selected == 0
-                        ? ColorManager.visibilityColor
-                        : ColorManager.commentsColor)),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: VerticalDivider(
-                thickness: 2, color: ColorManager.commentsColor),
-          ),
-          GestureDetector(
-            onTap: () => setState(() {
-              selected = 1;
-            }),
-            child: Text('Joined',
-                style: getSemiBoldStyle(
-                    fontSize: FontSize.s20,
-                    color: selected == 1
-                        ? ColorManager.visibilityColor
-                        : ColorManager.commentsColor)),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _VideoOverview extends StatelessWidget {
-  const _VideoOverview({Key? key, this.defaultIconColor, this.borderRadius})
+  const _VideoOverview(
+      {Key? key,
+      this.defaultIconColor,
+      this.borderRadius,
+      required this.challange})
       : super(key: key);
   final Color? defaultIconColor;
   final double? borderRadius;
+  final Challange challange;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -263,33 +328,37 @@ class _VideoOverview extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Image.asset(
-                  getVideoImageRandom(),
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.fill,
-                ),
+                cachedNetworkImage(
+                    imageUrl: challange.videoCreator.thumNailUrl,
+                    height: double.infinity,
+                    width: double.infinity),
+                // Image.asset(
+                //   getVideoImageRandom(),
+                //   width: double.infinity,
+                //   height: double.infinity,
+                //   fit: BoxFit.fill,
+                // ),
                 const BlackOpacity(
                   opacity: 0.37,
                 ),
                 PlayVideoIcon(size: 66.r),
                 // const Align(
                 //     alignment: Alignment.topLeft, child: PersonDetails()),
-                Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Icon(
-                        Icons.volume_mute,
-                        color: ColorManager.white,
-                        size: 30.r,
-                      )),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.all(8.w),
+                //   child: Align(
+                //       alignment: Alignment.bottomRight,
+                //       child: Icon(
+                //         Icons.volume_mute,
+                //         color: ColorManager.white,
+                //         size: 30.r,
+                //       )),
+                // ),
                 Padding(
                   padding: EdgeInsets.all(10.h),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.topRight,
-                    child: HashtagItem(title: 'Football'),
+                    child: HashtagItem(title: challange.category),
                   ),
                 )
               ],
@@ -318,18 +387,18 @@ class _VideoOverview extends StatelessWidget {
         spacing: 10.w,
         children: [
           FavoriteIcon(
-            count: '12',
+            count: challange.likesNumber.toString(),
             textColor: ColorManager.black,
           ),
           CommentIcon(
-            count: '15',
+            count: challange.commentsNumber.toString(),
             textColor: ColorManager.black,
-            onPressed: () {
-              Dialogs.showCommentsDialog(context, 3);
-            },
+            // onPressed: () {
+            //  Dialogs.showCommentsDialog(context, 3);
+            // },
           ),
           ViewIcon(
-            count: '112',
+            count: challange.views.toString(),
             textColor: ColorManager.black,
             iconColor: ColorManager.commentsColor,
           ),

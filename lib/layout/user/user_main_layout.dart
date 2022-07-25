@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +11,7 @@ import 'package:mimic/layout/widgets/bottom_bar_widgets.dart';
 import 'package:mimic/layout/widgets/mimic_bottom_bar.dart';
 import 'package:mimic/layout/widgets/notification_icon.dart';
 import 'package:mimic/modules/home/home_cubit/home_cubit_cubit.dart';
+import 'package:mimic/modules/home/stories/manage_stories_cubit/manage_stories_cubit.dart';
 import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/shared/methods.dart';
@@ -30,14 +30,14 @@ class _UserMainLayoutState extends State<UserMainLayout>
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     myChallengesController.dispose();
+    super.dispose();
   }
 
   @override
   late TabController myChallengesController =
       TabController(length: 4, vsync: this);
+ 
   @override
   Widget build(BuildContext context) {
     ProfileCubit.get(context).getProfileAllData();
@@ -59,6 +59,7 @@ class _UserMainLayoutState extends State<UserMainLayout>
             tabBarController: myChallengesController,
           ),
         ),
+        BlocProvider(create: (context)=>ManageStoriesCubit()..getAllStories())
       ],
       child: Builder(builder: (context) {
         final instance = UserCubit.instance(context);

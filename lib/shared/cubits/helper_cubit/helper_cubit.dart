@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -21,5 +20,8 @@ class HelperCubit extends Cubit<HelperState> {
 
   void rebuildPart() {
     emit(HelperRebuild());
+  }
+  void rebuildConfetti() {
+    emit(HelperRebuildConfetti());
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mimic/modules/challenger_profile/challenger_profile.dart';
 import 'package:mimic/modules/challenges/challange_data_cubit/challange_data_cubit.dart';
-import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
@@ -30,7 +28,9 @@ class PeopleJoined extends StatelessWidget {
                 child: ListView.separated(
                   itemBuilder: ((context, index) => InkWell(
                         onTap: () {
-                          navigateTo(context, Routes.challengerProfile,arguments: challangeDataCubit.challangeDetails.peopleJoined[index].id);
+                          navigateTo(context, Routes.challengerProfile,
+                              arguments: challangeDataCubit
+                                  .challangeDetails.peopleJoined[index].id);
                         },
                         child: cachedNetworkImageProvider(
                             challangeDataCubit
@@ -38,7 +38,7 @@ class PeopleJoined extends StatelessWidget {
                             28.r),
                       )),
                   separatorBuilder: (context, index) => SizedBox(
-                    width: 10.w,
+                    width: 2.w,
                   ),
                   itemCount:
                       challangeDataCubit.challangeDetails.peopleJoined.length,
@@ -59,15 +59,15 @@ class PeopleJoined extends StatelessWidget {
             //     ],
             //   ),
             // ),
-            TextButton(
-                onPressed: () {
-                  navigateTo(context, Routes.allChallengers);
-                },
-                child: Text(
-                  'VIEW ALL',
-                  style: getRegularStyle(fontSize: FontSize.s8)
-                      .copyWith(decoration: TextDecoration.underline),
-                ))
+            // TextButton(
+            //     onPressed: () {
+            //       navigateTo(context, Routes.allChallengers);
+            //     },
+            //     child: Text(
+            //       'VIEW ALL',
+            //       style: getRegularStyle(fontSize: FontSize.s8)
+            //           .copyWith(decoration: TextDecoration.underline),
+            //     ))
           ],
         ),
       ],

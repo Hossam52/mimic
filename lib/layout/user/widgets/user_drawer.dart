@@ -14,6 +14,8 @@ import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
+import 'package:mimic/shared/cubits/language_cubit/languages_cubit.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/methods.dart';
 
 class UserDrawer extends StatefulWidget {
@@ -54,8 +56,7 @@ class _UserDrawerState extends State<UserDrawer> {
                   Expanded(
                     child: _drawerItem(
                         _DrawerItemState(
-                            imagePath:
-                                ImageAssets.logout,
+                            imagePath: ImageAssets.logout,
                             title: AppStrings.logout,
                             onPressed: (context) {
                               AuthCubit.get(context).logout();
@@ -78,7 +79,7 @@ class _UserDrawerState extends State<UserDrawer> {
       return DrawerItem(
           onTap: item.onPressed == null ? null : () => item.onPressed!(context),
           imagePath: item.imagePath,
-          title: item.title,
+          title: item.title.translateString(context),
           iconColor: color);
     }
 
@@ -102,7 +103,7 @@ class _UserDrawerState extends State<UserDrawer> {
                 item.onPressed!(context);
               },
               imagePath: item.imagePath,
-              title: item.title,
+              title: item.title.translateString(context),
               iconColor: color),
           canTapOnHeader: item.subSections != null,
           isExpanded: item.isOpen,
@@ -188,7 +189,7 @@ class _SubSectionContainer extends StatelessWidget {
             color: ColorManager.drawerFillColor,
           ),
           child: Padding(
-            padding:  EdgeInsets.all(4.0.r),
+            padding: EdgeInsets.all(4.0.r),
             child: child,
           ),
         ),
@@ -273,13 +274,14 @@ class _DrawerItemState {
         ]),
     _DrawerItemState(
         imagePath: ImageAssets.discover,
-        onPressed: (BuildContext context) {},
+        onPressed: (BuildContext context) {
+          //discover
+        },
         title: AppStrings.discoverChallanges,
         subSections: [
           _DrawerItemSubSection(
               onTap: (context) {
                 Navigator.pop(context);
-
                 UserCubit.instance(context).navigateToSearch(context);
               },
               imagePath: ImageAssets.soccer,
@@ -295,6 +297,13 @@ class _DrawerItemState {
               title: AppStrings.basketBalls,
               count: '+3'),
         ]),
+    _DrawerItemState(
+        imagePath: ImageAssets.myRank,
+        title: AppStrings.marked,
+        onPressed: (BuildContext context) {
+          Navigator.pop(context);
+          navigateTo(context, Routes.markedChallenges);
+        }),
     _DrawerItemState(
       imagePath: ImageAssets.help,
       onPressed: (BuildContext context) {
@@ -324,12 +333,19 @@ class _DrawerItemState {
         title: AppStrings.language,
         subSections: [
           _DrawerItemSubSection(
-              imagePath: ImageAssets.done,
-              title: AppStrings.arabic,
-              iconColor: ColorManager.black),
+            imagePath: ImageAssets.done,
+            onTap: (context) {
+              LanguagesCubit.get(context).changeLanguage('ar');
+            },
+            title: AppStrings.arabic,
+            iconColor: ColorManager.black,
+          ),
           _DrawerItemSubSection(
               imagePath: ImageAssets.done,
               title: AppStrings.english,
+              onTap: (context) {
+                LanguagesCubit.get(context).changeLanguage('en');
+              },
               iconColor: Colors.transparent),
         ])
   ];

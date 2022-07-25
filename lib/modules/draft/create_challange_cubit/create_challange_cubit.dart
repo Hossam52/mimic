@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_ffmpeg/statistics.dart';
 import 'package:meta/meta.dart';
 import 'package:mimic/models/challenge_models/hashtag_model.dart';
@@ -59,21 +57,24 @@ class CreateChallangeCubit extends Cubit<CreateChallangeState> {
             await VideoServices.processedVideo(videoFile!, randomVideoName);
         List<String> newHashTagsNames = hashTagFilters();
         final response = await createChallangeRepository.createChallange(
-          challangeTitle: challangeTitle,
-          categoryId: categoryId,
-          challangeDescription: challangeDescription,
-          endDate: endDate,
-          hashTag: selectedHashtags,
-          videoData: _videoCompressed.videoFiles,
-          thumbNail: _videoCompressed.thumbnail,
-          videoName: randomVideoName,
-          newHashTags: newHashTagsNames,
-        );
+            challangeTitle: challangeTitle,
+            categoryId: categoryId,
+            challangeDescription: challangeDescription,
+            endDate: endDate,
+            hashTag: selectedHashtags,
+            videoData: _videoCompressed.videoFiles,
+            thumbNail: _videoCompressed.thumbnail,
+            videoName: randomVideoName,
+            newHashTags: newHashTagsNames,
+            onProgress: (sent, total) {
+              emit(CreateChallangeProgressUploadingLoading((sent / total)));
+            });
 
         log(response.data.toString());
         if (response.data['status']) {
           emit(CreateChallangeSuccess());
-        } else {
+        } else 
+        {
           emit(CreateChallangeError(response.data['message'].toString()));
         }
       } catch (e) {
@@ -91,8 +92,7 @@ class CreateChallangeCubit extends Cubit<CreateChallangeState> {
     bool isExist = false;
     for (int index = 0; index < newHashTags.length; index++) {
       isExist = selectedHashtags.remove(newHashTags[index].id.toString());
-      if (isExist) 
-      {
+      if (isExist) {
         newHashtagsNames.add(newHashTags[index].name);
       }
     }

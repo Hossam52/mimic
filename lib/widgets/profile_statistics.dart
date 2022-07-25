@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mimic/models/user_model/staticticsData.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 
 class ProfileStatistics extends StatelessWidget {
-  const ProfileStatistics({Key? key}) : super(key: key);
-
+  const ProfileStatistics({Key? key, this.staticticsData}) : super(key: key);
+  final StaticticsData? staticticsData;
   @override
   Widget build(BuildContext context) {
     final divider = VerticalDivider(
@@ -17,32 +20,32 @@ class ProfileStatistics extends StatelessWidget {
     );
     return IntrinsicHeight(
       child: Row(children: [
-        const Expanded(
+        Expanded(
           child: FittedBox(
               // flex: 2,
               child: _ProfileStatisticsItem(
-            count: '140',
+            count: staticticsData!.numberOfVideos.toString(),
             icon: MimicIcons.video,
-            label: 'Video uploaded',
+            label: AppStrings.videosUploaded.translateString(context),
           )),
         ),
         divider,
-        const Expanded(
+        Expanded(
           child: FittedBox(
               child: _ProfileStatisticsItem(
-            count: '140',
+            count: staticticsData!.numberOfLikes.toString(),
             icon: MimicIcons.like,
-            label: 'Likes',
+            label: AppStrings.likes.translateString(context),
           )),
         ),
         divider,
-        const Expanded(
+        Expanded(
           child: FittedBox(
               // flex: 2,
               child: _ProfileStatisticsItem(
-            count: '24K',
+            count: staticticsData!.numberOfContrubtion.toString(),
             icon: MimicIcons.contribution,
-            label: 'Contribution',
+            label: AppStrings.contribution.translateString(context),
           )),
         ),
       ]),

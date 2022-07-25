@@ -10,7 +10,6 @@ import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/cubits/auth_cubit/auth_cubit.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/defulat_button.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);

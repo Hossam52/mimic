@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mimic/modules/challenges/add_video_to_challange/cubit/add_video_to_challange_cubit.dart';
 import 'package:mimic/modules/draft/videlo_upload_loading.dart';
 import 'package:mimic/modules/draft/video_preparing_widget.dart';
-import 'package:mimic/modules/home/stories/manage_stories_cubit/manage_stories_cubit.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
@@ -39,7 +38,7 @@ class AddVideoToChallangeScreen extends StatelessWidget {
                   AddVideoToChallangeState>(
                 listener: (context, state) {
                   if (state is AddVideoToChallangeSuccess) {
-                    Navigator.pop(context);
+                    Navigator.pop(context, true);
                     Fluttertoast.showToast(
                       msg: AppStrings.videoAddedToChallangeSuccessfully,
                       backgroundColor: ColorManager.white,
@@ -94,6 +93,15 @@ class AddVideoToChallangeScreen extends StatelessWidget {
                       child: VideoPreparingWidget(
                         progress: state.progress,
                         color: ColorManager.white,
+                      ),
+                    );
+                  } else if (state is AddVideoToChallangeUploadPreparing) {
+                    return SizedBox(
+                      height: 1.sh,
+                      child: VideoPreparingWidget(
+                        progress: state.progress,
+                        color: ColorManager.white,
+                        uploadTime: true,
                       ),
                     );
                   } else if (state is AddVideoToChallangeSuccess) {

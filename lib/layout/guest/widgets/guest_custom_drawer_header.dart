@@ -4,7 +4,6 @@ import 'package:mimic/layout/widgets/rounded_drawer_header.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
-import 'package:mimic/shared/methods.dart';
 
 class GuestCustomDrawerHeader extends StatelessWidget {
   const GuestCustomDrawerHeader({Key? key}) : super(key: key);

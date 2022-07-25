@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mimic/modules/auth/widgets/background_color_widget.dart';
 import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/mimic_logo.dart';

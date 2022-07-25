@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/models/challenge_models/challenge_model.dart';
 import 'package:mimic/models/user_model/user.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
-import 'package:mimic/modules/video_play_test.dart';
+import 'package:mimic/shared/video_players_widgets/video_play_test.dart';
 import 'package:mimic/presentation/resourses/assets_manager.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
@@ -13,7 +13,6 @@ import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
 import 'package:mimic/widgets/hashtag_item.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
-import 'package:mimic/widgets/rounded_image.dart';
 
 class MyChallengeItem extends StatelessWidget {
   const MyChallengeItem(
@@ -30,7 +29,7 @@ class MyChallengeItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: AppPadding.p20.h),
       child: SizedBox(
-        height: 260.h,
+        height: 300.h,
         child: Card(
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
@@ -44,14 +43,17 @@ class MyChallengeItem extends StatelessWidget {
                   children: [
                     Center(child: _ChallengePerson(user: challange.creator)),
                     const Spacer(),
-                    const HashtagItem(title: 'MUSIC'),
+                    HashtagItem(title: challange.category),
                   ],
+                ),
+                SizedBox(
+                  height: AppSize.s10.h,
                 ),
                 Expanded(
                     child: ClipRRect(
                   borderRadius: BorderRadius.circular(AppSize.s8.r),
                   child: VideoItemPlayer(
-                      video: challange.videos.first,
+                      video: challange.videoCreator,
                       controller: challange.videos),
                 )
                     //  _Video(
@@ -78,7 +80,7 @@ class _ChallengePerson extends StatelessWidget {
         //  RoundedImage(imagePath: ImageAssets.avater, size: 27.w),
         CircleAvatar(
           backgroundImage: CachedNetworkImageProvider(user.image),
-          radius: 27.w,
+          radius: 23.w,
         ),
         SizedBox(width: 10.w),
         Text(

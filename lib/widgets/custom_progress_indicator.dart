@@ -12,8 +12,8 @@ class CustomLoadingProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: 80.r,
-        width: 80.r,
+        height: 100.r,
+        width: 100.r,
         child: CircularProgressIndicator(
           strokeWidth: 5.w,
           value: progress,

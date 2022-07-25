@@ -33,8 +33,7 @@ class PersonDetails extends StatelessWidget {
           SizedBox(
             width: AppSize.s28.r,
             height: AppSize.s28.r,
-            child:cachedNetworkImageProvider(user.image, imageRadius.r),
-            
+            child: cachedNetworkImageProvider(user.image, imageRadius.r),
           ),
           SizedBox(width: AppSize.s3.w),
           Column(
@@ -64,6 +63,59 @@ class PersonDetails extends StatelessWidget {
   }
 }
 
+class PersonNameAndImageCreator extends StatelessWidget {
+  const PersonNameAndImageCreator(
+      {Key? key,
+      this.imageRadius = 28,
+      this.nameSize,
+      this.textColor,
+      required this.image,
+      required this.name})
+      : super(key: key);
+  final double imageRadius;
+  final double? nameSize;
+  final Color? textColor;
+  final String image;
+  final String name;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: AppPadding.p4.w, right: AppPadding.p4.w, top: AppPadding.p4.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+              width: AppSize.s28.w,
+              child: cachedNetworkImageProvider(image, imageRadius.r)
+              //  RoundedImage(
+              //   imagePath: ImageAssets.avater,
+              //   size: imageRadius.r,
+              // ),
+              ),
+          SizedBox(width: AppSize.s3.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  name,
+                  style: getRegularStyle(
+                      color: textColor ?? ColorManager.white,
+                      fontSize: nameSize ?? FontSize.s12),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//
 class PersonNameAndImage extends StatelessWidget {
   const PersonNameAndImage(
       {Key? key, this.imageRadius = 28, this.nameSize, this.textColor})

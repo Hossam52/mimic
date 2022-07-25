@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:mimic/shared/services/security_services.dart';
 
@@ -19,9 +18,8 @@ class HashTag {
   final String name;
   HashTag({required this.id, required this.name});
   factory HashTag.fromJson(Map<String, dynamic> data) {
-
     return HashTag(
-        id: int.parse(SecurityServices.decrypt(data['R0'])),
+        id:data['R0']==null? 1:int.parse(SecurityServices.decrypt(data['R0'])),
         name: SecurityServices.decrypt(data['R8']));
   }
 }

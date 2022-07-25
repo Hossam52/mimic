@@ -11,7 +11,7 @@ class HashtagItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '#$title',
+      title,
       style: getBoldStyle(
           color: color ?? ColorManager.hashtagColor, fontSize: FontSize.s11),
     );

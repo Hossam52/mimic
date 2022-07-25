@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import 'loading_brogress.dart';
 import 'rounded_image.dart';
 
-
 Widget cachedNetworkImageProvider(String? imageUrl, double radius) {
-  return imageUrl==null?
-   RoundedImage(
-              imagePath: 'assets/images/static/avatar.png',
-              size: radius,
-            ):
-      CachedNetworkImage(
+  return imageUrl == null
+      ? RoundedImage(
+          imagePath: 'assets/images/static/avatar.png',
+          size: radius,
+        )
+      : CachedNetworkImage(
           imageUrl: imageUrl,
+          
           placeholder: (context, url) =>
-              CircleAvatar(radius: radius, child:const LoadingProgress()),
+              CircleAvatar(radius: radius, child: const LoadingProgress()),
           errorWidget: (context, url, error) =>
-              CircleAvatar(radius: radius, child:const Icon(Icons.error)),
+              CircleAvatar(radius: radius, child: const Icon(Icons.error)),
           imageBuilder: (context, imageProvider) {
+            
             return Align(
               alignment: AlignmentDirectional.center,
-              
-              child: CircleAvatar(
+              child: 
+              CircleAvatar(
                 radius: radius,
                 backgroundImage: imageProvider,
+
               ),
             );
           },

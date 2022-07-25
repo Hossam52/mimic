@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ffmpeg/statistics.dart';
 import 'package:meta/meta.dart';
@@ -50,7 +49,10 @@ class ManageVideosChallangersCubit extends Cubit<AddVideoToChallangeState> {
             file: _videoCompressed.thumbnail,
             challangeId: challangeId,
             challangeName: 'title',
-            videoName: randomVideoName);
+            videoName: randomVideoName,
+            onProgressUpload: (sent, total) {
+              emit(AddVideoToChallangeUploadPreparing((sent / total)));
+            });
 
         log(response.data.toString());
         if (response.data['status']) {

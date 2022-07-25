@@ -5,9 +5,7 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values_manager.dart';
-import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/cached_network_image.dart';
-import 'package:mimic/widgets/cached_network_image_circle.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
 class UserCustomDrawerHeader extends StatelessWidget {

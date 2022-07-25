@@ -2,19 +2,16 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mentions/flutter_mentions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/bloc_observer.dart';
 import 'package:mimic/layout/guest/guest_main_layout.dart';
 import 'package:mimic/layout/user/user_main_layout.dart';
 import 'package:mimic/modules/onboarding/on_boarding_screen.dart';
-import 'package:mimic/modules/video_play_test.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/theme_manager.dart';
 import 'package:mimic/presentation/resourses/values_manager.dart';
@@ -114,13 +111,15 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<LanguagesCubit, LanguagesStates>(
           builder: (context, state) 
           {
-            return MaterialApp(
-              title: AppStrings.appName,
-              supportedLocales: MimicLocalizations.supportedLocales,
-              localizationsDelegates: MimicLocalizations.localizationsDelegate,
-              debugShowCheckedModeBanner: false,
-              theme: getApplicationTheme(),
-              home: mainWidget(),
+            return Portal(
+              child: MaterialApp(
+                title: AppStrings.appName,
+                supportedLocales: MimicLocalizations.supportedLocales,
+                localizationsDelegates: MimicLocalizations.localizationsDelegate,
+                debugShowCheckedModeBanner: false,
+                theme: getApplicationTheme(),
+                home: mainWidget(),
+              ),
             );
           },
         ),
