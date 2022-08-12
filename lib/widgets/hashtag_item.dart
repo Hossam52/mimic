@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
@@ -10,10 +11,14 @@ class HashtagItem extends StatelessWidget {
   final Color? color;
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: getBoldStyle(
-          color: color ?? ColorManager.hashtagColor, fontSize: FontSize.s11),
+    return Padding(
+      padding: EdgeInsets.all(4.r),
+     
+      child: Text(
+        '#'+title,
+        style: getBoldStyle(
+            color: color ?? ColorManager.hashtagColor, fontSize: FontSize.s11),
+      ),
     );
   }
 }

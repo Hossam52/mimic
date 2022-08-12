@@ -24,6 +24,9 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   List<HashTag> newHashtags = [];
   List<String> selectedHashtags = [];
   List<Category> selectedCategories = [];
+  void rebuildUI() {
+    emit(CategoriesSuccess());
+  }
 
   Future<void> getAllCategories() async {
     emit(CategoriesLoading());
@@ -79,7 +82,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         newHashtagsNames.add(newHashtags[index].name);
       }
     }
-    
 
     return newHashtagsNames;
   }

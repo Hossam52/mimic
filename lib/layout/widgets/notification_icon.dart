@@ -11,11 +11,11 @@ class NotificationIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () {
-          navigateTo(context, Routes.notifications);
+          navigateTo(context, Routes.notifications, arguments: context);
         },
         icon: Icon(
           MimicIcons.notifications,
-          size: 17.r,
+          size: 19.sp,
           color: Theme.of(context).primaryColor,
         ));
   }

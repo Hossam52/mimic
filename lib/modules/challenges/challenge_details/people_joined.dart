@@ -20,6 +20,9 @@ class PeopleJoined extends StatelessWidget {
           '${challangeDataCubit.challangeDetails.peopleJoined.length} people joined',
           style: getBoldStyle(),
         ),
+        SizedBox(
+          height: 10.h,
+        ),
         Row(
           children: [
             Expanded(

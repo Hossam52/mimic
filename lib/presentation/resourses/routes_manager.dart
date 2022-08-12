@@ -24,7 +24,8 @@ import 'package:mimic/modules/home/how_to_challenge.dart';
 import 'package:mimic/modules/home/stories/add_story_screen.dart';
 import 'package:mimic/modules/home/stories/view_friends_stories.dart';
 import 'package:mimic/modules/home/stories/view_my_stories_screen.dart';
-import 'package:mimic/modules/my_profile/all_ranks.dart';
+import 'package:mimic/modules/my_profile/all_ranks/screens/all_ranks.dart';
+import 'package:mimic/modules/my_profile/all_ranks/screens/rank_details_screen.dart';
 import 'package:mimic/modules/my_profile/profile_change_password.dart';
 import 'package:mimic/modules/my_profile/profile_settings.dart';
 import 'package:mimic/modules/notifications/notifications_screen.dart';
@@ -58,6 +59,7 @@ class Routes {
   static const String profileChangePassword = '/profile_change_password';
   static const String notifications = '/notifications';
   static const String allRanks = '/allRanks';
+  static const String rankDetails = '/rankDetails';
   static const String createChallenge = '/create_challenge';
   static const String challengerProfile = '/challenger_profile';
   static const String addStory = '/addStory';
@@ -121,9 +123,12 @@ class RouteGenerator {
       case Routes.profileChangePassword:
         return MaterialPageRoute(builder: (_) => const ProfileChangePassword());
       case Routes.notifications:
-        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+        return MaterialPageRoute(
+            builder: (_) => NotificationsScreen(), settings: routeSettings);
       case Routes.allRanks:
         return MaterialPageRoute(builder: (_) => AllRanksScreen());
+      case Routes.rankDetails:
+        return MaterialPageRoute(builder: (_) =>const RankDetailsScreen(),settings: routeSettings);
       case Routes.createChallenge:
         return MaterialPageRoute(builder: (_) => const CreateChallenge());
       case Routes.challengerProfile:
@@ -131,11 +136,12 @@ class RouteGenerator {
             builder: (_) => ChallengerProfile(), settings: routeSettings);
       case Routes.addVideoToChallange:
         return MaterialPageRoute(
-            builder: (_) => const AddVideoToChallangeScreen(),
+            builder: (_) =>  AddVideoToChallangeScreen(),
             settings: routeSettings);
       case Routes.viewMyStories:
         return MaterialPageRoute(
-            builder: (_) => const ViewMyStoriesScreen(), settings: routeSettings);
+            builder: (_) => const ViewMyStoriesScreen(),
+            settings: routeSettings);
       case Routes.challangesByHashtagId:
         return MaterialPageRoute(
             builder: (_) => ChallangesByHashtagScreen(),
@@ -145,8 +151,9 @@ class RouteGenerator {
             builder: (_) => const ViewFriendsStoriesScreen(),
             settings: routeSettings);
       case Routes.markedChallenges:
-        return MaterialPageRoute(builder: (_) => const MarkedChallengesScreen());
-        
+        return MaterialPageRoute(
+            builder: (_) => const MarkedChallengesScreen());
+
       default:
         return unDefinedRoute();
     }

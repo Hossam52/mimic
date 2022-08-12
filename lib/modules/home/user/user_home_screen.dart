@@ -42,12 +42,15 @@ class UserHomeScreen extends StatelessWidget {
             return const LoadingProgressSearchChallanges();
           } else if (state is HomeCubitError &&
               HomeCubitCubit.get(context).challanges.isEmpty) {
-            return BuildErrorWidget(state.error);
+            return Center(
+                child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: BuildErrorWidget(state.error)));
           } else {
             HomeCubitCubit homeCubitCubit = HomeCubitCubit.get(context);
             return SingleChildScrollView(
               controller: challengesController,
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding: EdgeInsetsDirectional.only(
                     start: AppPadding.p10.w, end: AppPadding.p10.w),

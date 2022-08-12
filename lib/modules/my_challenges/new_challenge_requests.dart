@@ -13,61 +13,92 @@ import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
+import 'package:mimic/shared/cubits/categories_cubit/categories_cubit.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
 class NewChallengeRequests extends StatelessWidget {
-  const NewChallengeRequests({Key? key}) : super(key: key);
-
+  NewChallengeRequests({Key? key}) : super(key: key);
+  int? selectedCategory;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyChallengesCubit, MyChallengesStateState>(
-      builder: (context, state) {
-        if (state is ErrorMyChallengesCubit) {
-          return BuildErrorWidget(state.error);
-        } else if (state is SuccessMyChallengesCubit) {
-          return Padding(
-            padding: EdgeInsets.only(top: AppPadding.p20.h),
-            child: Column(
+    return Padding(
+      padding: EdgeInsets.only(top: AppPadding.p20.h),
+      child: BlocBuilder<CategoriesCubit, CategoriesState>(
+        builder: (context, state) {
+          if (state is CategoriesLoading) {
+            return const LoadingProgress();
+          } else if (state is CategoriesSuccess) {
+            return Column(
               children: [
-                const AllCategoriesDropDown(),
+                AllCategoriesDropDown(
+                  onChange: (value) {
+                    selectedCategory = int.parse(value);
+                    MyChallengesCubit.instance(context)
+                        .getMyChallengesFilterd(categoryId: int.parse(value));
+                  },
+                ),
                 SizedBox(height: AppSize.s20.h),
-                Expanded(
-                    child: _requestsListView(
-                        MyChallengesCubit.instance(context).challanges)),
+                Expanded(child:
+                    BlocBuilder<MyChallengesCubit, MyChallengesStateState>(
+                  builder: (context, state) {
+                    if (state is ErrorMyChallengesCubit) {
+                      return BuildErrorWidget(state.error);
+                    } else if (state is SuccessMyChallengesCubit) {
+                      return _requestsListView(
+                          MyChallengesCubit.instance(context).challanges,
+                          onRefresh: () {
+                        selectedCategory = null;
+                        //CategoriesCubit.get(context).rebuildUI();
+                        MyChallengesCubit.instance(context)
+                            .getMyChallengesFilterd();
+                      });
+                    } else {
+                      return const LoadingProgress();
+                    }
+                  },
+                )),
               ],
-            ),
-          );
-        } else {
+            );
+          } else if (state is CategoriesError) {
+            return BuildErrorWidget(state.message);
+          }
           return const LoadingProgress();
-        }
-      },
+        },
+      ),
     );
   }
 
-  Widget _requestsListView(Set<Challange> challanges) {
-    return ListView.builder(
-        itemCount: challanges.length,
-        shrinkWrap: true,
-        itemBuilder: (_, index) {
-          return MyChallengeItem(
-              challange: challanges.elementAt(index),
-              stackItems: [
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.r),
-                    child: Text(
-                      '2 days, 10 hours, 12 min',
-                      style: getBoldStyle(
-                          fontSize: FontSize.s12, color: ColorManager.white),
+  Widget _requestsListView(Set<Challange> challanges,
+      {required Function onRefresh}) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        onRefresh();
+      },
+      child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: challanges.length,
+          shrinkWrap: true,
+          itemBuilder: (_, index) {
+            return MyChallengeItem(
+                challange: challanges.elementAt(index),
+                stackItems: [
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.r),
+                      child: Text(
+                        '2 days, 10 hours, 12 min',
+                        style: getBoldStyle(
+                            fontSize: FontSize.s12, color: ColorManager.white),
+                      ),
                     ),
                   ),
-                ),
-              ]);
-        });
+                ]);
+          }),
+    );
   }
 }
 

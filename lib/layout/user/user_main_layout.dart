@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,8 +12,12 @@ import 'package:mimic/layout/widgets/notification_icon.dart';
 import 'package:mimic/modules/home/home_cubit/home_cubit_cubit.dart';
 import 'package:mimic/modules/home/stories/manage_stories_cubit/manage_stories_cubit.dart';
 import 'package:mimic/modules/my_profile/profile_cubit/profile_cubit.dart';
+import 'package:mimic/modules/notifications/notifications_cubit/notifications_cubit.dart';
+import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
+import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/methods.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:mimic/widgets/mimic_logo.dart';
 
@@ -37,7 +40,7 @@ class _UserMainLayoutState extends State<UserMainLayout>
   @override
   late TabController myChallengesController =
       TabController(length: 4, vsync: this);
- 
+
   @override
   Widget build(BuildContext context) {
     ProfileCubit.get(context).getProfileAllData();
@@ -59,7 +62,10 @@ class _UserMainLayoutState extends State<UserMainLayout>
             tabBarController: myChallengesController,
           ),
         ),
-        BlocProvider(create: (context)=>ManageStoriesCubit()..getAllStories())
+        BlocProvider(
+            create: (context) => ManageStoriesCubit()..getAllStories()),
+        BlocProvider(
+            create: (context) => NotificationsCubit()..getNotificationCount()),
       ],
       child: Builder(builder: (context) {
         final instance = UserCubit.instance(context);
@@ -93,8 +99,37 @@ class _UserMainLayoutState extends State<UserMainLayout>
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    actions: const [
-                      NotificationIcon(),
+                    actions: [
+                      BlocBuilder<NotificationsCubit, NotificationsState>(
+                        builder: (context, state) {
+                          return SizedBox(
+                            height: 30.h,
+                            child: Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                const NotificationIcon(),
+                                if (NotificationsCubit.get(context)
+                                        .checkNotificationsUnreaded() !=
+                                    0)
+                                  CircleAvatar(
+                                    radius: 8.r,
+                                    child: FittedBox(
+                                        child: Text(
+                                      NotificationsCubit.get(context)
+                                          .checkNotificationsUnreaded()
+                                          .toString(),
+                                    )),
+                                    backgroundColor: ColorManager.white,
+                                  ),
+                                if (state is NotificationsCountLoading)
+                                  LoadingProgress(
+                                    color: ColorManager.white,
+                                  )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                   drawer: const UserDrawer(),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -220,6 +219,9 @@ class _SearchedChallengeItem extends StatelessWidget {
               nameSize: FontSize.s10,
               image: challange.creator.image,
               name: challange.creator.name,
+            ),
+            SizedBox(
+              height: 5.h,
             ),
             Expanded(
               child: cachedNetworkImage(

@@ -21,6 +21,7 @@ class CreateChallangeCubit extends Cubit<CreateChallangeState> {
   List<String> selectedHashtags = [];
   List<HashTag> newHashTags = [];
   Future<void> createChallange({
+
     required String challangeTitle,
     required String challangeDescription,
     required int categoryId,
@@ -28,6 +29,7 @@ class CreateChallangeCubit extends Cubit<CreateChallangeState> {
     File? videoFile,
     required List<String> hashTag,
     required List<HashTag> newHashtagsData,
+    required List<int>tagsFriends,
   }) async {
     emit(CreateChallangeLoading());
     if (await checkInternetConnecation()) {
@@ -66,6 +68,7 @@ class CreateChallangeCubit extends Cubit<CreateChallangeState> {
             thumbNail: _videoCompressed.thumbnail,
             videoName: randomVideoName,
             newHashTags: newHashTagsNames,
+            tagsFriends: tagsFriends,
             onProgress: (sent, total) {
               emit(CreateChallangeProgressUploadingLoading((sent / total)));
             });

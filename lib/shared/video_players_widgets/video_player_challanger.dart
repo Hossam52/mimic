@@ -32,7 +32,7 @@ class _VideoPlayerChallangerState extends State<VideoPlayerChallanger> {
     widget.video.controller = BetterPlayerController(
       BetterPlayerConfiguration(
         expandToFill: true,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         aspectRatio: 1,
         showPlaceholderUntilPlay: true,
         fullScreenAspectRatio: 1,

@@ -16,6 +16,7 @@ class CreateChallangeRepository {
     required File thumbNail,
     required List<String> hashTag,
     required List<String> newHashTags,
+    required List<int> tagsFriends,
     required String videoName,
     required Function onProgress,
   }) async {
@@ -27,7 +28,7 @@ class CreateChallangeRepository {
     for (var element in videoData) {
       files.add(await uploadFile(element));
     }
-
+    log(tagsFriends.toString());
     FormData formData = FormData.fromMap({
       'title': challangeTitle,
       'description': challangeDescription,
@@ -36,6 +37,7 @@ class CreateChallangeRepository {
       'videos[]': files,
       'hashtags[]': hashTag,
       'hashtagNames[]': newHashTags,
+      'requests[]': tagsFriends,
       'video_name': videoName,
       'thumb': thumbFile,
     });

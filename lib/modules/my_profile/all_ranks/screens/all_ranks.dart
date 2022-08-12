@@ -1,11 +1,15 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
+import 'package:mimic/modules/my_profile/all_ranks/all_ranks_cubit/all_ranks_cubit.dart';
+import 'package:mimic/modules/my_profile/all_ranks/widgets/rank_item.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/mimic_icons.dart';
 import 'package:timelines/timelines.dart';
 
@@ -20,42 +24,76 @@ class AllRanksScreen extends StatelessWidget {
   final double _statisticsHeight = 130.h;
   @override
   Widget build(BuildContext context) {
-    const rankItems = 5;
+    // const rankItems = 5;
 
     return Scaffold(
       appBar: const TransparentAppBar(
         title: 'All Ranks',
       ),
-      body: SingleChildScrollView(
-        controller: controller,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: SizedBox(
-                      height: _statisticsHeight,
-                      child: const Center(child: _MyRankDetails())),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w, right: 16.w),
-                  child: Column(
+      body: BlocProvider(
+        create: (context) => AllRanksCubit()..allRanks(),
+        child: BlocBuilder<AllRanksCubit, AllRanksState>(
+          builder: (context, state) {
+            if (state is AllRanksError) {
+              return BuildErrorWidget(state.error);
+            } else if (state is AllRanksSuccess) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  AllRanksCubit.get(context).allRanks();
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: controller,
+                  child: Stack(
                     children: [
-                      SizedBox(height: _marginAfterStatistics),
-                      for (int i = 0; i < rankItems; i++)
-                        _RankItem(
-                            rankItemMargin: _rankItemMargin,
-                            rankItemHeight: _rankItemHeight,
-                            title: 'MIMIC JUNIOR',
-                            description: 'Description goes here'),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: SizedBox(
+                                height: _statisticsHeight,
+                                child: const Center(child: _MyRankDetails())),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.w, right: 16.w),
+                            child: Column(
+                              children: [
+                                SizedBox(height: _marginAfterStatistics),
+                                ...AllRanksCubit.get(context)
+                                    .ranksModel
+                                    .ranks
+                                    .map(
+                                      (e) => RankItem(
+                                        rank: e,
+                                        myStatictics: AllRanksCubit.get(context)
+                                            .ranksModel
+                                            .myStatictics,
+                                        rankItemMargin: _rankItemMargin,
+                                        rankItemHeight: _rankItemHeight,
+                                      ),
+                                    ),
+                                // for (int i = 0; i < rankItems; i++)
+                                //   _RankItem(
+                                //       rankItemMargin: _rankItemMargin,
+                                //       rankItemHeight: _rankItemHeight,
+                                //       title: 'MIMIC JUNIOR',
+                                //       description: 'Description goes here'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      _timeLine(
+                          AllRanksCubit.get(context).ranksModel.ranks.length,
+                          AllRanksCubit.get(context).ranksModel.myRank),
                     ],
                   ),
                 ),
-              ],
-            ),
-            _timeLine(rankItems, 3),
-          ],
+              );
+            } else {
+              return const LoadingProgress();
+            }
+          },
         ),
       ),
     );
@@ -64,26 +102,33 @@ class AllRanksScreen extends StatelessWidget {
   Widget _timeLine(int rankItems, int currentRank) {
     return Builder(
       builder: (context) {
-        return TimelineTheme(
-          data: TimelineTheme.of(context).copyWith(
-              color: Theme.of(context).primaryColor,
-              connectorTheme:
-                  ConnectorTheme.of(context).copyWith(thickness: 3)),
-          child: Timeline.tileBuilder(
-            shrinkWrap: true,
-            controller: controller,
-            builder: TimelineTileBuilder.connected(
-              firstConnectorBuilder: (context) => SolidLineConnector(
-                indent: _statisticsHeight /
-                    2, //to hide the top part that is appear above the statistic box
+        return Container(
+          alignment: Alignment.center,
+          margin: EdgeInsetsDirectional.only(start: 15.w),
+          width: 100.w,
+          child: TimelineTheme(
+            data: TimelineTheme.of(context).copyWith(
+                color: Theme.of(context).primaryColor,
+                connectorTheme:
+                    ConnectorTheme.of(context).copyWith(thickness: 3)),
+            child: Timeline.tileBuilder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              controller: controller,
+              builder: TimelineTileBuilder.connected(
+                firstConnectorBuilder: (context) => SolidLineConnector(
+                  indent: _statisticsHeight /
+                      2, //to hide the top part that is appear above the statistic box
+                ),
+                indicatorBuilder: (_, index) =>
+                    _indicatorImage(index, currentRank),
+                indicatorPositionBuilder: (context, index) => 1,
+                itemExtentBuilder: _itemExtent,
+                connectorBuilder: (context, _, __) =>
+                    const SolidLineConnector(),
+                nodePositionBuilder: (_, index) => 0.05,
+                itemCount: rankItems,
               ),
-              indicatorBuilder: (_, index) =>
-                  _indicatorImage(index, currentRank),
-              indicatorPositionBuilder: (context, index) => 1,
-              itemExtentBuilder: _itemExtent,
-              connectorBuilder: (context, _, __) => const SolidLineConnector(),
-              nodePositionBuilder: (_, index) => 0.05,
-              itemCount: rankItems,
             ),
           ),
         );
@@ -195,57 +240,6 @@ class _RankStatisticItem extends StatelessWidget {
             style:
                 getBoldStyle(color: ColorManager.white, fontSize: FontSize.s16),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class _RankItem extends StatelessWidget {
-  const _RankItem(
-      {Key? key,
-      required this.title,
-      required this.description,
-      required this.rankItemMargin,
-      required this.rankItemHeight})
-      : super(key: key);
-  final String title;
-  final String description;
-  final double rankItemMargin;
-  final double rankItemHeight;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: rankItemMargin),
-      height: rankItemHeight,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          color: ColorManager.selectedColor),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 50.w),
-                  child: Text(title,
-                      style: getSemiBoldStyle(fontSize: FontSize.s14)),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 65.w),
-                  child: Text(description, style: getRegularStyle()),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 21.w),
-            child: SvgPicture.asset('assets/images/crown.svg',
-                width: 92.w, height: 92.h),
-          ),
         ],
       ),
     );

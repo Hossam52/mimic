@@ -24,7 +24,8 @@ class ConstantHelper {
   static const String editProfileUrl = 'client/updateProfile';
   static const String getCurrentChallanges =
       'client/Challenge/getCurrentChallenges';
-  static const String getFavChallenges = 'client/Favourite/getMyFavouriteChallenge';
+  static const String getFavChallenges =
+      'client/Favourite/getMyFavouriteChallenge';
   static const String addStoryUrl = 'client/Story/store';
   static const String getViewsMyStory = 'client/Like/getReacts';
   static const String getChallangeVideos =
@@ -57,4 +58,12 @@ class ConstantHelper {
       'client/Challenge/searchInChallenges';
   static const String reactStory = 'client/Like/reactStory';
   static const String watchStory = 'client/WatchOrShare/watchStory';
+  //notifications
+  static const String getAllNotifications = 'client/getNotifications';
+  static const String readNotification = 'client/readNotification';
+  static const String deleteNotification = 'client/deleteNotify';
+  static const String changeNotificationState = 'client/changeNotifyStatus';
+  static const String getNotificationCount =
+      'client/getunReadNotificationsCount';
+  static const String allRanks = 'client/Rank/getRanks';
 }

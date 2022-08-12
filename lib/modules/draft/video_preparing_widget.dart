@@ -16,6 +16,7 @@ class VideoPreparingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String pro = (progress * 100).toStringAsFixed(2);
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           uploadTime ? 'Video uploading now' : 'Video Preparing to upload',

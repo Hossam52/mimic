@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,19 +12,35 @@ import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
+import 'package:mimic/shared/dialog_widgets/cancel_upload_dialog.dart';
 import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
 import 'package:mimic/shared/services/pickers_services.dart';
 
 class AddVideoToChallangeScreen extends StatelessWidget {
-  const AddVideoToChallangeScreen({Key? key}) : super(key: key);
-
+  AddVideoToChallangeScreen({Key? key}) : super(key: key);
+  File? videoPicked;
   @override
   Widget build(BuildContext context) {
     String challangeId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
+          leading: BackButton(
+            color: ColorManager.white,
+            onPressed: () async {
+              if (videoPicked != null) {
+                showDialog(
+                    context: context,
+                    builder: (context) => CancelUploading(
+                        title: AppStrings
+                            .areYouSureToCancelUploadingInThisChallenge
+                            .translateString(context)));
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ),
         body: BlocProvider(
           create: (context) => ManageVideosChallangersCubit(),
@@ -51,7 +69,7 @@ class AddVideoToChallangeScreen extends StatelessWidget {
                   if (state is AddVideoToChallangeInitial) {
                     return InkWell(
                       onTap: () async {
-                        final videoPicked = await PickerServices.pickVideo();
+                        videoPicked = await PickerServices.pickVideo();
                         if (videoPicked != null) {
                           ManageVideosChallangersCubit.get(context).createStory(
                               videoFile: videoPicked,

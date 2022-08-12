@@ -30,7 +30,7 @@ class _VideoPlayerOnlyState extends State<VideoPlayerOnly> {
     widget.video.controller = BetterPlayerController(
       const BetterPlayerConfiguration(
         expandToFill: true,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         aspectRatio: 1,
         showPlaceholderUntilPlay: true,
         fullScreenAspectRatio: 1,

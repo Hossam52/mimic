@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,47 +19,50 @@ import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
 class ApprovedChallenges extends StatelessWidget {
-  const ApprovedChallenges({Key? key}) : super(key: key);
-
+  ApprovedChallenges({Key? key}) : super(key: key);
+  int? selectedCategory;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyChallengesCubit, MyChallengesStateState>(
-      builder: (context, state) {
-        if (state is ErrorMyChallengesCubit) {
-          return BuildErrorWidget(state.error);
-        } 
-        else if (state is SuccessMyChallengesCubit) {
-          return Padding(
-            padding: EdgeInsets.only(top: AppPadding.p20.h),
-            child: Column(
-              children: [
-                const AllCategoriesDropDown(),
-                SizedBox(height: AppSize.s20.h),
-                Expanded(
-                    child: _requestsListView(
-                        MyChallengesCubit.instance(context).challanges)),
-              ],
-            ),
-          );
-        } else {
-          return const LoadingProgress();
-        }
-      },
+    return Padding(
+      padding: EdgeInsets.only(top: AppPadding.p20.h),
+      child: Column(
+        children: [
+          AllCategoriesDropDown(onChange: (value) {
+            selectedCategory = int.parse(value);
+            MyChallengesCubit.instance(context)
+                .getMyChallengesFilterd(categoryId: int.parse(value));
+          }),
+          SizedBox(height: AppSize.s20.h),
+          Expanded(
+              child: BlocBuilder<MyChallengesCubit, MyChallengesStateState>(
+            builder: (context, state) {
+              if (state is ErrorMyChallengesCubit) {
+                return BuildErrorWidget(state.error);
+              } else if (state is SuccessMyChallengesCubit) {
+                return _requestsListView(
+                    MyChallengesCubit.instance(context).challanges);
+              } else {
+                return const LoadingProgress();
+              }
+            },
+          )),
+        ],
+      ),
     );
   }
+}
 
-  Widget _requestsListView(Set<Challange> challanges) {
-    // log('length ${challanges.length}');
-    return ListView.builder(
-        itemCount: challanges.length,
-        shrinkWrap: true,
-        itemBuilder: (_, index) {
-          return MyChallengeItem(
-            displayBlackOpacity: index != 0,
-            challange: challanges.elementAt(index),
-          );
-        });
-  }
+Widget _requestsListView(Set<Challange> challanges) {
+  // log('length ${challanges.length}');
+  return ListView.builder(
+      itemCount: challanges.length,
+      shrinkWrap: true,
+      itemBuilder: (_, index) {
+        return MyChallengeItem(
+          displayBlackOpacity: index != 0,
+          challange: challanges.elementAt(index),
+        );
+      });
 }
 
 class _ApprovedItem extends StatelessWidget {

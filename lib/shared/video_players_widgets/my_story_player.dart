@@ -9,6 +9,7 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/shared/cubits/helper_cubit/helper_cubit.dart';
 import 'package:mimic/widgets/cached_network_image.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../modules/home/stories/models/story.dart';
 
@@ -39,7 +40,7 @@ class _VideoPlayerStoryState extends State<VideoPlayerStory> {
     betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
         expandToFill: true,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         aspectRatio: 1,
         autoPlay: true,
 
@@ -88,18 +89,20 @@ class _VideoPlayerStoryState extends State<VideoPlayerStory> {
       //     .toString());
       if (mounted) {
         if (modalRoute.isCurrent) {
-          if (!betterPlayerController.isPlaying()!)
+          if (!betterPlayerController.isPlaying()!) {
             betterPlayerController.videoPlayerController!.play();
+          }
 
           log('IsCurrent');
         } else {
-          if (betterPlayerController.isPlaying()!) 
-          {
+          if (betterPlayerController.isPlaying()!) {
             betterPlayerController.pause();
           }
         }
 
-        if (betterPlayerController.isPlaying()!&&_helperCubit != null && !_helperCubit!.isClosed) {
+        if (betterPlayerController.isPlaying()! &&
+            _helperCubit != null &&
+            !_helperCubit!.isClosed) {
           _helperCubit!.rebuildPart();
         }
       }

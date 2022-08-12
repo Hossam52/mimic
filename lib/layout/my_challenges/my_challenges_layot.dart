@@ -42,6 +42,7 @@ class _MyChallengesLayoutState extends State<MyChallengesLayout> {
             Expanded(
               flex: 10,
               child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: instance.tabBarController,
                 children: instance.getTabsScreens,
               ),

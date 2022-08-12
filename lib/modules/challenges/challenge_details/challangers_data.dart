@@ -26,7 +26,7 @@ class ChallangersData extends StatelessWidget {
                     child: Builder(builder: (context) {
                       return TextButton(
                         onPressed: () {
-                          log('get more videos');
+                          // log('get more videos');
                           ChallangeDataCubit cubit =
                               ChallangeDataCubit.get(context);
                           if (cubit.videosModel.videos.links.next != null) {

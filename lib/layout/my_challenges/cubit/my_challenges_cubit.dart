@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +23,11 @@ class MyChallengesCubit extends Cubit<MyChallengesStateState> {
   final TabController tabBarController;
   final List<CustomTabBarItem> _myChallengesTabBars = [
     CustomTabBarItem(
-        name: AppStrings.newRequests, widget: const NewChallengeRequests()),
+        name: AppStrings.newRequests, widget:  NewChallengeRequests()),
     CustomTabBarItem(
-        name: AppStrings.approved, widget: const ApprovedChallenges()),
+        name: AppStrings.approved, widget:  ApprovedChallenges()),
     CustomTabBarItem(
-        name: AppStrings.rejected, widget: const RejectedChallenges()),
+        name: AppStrings.rejected, widget:  RejectedChallenges()),
     CustomTabBarItem(name: AppStrings.draft, widget: const ChallengesDraft()),
   ];
   List<CustomTabBarItem> get getTabs => _myChallengesTabBars;
@@ -51,7 +50,7 @@ class MyChallengesCubit extends Cubit<MyChallengesStateState> {
     _currentIndex = index;
   }
 
-  Future<void> getMyChallengesFilterd() async {
+  Future<void> getMyChallengesFilterd({int? categoryId}) async {
     if (await checkInternetConnecation()) {
       emit(LoadingMyChallengesCubit());
       Response response;
@@ -60,26 +59,35 @@ class MyChallengesCubit extends Cubit<MyChallengesStateState> {
         switch (tabBarController.index) {
           case 0:
             response = await _myChallengesRepostiory.getMyChallangesFiltered(
-                status: 'pending');
+              status: 'pending',
+              categoryId: categoryId,
+            );
             break;
           case 1:
             response = await _myChallengesRepostiory.getMyChallangesFiltered(
-                status: 'accept');
+              status: 'accept',
+              categoryId: categoryId,
+            );
 
             break;
           case 2:
             response = await _myChallengesRepostiory.getMyChallangesFiltered(
-                status: 'reject');
+              status: 'reject',
+              categoryId: categoryId,
+            );
 
             break;
 
           default:
             response = await _myChallengesRepostiory.getMyChallangesFiltered(
-                status: 'pending');
+              status: 'pending',
+              categoryId: categoryId,
+            );
         }
         if (response.data['status']) {
-          challanges
-              .addAll(ChallengesModel.fromJson(response.data).challenges.data);
+          challanges =
+              ChallengesModel.fromJson(response.data).challenges.data.toSet();
+          //   .addAll(ChallengesModel.fromJson(response.data).challenges.data);
           emit(SuccessMyChallengesCubit());
         } else {
           emit(ErrorMyChallengesCubit(response.data['message'].toString()));

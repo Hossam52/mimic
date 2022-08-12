@@ -3,11 +3,14 @@ import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
+import 'package:mimic/shared/cubits/categories_cubit/categories_cubit.dart';
 import 'package:mimic/widgets/custom_drop_down.dart';
 import 'package:mimic/widgets/shadow_box.dart';
 
 class AllCategoriesDropDown extends StatefulWidget {
-  const AllCategoriesDropDown({Key? key}) : super(key: key);
+  const AllCategoriesDropDown({Key? key, required this.onChange})
+      : super(key: key);
+  final Function onChange;
 
   @override
   _AllCategoriesDropDownState createState() => _AllCategoriesDropDownState();
@@ -22,7 +25,7 @@ class _AllCategoriesDropDownState extends State<AllCategoriesDropDown> {
       child: SizedBox(
         width: double.infinity,
         child: CustomDropDown(
-          child: DropdownButton<String>(
+          child: DropdownButtonFormField<String>(
             elevation: 10,
             iconEnabledColor: ColorManager.visibilityColor,
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -32,40 +35,23 @@ class _AllCategoriesDropDownState extends State<AllCategoriesDropDown> {
               AppStrings.allCategories,
               style: getRegularStyle(),
             ),
-            items: [
-              DropdownMenuItem(
-                value: '1',
-                child: Text(
-                  'Music',
-                  style: getRegularStyle(fontSize: FontSize.s16),
-                ),
-              ),
-              DropdownMenuItem(
-                value: '2',
-                child: Text(
-                  'Music',
-                  style: getRegularStyle(fontSize: FontSize.s16),
-                ),
-              ),
-              DropdownMenuItem(
-                value: '3',
-                child: Text(
-                  'Volley ball',
-                  style: getRegularStyle(fontSize: FontSize.s16),
-                ),
-              ),
-              DropdownMenuItem(
-                value: '4',
-                child: Text(
-                  'Football',
-                  style: getRegularStyle(fontSize: FontSize.s16),
-                ),
-              ),
-            ],
+            items: CategoriesCubit.get(context).categoriesModel == null
+                ? []
+                : CategoriesCubit.get(context)
+                    .categoriesModel
+                    .categories
+                    .categories
+                    .map((e) => DropdownMenuItem(
+                          child: Text(
+                            e.name,
+                            style: getRegularStyle(),
+                          ),
+                          value: e.id,
+                          onTap: () {},
+                        ))
+                    .toList(),
             onChanged: (val) {
-              setState(() {
-                selectedVal = val;
-              });
+              widget.onChange(val);
             },
           ),
         ),

@@ -2,7 +2,9 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +55,9 @@ void main() async {
   await CacheHelper.init();
   DioHelper.init();
   await Firebase.initializeApp();
-  
+  String? keyr =await FirebaseMessaging.instance.getToken();
+  print(keyr);
+
   ValuesManager.username =
       CacheHelper.getDate(key: ValuesManager.usernameKey) ?? 'Tour user';
   ValuesManager.email =
@@ -109,13 +113,13 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: BlocBuilder<LanguagesCubit, LanguagesStates>(
-          builder: (context, state) 
-          {
+          builder: (context, state) {
             return Portal(
               child: MaterialApp(
                 title: AppStrings.appName,
                 supportedLocales: MimicLocalizations.supportedLocales,
-                localizationsDelegates: MimicLocalizations.localizationsDelegate,
+                localizationsDelegates:
+                    MimicLocalizations.localizationsDelegate,
                 debugShowCheckedModeBanner: false,
                 theme: getApplicationTheme(),
                 home: mainWidget(),

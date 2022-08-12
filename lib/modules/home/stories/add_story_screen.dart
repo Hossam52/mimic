@@ -12,6 +12,7 @@ import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/presentation/resourses/values.dart';
+import 'package:mimic/shared/dialog_widgets/cancel_upload_dialog.dart';
 import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
 import 'package:mimic/shared/services/pickers_services.dart';
@@ -26,6 +27,20 @@ class AddStoryScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
+          leading: BackButton(
+            color: ColorManager.white,
+            onPressed: () async {
+              if (videoPicked != null) {
+                showDialog(
+                    context: context,
+                    builder: (context) => CancelUploading(
+                        title: AppStrings.areYouSureToCancelUploadingThisStory
+                            .translateString(context)));
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ),
         body: Container(
           height: 1.sh,
@@ -79,7 +94,8 @@ class AddStoryScreen extends StatelessWidget {
                     return SizedBox(
                       height: 1.sh,
                       child: VideoPreparingWidget(
-                        progress: double.parse(state.progress.toStringAsFixed(1)),
+                        progress:
+                            double.parse(state.progress.toStringAsFixed(1)),
                         color: ColorManager.white,
                         uploadTime: true,
                       ),

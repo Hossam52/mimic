@@ -45,7 +45,7 @@ class _VideoPlayerStoryFriendState extends State<VideoPlayerStoryFriend> {
     betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
         expandToFill: true,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         aspectRatio: 1,
         autoPlay: true,
 

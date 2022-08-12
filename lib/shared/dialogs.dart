@@ -52,17 +52,24 @@ class Dialogs {
     );
   }
 
-  static Future<T?> acceptChallengeDialog<T>(BuildContext context) {
+  static Future<T?> acceptChallengeDialog<T>(
+      BuildContext context, Function confirmOk) {
     return showDialog(
       context: context,
-      builder: (_) => const AcceptChallengeDialog(),
+      builder: (_) => AcceptChallengeDialog(confirm: () 
+      {
+        confirmOk();
+      }),
     );
   }
 
-  static Future<T?> rejectChallengeDialog<T>(BuildContext context) {
+  static Future<T?> rejectChallengeDialog<T>(
+      BuildContext context, Function confirmCancel) {
     return showDialog(
       context: context,
-      builder: (_) => const RejectChallengeDialog(),
+      builder: (_) => RejectChallengeDialog(confirmCancel: () {
+        confirmCancel();
+      }),
     );
   }
 

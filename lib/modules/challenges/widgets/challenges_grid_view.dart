@@ -31,7 +31,6 @@ class ChallengesGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Story> videos = ChallangeDataCubit.get(context).videosChallengers;
-    log(videos.length.toString());
     return GridView.builder(
         primary: false,
         shrinkWrap: true,

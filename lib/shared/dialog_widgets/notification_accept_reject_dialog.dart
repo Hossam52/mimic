@@ -6,8 +6,8 @@ import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 
 class AcceptChallengeDialog extends StatelessWidget {
-  const AcceptChallengeDialog({Key? key}) : super(key: key);
-
+  const AcceptChallengeDialog({Key? key,required this.confirm,}) : super(key: key);
+  final Function confirm;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -22,7 +22,8 @@ class AcceptChallengeDialog extends StatelessWidget {
               style: getSemiBoldStyle(fontSize: FontSize.s14),
             ),
             SizedBox(height: 46.h),
-            const _AcceptActions(),
+            //
+            _AcceptActions(confirm: confirm),
           ],
         ),
       ),
@@ -31,8 +32,11 @@ class AcceptChallengeDialog extends StatelessWidget {
 }
 
 class RejectChallengeDialog extends StatelessWidget {
-  const RejectChallengeDialog({Key? key}) : super(key: key);
-
+  const RejectChallengeDialog({
+    Key? key,
+    required this.confirmCancel,
+  }) : super(key: key);
+  final Function confirmCancel;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -47,7 +51,9 @@ class RejectChallengeDialog extends StatelessWidget {
               style: getSemiBoldStyle(fontSize: FontSize.s14),
             ),
             SizedBox(height: 46.h),
-            const _AcceptActions(),
+            _AcceptActions(
+              confirm: confirmCancel,
+            ),
           ],
         ),
       ),
@@ -56,8 +62,8 @@ class RejectChallengeDialog extends StatelessWidget {
 }
 
 class _AcceptActions extends StatelessWidget {
-  const _AcceptActions({Key? key}) : super(key: key);
-
+  const _AcceptActions({Key? key, required this.confirm}) : super(key: key);
+  final Function confirm;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -66,6 +72,7 @@ class _AcceptActions extends StatelessWidget {
           child: DefaultButton(
               text: 'OK',
               onPressed: () {
+                confirm();
                 Navigator.pop(context);
               },
               backgroundColor: Theme.of(context).primaryColor,

@@ -1,210 +1,161 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mimic/enums/notifications_type.dart';
 import 'package:mimic/modules/challenges/widgets/transparent_app_bar.dart';
 import 'package:mimic/modules/home/widgets/black_opacity.dart';
+import 'package:mimic/modules/notifications/notifications_cubit/notifications_cubit.dart';
+import 'package:mimic/modules/notifications/widgets/admin_notification.dart';
+import 'package:mimic/modules/notifications/widgets/comment_or_reply_notification.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
+import 'package:mimic/shared/extentions/translate_word.dart';
+import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
 import 'package:mimic/widgets/defulat_button.dart';
+import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
 import 'package:mimic/widgets/rounded_image.dart';
 
+import 'widgets/notification_friend_tag.dart';
+import 'widgets/notification_person.dart';
+
 class NotificationsScreen extends StatelessWidget {
-  const NotificationsScreen({Key? key}) : super(key: key);
+  NotificationsScreen({Key? key}) : super(key: key);
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    final BuildContext contextCubit =
+        ModalRoute.of(context)!.settings.arguments as BuildContext;
+    NotificationsCubit.get(contextCubit).init();
+    NotificationsCubit.get(contextCubit).getAllNotifications();
+
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        log('Enter End Screen');
+        if (NotificationsCubit.get(contextCubit).checkFoundMore()) {
+          NotificationsCubit.get(contextCubit).getAllNotifications();
+        }
+      }
+    });
     return Scaffold(
-      appBar: const TransparentAppBar(title: 'Notifications'),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const _NotificationWithDetails(),
-              SizedBox(height: 10.h),
-              Container(
-                  color: ColorManager.seenNotificationBackground,
-                  child: Column(
-                    children: [
-                      const _PersonNotification(
-                        description: 'Shared an ETAs',
-                      ),
-                      Divider(color: ColorManager.grey),
-                      const _PersonNotification(
-                        description: 'Approved your challenge',
-                      ),
-                    ],
-                  )),
-              SizedBox(height: 8.h),
-              _NotificationWithDetails(
-                textColor: ColorManager.black,
-                profileDescriptionColor: ColorManager.black,
-                timeAgoColor: ColorManager.black,
-                backgroundColor: ColorManager.seenNotificationBackground,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _NotificationPersonDetails extends StatelessWidget {
-  const _NotificationPersonDetails(
-      {Key? key, this.nameColor, this.descriptionColor, this.timeAgoColor})
-      : super(key: key);
-  final Color? nameColor;
-  final Color? descriptionColor;
-  final Color? timeAgoColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0.w),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 50,
-            child: RoundedImage(
-              imagePath: 'assets/images/static/avatar.png',
-              size: 50.r,
-            ),
-          ),
-          SizedBox(width: 3.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Hossam Hassan',
-                  style: getBoldStyle(
-                    color: nameColor ?? ColorManager.white,
-                  ),
-                ),
-                Text(
-                  'Shared An ETA',
-                  style: getRegularStyle(
-                    fontSize: FontSize.s10,
-                    color: descriptionColor ??
-                        ColorManager.notificationPersonDetails,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            '1M Ago',
-            style: getRegularStyle(
-                fontSize: FontSize.s10,
-                color: timeAgoColor ?? ColorManager.white),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class _NotificationWithDetails extends StatelessWidget {
-  const _NotificationWithDetails(
-      {Key? key,
-      this.backgroundColor,
-      this.timeAgoColor,
-      this.textColor,
-      this.profileDescriptionColor})
-      : super(key: key);
-  final Color? backgroundColor;
-  final Color? timeAgoColor;
-  final Color? textColor;
-  final Color? profileDescriptionColor;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor ?? Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(14.r),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 18.0.h),
-        child: Column(
-          children: [
-            _NotificationPersonDetails(
-              nameColor: textColor,
-              descriptionColor: profileDescriptionColor,
-              timeAgoColor: timeAgoColor,
-            ),
-            SizedBox(height: 12.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18.w),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 70.h,
-                    child: SingleChildScrollView(
-                      child: Text(
-                        AppStrings.notificationDescription,
-                        style: getRegularStyle(
-                            color: textColor ?? ColorManager.white),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(18.w),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 8.h),
-                        const _Video(),
-                        SizedBox(height: 8.h),
-                        _NotificationActions(
-                          rejectBackgroundColor: backgroundColor,
+      appBar: TransparentAppBar(
+          title: AppStrings.notifications.translateString(context)),
+      body: BlocProvider.value(
+        value: NotificationsCubit.get(contextCubit),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+          child: Builder(builder: (context) {
+            return BlocConsumer<NotificationsCubit, NotificationsState>(
+              listener: (context, state) {
+                if (state is NotificationsDeleteNotificationSuccess) {
+                  Fluttertoast.showToast(
+                    msg: AppStrings.notificationDeletedSuccessfully
+                        .translateString(context),
+                    backgroundColor: Colors.green,
+                    textColor: ColorManager.white,
+                  );
+                } else if (state is NotificationsDeleteNotificationError) {
+                  Fluttertoast.showToast(
+                      msg: state.error,
+                      backgroundColor: ColorManager.error,
+                      textColor: ColorManager.white);
+                }
+              },
+              builder: (context, state) {
+                NotificationsCubit cubit = NotificationsCubit.get(context);
+                if (state is NotificationsLoading && state.isFirst) {
+                  return const LoadingProgressSearchChallanges();
+                } else if (state is NotificationsError) {
+                  return BuildErrorWidget(state.error);
+                }
+                return Column(
+                  children: [
+                    Expanded(
+                        child: RefreshIndicator(
+                      onRefresh: () async {
+                        NotificationsCubit.get(contextCubit).init();
+                        NotificationsCubit.get(contextCubit)
+                            .getAllNotifications();
+                      },
+                      child: ListView.separated(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        controller: scrollController,
+                        itemBuilder: (context, index) => NotificationsType
+                                    .request.name ==
+                                cubit.allNotifications[index].notificationType
+                            ? NotificationWithDetails(
+                                notification: cubit.allNotifications[index],
+                                indexNotification: index,
+                              )
+                            : cubit.allNotifications[index].notificationType ==
+                                    NotificationsType.comment.name
+                                ? CommentOrReplyNotification(
+                                    notificationData:
+                                        cubit.allNotifications[index],
+                                    indexNotification: index,
+                                  )
+                                : AdminNotification(
+                                    notificationData:
+                                        cubit.allNotifications[index],
+                                    indexNotification: index,
+                                  ),
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: 10.h,
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                        itemCount: cubit.allNotifications.length,
+                      ),
+                    )),
+                    if (state is NotificationsLoading) const LoadingProgress(),
+                  ],
+                );
+                // return SingleChildScrollView(
+                //   child: Column(
+                //     children: [
+                //       NotificationWithDetails(),
+                //       SizedBox(height: 10.h),
+                //       Container(
+                //           color: ColorManager.seenNotificationBackground,
+                //           child: Column(
+                //             children: [
+                //               const PersonNotification(
+                //                 description: 'Shared an ETAs',
+                //               ),
+                //               Divider(color: ColorManager.grey),
+                //               const PersonNotification(
+                //                 description: 'Approved your challenge',
+                //               ),
+                //             ],
+                //           )),
+                //       SizedBox(height: 8.h),
+                //       NotificationWithDetails(
+                //         textColor: ColorManager.black,
+                //         profileDescriptionColor: ColorManager.black,
+                //         timeAgoColor: ColorManager.black,
+                //         backgroundColor:
+                //             ColorManager.seenNotificationBackground,
+                //       ),
+                //     ],
+                //   ),
+                // );
+              },
+            );
+          }),
         ),
       ),
     );
   }
 }
 
-class _PersonNotification extends StatelessWidget {
-  const _PersonNotification({Key? key, required this.description})
-      : super(key: key);
-  final String description;
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      dense: true,
-      minVerticalPadding: 0,
-      contentPadding: EdgeInsets.all(8.w),
-      leading: RoundedImage(
-        imagePath: 'assets/images/static/avatar.png',
-        size: 60.r,
-      ),
-      tileColor: ColorManager.seenNotificationBackground,
-      title: Text('Duran Clyton', style: getRegularStyle()),
-      isThreeLine: true,
-      subtitle: Text(
-        description,
-        style: getRegularStyle(),
-      ),
-      trailing: Text('5M ago', style: getRegularStyle()),
-    );
-  }
-}
-
-class _Video extends StatelessWidget {
-  const _Video({Key? key, this.defaultIconColor}) : super(key: key);
+class Video extends StatelessWidget {
+  const Video({Key? key, this.defaultIconColor}) : super(key: key);
   final Color? defaultIconColor;
   @override
   Widget build(BuildContext context) {
@@ -241,41 +192,6 @@ class _Video extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _NotificationActions extends StatelessWidget {
-  const _NotificationActions({Key? key, this.rejectBackgroundColor})
-      : super(key: key);
-  final Color? rejectBackgroundColor;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: DefaultButton(
-          onPressed: () {
-            Dialogs.acceptChallengeDialog(context);
-          },
-          text: 'Approve',
-          hasBorder: false,
-          radius: 8.r,
-        )),
-        const SizedBox(width: 10),
-        Expanded(
-            child: DefaultButton(
-          onPressed: () {
-            Dialogs.rejectChallengeDialog(context);
-          },
-          text: 'Reject',
-          radius: 8.r,
-          borderColor: ColorManager.white,
-          backgroundColor:
-              rejectBackgroundColor ?? Theme.of(context).primaryColor,
-          foregroundColor: ColorManager.white,
-        )),
-      ],
     );
   }
 }

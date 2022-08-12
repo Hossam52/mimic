@@ -87,6 +87,8 @@ class AppStrings {
   static const String newRequests = 'New Request';
   static const String approved = 'Approved';
   static const String rejected = 'Rejected';
+  static const String reject = 'Reject';
+  static const String approve = 'Approve';
   static const String draft = 'Create challenge';
   static const String allCategories = 'All Categories';
   static const String adminRejectedYourVideo = 'Admin rejected your video';
@@ -130,4 +132,24 @@ class AppStrings {
   static const String joined = 'joined';
   static const String created = 'created';
   static const String saveChanges = 'Save Changes';
+  static const String aleardyExists = 'Aleardy exists';
+  static const String tagYourFriendsAddaThenChoice =
+      'Tag your friends add @ then search on them';
+  static const String tagYourFriends = 'Tag your friends';
+  static const String notifications = 'Notifications';
+  static const String levelDetails = 'Level Details';
+  static const String levelRequirements = 'Level Requirements';
+  static const String numberOfChallenges = 'Number of challenges';
+  static const String numberOfVideos = 'Number of videos';
+  static const String numberOfLikes = 'Number of likes';
+  static const String numberofInvites = 'Number of invites';
+  static const String yes = 'Yes';
+  static const String no = 'No';
+  static const String areYouSureToCancelUploadingInThisChallenge =
+      'Are you sure to cancel uploading video in this challenge?';
+  static const String areYouSureToCancelUploadingThisStory =
+      'Are you sure to cancel uploading this story';
+  static const String notificationDeletedSuccessfully =
+      'Notification deleted successfully';
+  static const String viewChallenge = 'View Challenges';
 }
