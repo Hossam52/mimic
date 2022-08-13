@@ -28,7 +28,7 @@ class NotificationsCountSuccess extends NotificationsState {}
 
 class NotificationsCountError extends NotificationsState {
   final String error;
- const NotificationsCountError(this.error);
+  const NotificationsCountError(this.error);
 }
 
 class NotificationsDeleteNotificationLoading extends NotificationsState {}
@@ -38,4 +38,9 @@ class NotificationsDeleteNotificationSuccess extends NotificationsState {}
 class NotificationsDeleteNotificationError extends NotificationsState {
   final String error;
   const NotificationsDeleteNotificationError(this.error);
+}
+
+class NotificationsChangeStatusSuccess extends NotificationsState {
+  final String challengeId;
+  const NotificationsChangeStatusSuccess(this.challengeId);
 }

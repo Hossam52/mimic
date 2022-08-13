@@ -142,14 +142,14 @@ class _NotificationActions extends StatelessWidget {
             child: DefaultButton(
           onPressed: () {
             Dialogs.acceptChallengeDialog(
-              context,
-              () {
-                navigateTo(context, Routes.challengeDetails,
-                    arguments: notificationData.challengeId.toString());
+              context,confirmOk: 
+              ()async {
+              //  Navigator.pop(context);
                 NotificationsCubit.get(context).changeNotificationState(
                   notificationId: notificationData.id,
                   notificationIndex: index,
                 );
+               
               },
             );
           },

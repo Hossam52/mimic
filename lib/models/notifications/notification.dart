@@ -37,7 +37,7 @@ class NotificationData {
   UserAbstractModel? sender;
   int? commentId;
   int? challengeId;
-  int? notificationSatus;
+  String? notificationSatus;
 
   int? replyId;
   late final AbstractVideoModel? Video;

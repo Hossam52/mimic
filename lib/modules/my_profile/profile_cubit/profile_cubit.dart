@@ -39,7 +39,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         userModel = UserModel.fromJson(responses[0].data);
         //log(responses[1].data.toString());
         videosModel = VideosModel.fromJson(responses[1].data);
-        challengesModel = ChallengesModel.fromJson(responses[2].data);
+        challengesModel =responses[2].data==null?ChallengesModel.fromJson({}) :ChallengesModel.fromJson(responses[2].data);
         emit(ProfileGetAllDataSuccess());
       } else {
         emit(ProfileGetAllDataNetworkDisable(AppStrings.checkInternet));

@@ -47,7 +47,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         }
         final response =
             await _notificationRepository.getAllNotification(page: page++);
-        // log(response.data.toString());
+       // log(response.data.toString());
         if (response.data['ST']) {
           notificationsModel = Notifications.fromJson(response.data['NO']);
           allNotifications.addAll(notificationsModel.notifications);
@@ -105,8 +105,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   Future<void> changeNotificationState(
       {required int notificationId, required int notificationIndex}) async {
     if (await checkInternetConnecation()) {
-      allNotifications[notificationIndex].notificationSatus = 1;
-      emit(NotificationsSuccess());
+      allNotifications[notificationIndex].notificationSatus = '1';
+      emit(NotificationsChangeStatusSuccess(
+          allNotifications[notificationIndex].challengeId.toString()));
       final response = await _notificationRepository.changeNotificationState(
           notificationId: notificationId);
       log(response.data.toString());

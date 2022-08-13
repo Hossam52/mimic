@@ -12,11 +12,13 @@ import 'package:mimic/modules/notifications/widgets/admin_notification.dart';
 import 'package:mimic/modules/notifications/widgets/comment_or_reply_notification.dart';
 import 'package:mimic/presentation/resourses/color_manager.dart';
 import 'package:mimic/presentation/resourses/font_manager.dart';
+import 'package:mimic/presentation/resourses/routes_manager.dart';
 import 'package:mimic/presentation/resourses/strings_manager.dart';
 import 'package:mimic/presentation/resourses/styles_manager.dart';
 import 'package:mimic/shared/dialogs.dart';
 import 'package:mimic/shared/extentions/translate_word.dart';
 import 'package:mimic/shared/helpers/error_handling/build_error_widget.dart';
+import 'package:mimic/shared/methods.dart';
 import 'package:mimic/widgets/defulat_button.dart';
 import 'package:mimic/widgets/loading_brogress.dart';
 import 'package:mimic/widgets/play_video_icon.dart';
@@ -67,6 +69,10 @@ class NotificationsScreen extends StatelessWidget {
                       msg: state.error,
                       backgroundColor: ColorManager.error,
                       textColor: ColorManager.white);
+                } else if (state is NotificationsChangeStatusSuccess) {
+                  Navigator.pop(context);
+                  navigateTo(context, Routes.challengeDetails,
+                      arguments: state.challengeId);
                 }
               },
               builder: (context, state) {

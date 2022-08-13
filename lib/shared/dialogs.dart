@@ -52,12 +52,11 @@ class Dialogs {
     );
   }
 
-  static Future<T?> acceptChallengeDialog<T>(
-      BuildContext context, Function confirmOk) {
+  static Future<T?> acceptChallengeDialog<T>(BuildContext context,
+      {required Function confirmOk}) {
     return showDialog(
       context: context,
-      builder: (_) => AcceptChallengeDialog(confirm: () 
-      {
+      builder: (_) => AcceptChallengeDialog(confirm: () {
         confirmOk();
       }),
     );

@@ -14,8 +14,8 @@ class ChallengesModel {
   late final Challenges challenges;
 
   ChallengesModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    challenges = Challenges.fromJson(json['CH']);
+    status = json['status'] ?? false;
+    challenges = Challenges.fromJson(json['CH']??{});
   }
 }
 
